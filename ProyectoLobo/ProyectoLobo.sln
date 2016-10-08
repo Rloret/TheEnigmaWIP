@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoLobo.CSharp", "ProyectoLobo.CSharp.csproj", "{6FAE0B06-1C35-296A-BED7-9C407C8E0018}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoLobo.CSharp.Editor", "ProyectoLobo.CSharp.Editor.csproj", "{5EA849C6-D2B1-38AC-0731-09A1C8E02184}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FAE0B06-1C35-296A-BED7-9C407C8E0018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FAE0B06-1C35-296A-BED7-9C407C8E0018}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FAE0B06-1C35-296A-BED7-9C407C8E0018}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FAE0B06-1C35-296A-BED7-9C407C8E0018}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA849C6-D2B1-38AC-0731-09A1C8E02184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA849C6-D2B1-38AC-0731-09A1C8E02184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA849C6-D2B1-38AC-0731-09A1C8E02184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA849C6-D2B1-38AC-0731-09A1C8E02184}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

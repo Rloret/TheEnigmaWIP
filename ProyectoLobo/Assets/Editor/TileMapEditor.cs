@@ -188,6 +188,8 @@ public class TileMapEditor : Editor {
 
         GameObject tile = GameObject.Find(map.name + "/Tiles/tile_" + id);
 
+
+        //Creación de tiles.
         if (tile == null ) {
             tile = new GameObject("tile_" + id);
             tile.transform.SetParent(map.tiles.transform);
