@@ -29,7 +29,7 @@ public class TilePickerWindow : EditorWindow {
         if (Selection.activeGameObject == null)
             return;
 
-        var selection = Selection.activeGameObject.GetComponent<TileMap>();
+        var selection =/*TileMap.getTileMapInstance*/Selection.activeGameObject.GetComponent<TileMap>();
 
         if (selection != null) {
             var texture2D = selection.texture2D;
