@@ -207,10 +207,13 @@ public class TileMapEditor : Editor {
      }
 
     void RemoveTile() {
-
         var id = brush.tileID.ToString();
+        int idnumber = brush.tileID;
+        int fila = (int)(idnumber / map.mapSize.x);
+        int columna = (int)(idnumber % map.mapSize.x);
 
-        GameObject tile = GameObject.Find(map.name + "/Tiles/tile_" + id);
+        GameObject tile = GameObject.Find(map.name + "/Tiles/" + fila + "#" + columna + "#" + map.tileID + "#");
+
 
         if (tile != null) {
             DestroyImmediate(tile);
