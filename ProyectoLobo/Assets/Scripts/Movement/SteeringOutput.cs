@@ -3,14 +3,14 @@ using System.Collections;
 
 public class SteeringOutput {
 
-    public Vector2 LinearAcceleration;
-    public float AngularAcceleration;
+    public Vector2 linearAcceleration;
+    public float angularAcceleration;
 
 
     public SteeringOutput()
     {
-        LinearAcceleration = new Vector2();
-        AngularAcceleration = 0.0f;
+        linearAcceleration = new Vector2();
+        angularAcceleration = 0.0f;
     }
 
 }

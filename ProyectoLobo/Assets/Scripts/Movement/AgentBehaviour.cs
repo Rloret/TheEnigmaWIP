@@ -6,10 +6,11 @@ public class AgentBehaviour : MonoBehaviour {
     public GameObject target;
     protected AgentPositionController agent;
 
-    public float MaxLinearVelocity;
+    //Esto es una errata del libro, estas cuatro variables estan en agentPositionController
+    /*public float MaxLinearVelocity; 
     public float MaxLinearAcceleration;
     public float MaxAngularVelocity;
-    public float maxAngularAcceleration;
+    public float maxAngularAcceleration;*/
 
     // Use this for initialization
     public virtual void Awake () {

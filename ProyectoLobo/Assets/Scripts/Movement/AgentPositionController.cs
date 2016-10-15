@@ -4,31 +4,33 @@ using System.Collections;
 public class AgentPositionController : MonoBehaviour {
 
     #region Public Domain
-    public float MaxLinearVelocity;
+    public float maxLinearVelocity;
     public float angularVelocity;
     public float maxAccel;
+    public float maxAngularVelocity;
+    public float orientation; // stores the angle in Rads to turn like if you were looking towards the positive Z Axis counterClockWise
+    public Vector2 position;
 
     public Vector2 linearVelocity;
 
-    protected SteeringOutput Steering;
+    protected SteeringOutput steering;
     #endregion
 
     #region private Domain
-    private Vector2 position;
+
  
-    private float orientation; // stores the angle in Rads to turn like if you were looking towards the positive Z Axis counterClockWise
     #endregion
 
 
 
     void Start () {
-        Steering = new SteeringOutput();
+        steering = new SteeringOutput();
         position = new Vector2(this.transform.position.x, this.transform.position.y);
 	}
 
     public void SetSteering (SteeringOutput Steering)
     {
-        this.Steering = Steering;
+        this.steering = Steering;
     }
 	
 
@@ -49,25 +51,25 @@ public class AgentPositionController : MonoBehaviour {
     void updateUnityVariables(ref Vector2 currentPosition) {
         this.transform.Translate(position);
         this.transform.Rotate(Vector3.up, orientation);
-        //this.transform.position = currentPosition;
+        //this.transform.Position = currentPosition;
     }
 
     void LateUpdate()
     {
-        linearVelocity += Steering.LinearAcceleration * Time.deltaTime;
-        angularVelocity += Steering.AngularAcceleration * Time.deltaTime;
+        linearVelocity += steering.linearAcceleration * Time.deltaTime;
+        angularVelocity += steering.angularAcceleration * Time.deltaTime;
 
-        if (linearVelocity.magnitude > MaxLinearVelocity)
+        if (linearVelocity.magnitude > maxLinearVelocity)
         {
             linearVelocity.Normalize();
-            linearVelocity *= MaxLinearVelocity;
+            linearVelocity *= maxLinearVelocity;
         }
 
-        if (Steering.AngularAcceleration == 0.0f)
+        if (steering.angularAcceleration == 0.0f)
             angularVelocity = 0.0f;
-        if (Steering.LinearAcceleration.sqrMagnitude == 0.0f)
+        if (steering.linearAcceleration.sqrMagnitude == 0.0f)
             linearVelocity = Vector2.zero;
-        Steering = new SteeringOutput();
+        steering = new SteeringOutput();
 
     }
 }

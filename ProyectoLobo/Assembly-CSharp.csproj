@@ -38,44 +38,30 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-<<<<<<< HEAD
-      <HintPath>D:/Programas/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>D:/Programas/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
-=======
       <HintPath>D:/Programas/Unity5/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>D:/Programas/Unity5/Editor/Data/Managed/UnityEditor.dll</HintPath>
->>>>>>> NachoRama
     </Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Movement\AgentBehaviour.cs" />
      <Compile Include="Assets\Scripts\Movement\AgentPositionController.cs" />
-<<<<<<< HEAD
+     <Compile Include="Assets\Scripts\Movement\Align.cs" />
+     <Compile Include="Assets\Scripts\Movement\Arrive.cs" />
      <Compile Include="Assets\Scripts\Movement\ClickPosition.cs" />
+     <Compile Include="Assets\Scripts\Movement\Face.cs" />
      <Compile Include="Assets\Scripts\Movement\Flee.cs" />
      <Compile Include="Assets\Scripts\Movement\Seek.cs" />
-=======
-     <Compile Include="Assets\Scripts\Movement\Arrive.cs" />
->>>>>>> NachoRama
      <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
+     <Compile Include="Assets\Scripts\Movement\Wander.cs" />
      <Compile Include="Assets\Scripts\TileBrush.cs" />
      <Compile Include="Assets\Scripts\TileMap.cs" />
  <Reference Include="UnityEngine.UI">
-<<<<<<< HEAD
- <HintPath>D:/Programas/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>D:/Programas/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
-=======
  <HintPath>D:/Programas/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>D:/Programas/Unity5/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
->>>>>>> NachoRama
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
