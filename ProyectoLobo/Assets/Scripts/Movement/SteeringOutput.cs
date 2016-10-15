@@ -8,7 +8,7 @@ public class SteeringOutput {
 
     public SteeringOutput()
     {
-        LinearAcceleration = new Vector3();
+        LinearAcceleration = new Vector2();
         AngularAcceleration = 0.0f;
     }
 
