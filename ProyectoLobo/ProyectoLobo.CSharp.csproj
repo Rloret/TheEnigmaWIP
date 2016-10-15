@@ -75,7 +75,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Movement\AgentBehaviour.cs" />
     <Compile Include="Assets\Scripts\Movement\AgentPositionController.cs" />
+    <Compile Include="Assets\Scripts\Movement\Align.cs" />
+    <Compile Include="Assets\Scripts\Movement\Face.cs" />
     <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
     <Compile Include="Assets\Scripts\TileBrush.cs" />
     <Compile Include="Assets\Scripts\TileMap.cs" />
