@@ -183,7 +183,7 @@ public class TileMapEditor : Editor {
     }
 
     void Draw() {
-        var id = brush.tileID.ToString();
+        //var id = brush.tileID.ToString(); al parecer ya no hace falta
         int idnumber = brush.tileID;
         var posX = brush.transform.position.x;
         var posY = brush.transform.position.y;
@@ -207,7 +207,7 @@ public class TileMapEditor : Editor {
      }
 
     void RemoveTile() {
-        var id = brush.tileID.ToString();
+        //var id = brush.tileID.ToString(); al parecer ya no se usa
         int idnumber = brush.tileID;
         int fila = (int)(idnumber / map.mapSize.x);
         int columna = (int)(idnumber % map.mapSize.x);

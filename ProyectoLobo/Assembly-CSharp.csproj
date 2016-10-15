@@ -50,8 +50,11 @@
      <Compile Include="Assets\Scripts\Movement\Align.cs" />
      <Compile Include="Assets\Scripts\Movement\Arrive.cs" />
      <Compile Include="Assets\Scripts\Movement\ClickPosition.cs" />
+     <Compile Include="Assets\Scripts\Movement\Evade.cs" />
      <Compile Include="Assets\Scripts\Movement\Face.cs" />
      <Compile Include="Assets\Scripts\Movement\Flee.cs" />
+     <Compile Include="Assets\Scripts\Movement\Leave.cs" />
+     <Compile Include="Assets\Scripts\Movement\Pursue.cs" />
      <Compile Include="Assets\Scripts\Movement\Seek.cs" />
      <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
      <Compile Include="Assets\Scripts\Movement\Wander.cs" />

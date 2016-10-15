@@ -28,9 +28,9 @@ public class Arrive : AgentBehaviour {
         steering.linearAcceleration = desiredVelocity - agent.linearVelocity;
         steering.linearAcceleration /= timeToTarget;
 
-        if (steering.linearAcceleration.magnitude > agent.maxLinearVelocity) {
+        if (steering.linearAcceleration.magnitude > agent.maxAccel) {
             steering.linearAcceleration.Normalize();
-            steering.linearAcceleration *= agent.maxLinearVelocity;
+            steering.linearAcceleration *= agent.maxAccel;
         }
 
         return steering;
