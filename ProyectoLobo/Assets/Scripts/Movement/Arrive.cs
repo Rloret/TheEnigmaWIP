@@ -18,19 +18,19 @@ public class Arrive : AgentBehaviour {
         if (distance < targetRadius) // si la distancia es menor que el radio del objetivo, es que ya hemos llegado.
             return steering;
         if (distance > slowRadius) // si la distancia es mayor que el radio de deceleración
-            targetSpeed = agent.MaxLinearVelocity; // vamos a tope
+            targetSpeed = agent.maxLinearVelocity; // vamos a tope
         else
-            targetSpeed = agent.MaxLinearVelocity * distance / slowRadius; // si no, es que estamos dentro del radio de deceleración y aminoramos progresivamente.
+            targetSpeed = agent.maxLinearVelocity * distance / slowRadius; // si no, es que estamos dentro del radio de deceleración y aminoramos progresivamente.
 
         Vector2 desiredVelocity = direction;
         desiredVelocity.Normalize();
         desiredVelocity *= targetSpeed;
-        steering.LinearAcceleration = desiredVelocity - agent.linearVelocity;
-        steering.LinearAcceleration /= timeToTarget;
+        steering.linearAcceleration = desiredVelocity - agent.linearVelocity;
+        steering.linearAcceleration /= timeToTarget;
 
-        if (steering.LinearAcceleration.magnitude > agent.MaxLinearVelocity) {
-            steering.LinearAcceleration.Normalize();
-            steering.LinearAcceleration *= agent.MaxLinearVelocity;
+        if (steering.linearAcceleration.magnitude > agent.maxLinearVelocity) {
+            steering.linearAcceleration.Normalize();
+            steering.linearAcceleration *= agent.maxLinearVelocity;
         }
 
         return steering;

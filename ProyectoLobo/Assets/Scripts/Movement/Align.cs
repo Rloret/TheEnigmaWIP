@@ -14,8 +14,8 @@ public class Align : AgentBehaviour {
     {
         SteeringOutput auxSteering = new SteeringOutput();
 
-        float targetOrientation = target.GetComponent<AgentPositionController>().Orientation;
-        float desiredAngularVelocity = targetOrientation - agent.Orientation;
+        float targetOrientation = target.GetComponent<AgentPositionController>().orientation;
+        float desiredAngularVelocity = targetOrientation - agent.orientation;
 
         //determines which is the best direction of rotation clockwise or counterclockwise to make the wisest (and shortest) rotation
         desiredAngularVelocity = MapToRange(desiredAngularVelocity);
@@ -29,19 +29,19 @@ public class Align : AgentBehaviour {
 
         float targetAngularVelocity;
 
-        targetAngularVelocity = desiredAngularVelocitySize > slowRadius? agent.MaxAngularVelocity:(agent.MaxAngularVelocity* desiredAngularVelocitySize / slowRadius);
+        targetAngularVelocity = desiredAngularVelocitySize > slowRadius? agent.maxAngularVelocity:(agent.maxAngularVelocity* desiredAngularVelocitySize / slowRadius);
 
         targetAngularVelocity *= desiredAngularVelocity / desiredAngularVelocitySize;
-        auxSteering.AngularAcceleration = (targetAngularVelocity - agent.AngularVelocity) / timeToTarget;
+        auxSteering.angularAcceleration = (targetAngularVelocity - agent.angularVelocity) / timeToTarget;
 
 
-        float angularAcceleration = Mathf.Abs(auxSteering.AngularAcceleration);
+        float angularAcceleration = Mathf.Abs(auxSteering.angularAcceleration);
 
-        if (angularAcceleration > agent.MaxAngularVelocity)
+        if (angularAcceleration > agent.maxAngularVelocity)
         {
 
-            auxSteering.AngularAcceleration /= angularAcceleration;
-            auxSteering.AngularAcceleration *= agent.MaxAngularVelocity;
+            auxSteering.angularAcceleration /= angularAcceleration;
+            auxSteering.angularAcceleration *= agent.maxAngularVelocity;
         }
         return auxSteering;
     }

@@ -26,15 +26,14 @@ public class Face : Align
     public override SteeringOutput GetSteering()
     {
         
-        Vector2 direction = targetAux.GetComponent<AgentPositionController>().Position - new Vector2(transform.position.x, transform.position.y);
+        Vector2 direction = targetAux.GetComponent<AgentPositionController>().position - new Vector2(transform.position.x, transform.position.y);
 
         if (direction.magnitude > 0.0f)
         {
             float targetOrientation = Mathf.Atan2(direction.x,
             direction.y);
             targetOrientation *= Mathf.Rad2Deg;
-            target.GetComponent<AgentPositionController>().Orientation=
-            targetOrientation;
+            target.GetComponent<AgentPositionController>().orientation = targetOrientation;
         }
         return base.GetSteering();
     }
