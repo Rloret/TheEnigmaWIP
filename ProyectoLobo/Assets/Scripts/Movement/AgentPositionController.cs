@@ -6,6 +6,7 @@ public class AgentPositionController : MonoBehaviour {
     #region Public Domain
     public float MaxLinearVelocity;
     public float angularVelocity;
+    public float maxAccel;
 
     public Vector2 linearVelocity;
 
