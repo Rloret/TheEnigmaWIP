@@ -39,4 +39,13 @@ public class AgentBehaviour : MonoBehaviour {
         return angularVelocity;
 
     }
+
+    public Vector2 GetOriAsVec (float orientation)
+    {
+        Vector2 vector = Vector2.zero;
+        vector.x = Mathf.Sin(orientation * Mathf.Deg2Rad) * 1.0f;
+        vector.y = Mathf.Cos(orientation * Mathf.Deg2Rad) * 1.0f;
+        return vector.normalized;
+
+    }
 }
