@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Align : AgentBehaviour {
 
-    public float stopTurningAngle=180;
+    public float stopTurningAngle=0;
     public float reduceTurningAngle=90;
     public float timeToTarget=0.1f;
 
@@ -12,10 +12,11 @@ public class Align : AgentBehaviour {
     ///</summary>
     public override SteeringOutput GetSteering()
     {
+
+        Debug.Log("ahora getseteering de Align");
         SteeringOutput auxSteering = new SteeringOutput();
 
-        float targetOrientation = target.transform.rotation.z;
-        stopTurningAngle = targetOrientation;
+        float targetOrientation = target.transform.rotation.eulerAngles.z;
 
         float desiredAngularVelocity = targetOrientation - agent.orientation;
         //reduceTurningAngle = 0.25f * stopTurningAngle;

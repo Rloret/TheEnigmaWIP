@@ -33,14 +33,14 @@ public class ClickPosition : MonoBehaviour {
 
                 GameObject aux = hit.collider.gameObject;
                 aux.GetComponent<SpriteRenderer>().color = Color.red;
-                addBehaviour(Comportamiento, aux);
-                if(GetComponent<AgentBehaviour>()!= null) GetComponent<AgentBehaviour>().target = aux;
+                addBehaviour(Comportamiento); 
+                GetComponent<AgentBehaviour>().target=aux;// Aqui lo machacamos
                 clickPos = mousePos;
             }
         }
     }
 
-    void addBehaviour(SteeringBehaviour comportamiento,GameObject target)
+    void addBehaviour(SteeringBehaviour comportamiento)
     {
         if (this.GetComponent<AgentBehaviour>() != null)
         {

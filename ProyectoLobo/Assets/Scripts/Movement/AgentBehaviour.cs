@@ -15,8 +15,8 @@ public class AgentBehaviour : MonoBehaviour {
 
     public virtual void Awake () {
         agent = gameObject.GetComponent<AgentPositionController>();
-        Debug.Log("Awake en base class");
-	}
+        Debug.Log("ahora Awake de agentbehaviour");
+    }
 	
 	// Update is called once per frame
 	public virtual void Update () {

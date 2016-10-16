@@ -6,13 +6,14 @@ public class Face : Align
     protected GameObject targetAux;
     //private GameObject target;
 
-    public override void Awake()
+  /*  public override void Awake()
     {
         base.Awake();
         targetAux = target;
-        //target = new GameObject();
+        target = new GameObject();
         //target.AddComponent<AgentPositionController>();
-    }
+        Debug.Log("ahora Awake de face");
+    }*/
 
     void OnDestroy()
     {
@@ -26,16 +27,28 @@ public class Face : Align
     ///</summary>
     public override SteeringOutput GetSteering()
     {
+        SteeringOutput steering;
+        targetAux = target;
+        target = new GameObject();
+        target.transform.rotation = targetAux.transform.rotation;
+        target.transform.position = targetAux.transform.position;
+
         //Vector2 direction = targetAux.GetComponent<AgentPositionController>().position - new Vector2(transform.position.x, transform.position.y);
-        Vector2 direction = target.transform.position - this.transform.position;
+        Vector3 direction = target.transform.position - this.transform.position;
 
-
+        Debug.Log("ahora getsteering de face");
         if (direction.magnitude > 0.0f)
         {
-            float targetOrientation = Mathf.Atan2(direction.x,direction.y);
+            float targetOrientation = Mathf.Atan2(-direction.x,direction.y);
             targetOrientation *= Mathf.Rad2Deg;
-            this.GetComponent<AgentPositionController>().orientation = targetOrientation;
+            target.transform.rotation =Quaternion.Euler(0,0, targetOrientation);
         }
-        return base.GetSteering();
+
+        steering= base.GetSteering();
+        DestroyImmediate(target);
+        target = targetAux;
+        return steering;
+
+       
     }
 }
