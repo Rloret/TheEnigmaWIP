@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Align : AgentBehaviour {
 
-    public float targetRadius=60;
-    public float slowRadius=10;
+    public float stopTurningAngle=180;
+    public float reduceTurningAngle=90;
     public float timeToTarget=0.1f;
 
     ///<summary>
@@ -15,21 +15,28 @@ public class Align : AgentBehaviour {
         SteeringOutput auxSteering = new SteeringOutput();
 
         float targetOrientation = target.transform.rotation.z;
+        stopTurningAngle = targetOrientation;
+
         float desiredAngularVelocity = targetOrientation - agent.orientation;
+        //reduceTurningAngle = 0.25f * stopTurningAngle;
+
 
         //determines which is the best direction of rotation clockwise or counterclockwise to make the wisest (and shortest) rotation
         desiredAngularVelocity = MapToRange(desiredAngularVelocity);
 
+      
+
         float desiredAngularVelocitySize = Mathf.Abs(desiredAngularVelocity);
 
-        if (desiredAngularVelocitySize < targetRadius)
+        if (desiredAngularVelocitySize == stopTurningAngle)
         {
+            Debug.Log("paro");
             return auxSteering;
         }
 
         float targetAngularVelocity;
 
-        targetAngularVelocity = desiredAngularVelocitySize > slowRadius? agent.maxAngularVelocity:(agent.maxAngularVelocity* desiredAngularVelocitySize / slowRadius);
+        targetAngularVelocity = desiredAngularVelocitySize > reduceTurningAngle? agent.maxAngularVelocity:(agent.maxAngularVelocity* desiredAngularVelocitySize / reduceTurningAngle);
 
         targetAngularVelocity *= desiredAngularVelocity / desiredAngularVelocitySize;
         auxSteering.angularAcceleration = (targetAngularVelocity - agent.angularVelocity) / timeToTarget;
