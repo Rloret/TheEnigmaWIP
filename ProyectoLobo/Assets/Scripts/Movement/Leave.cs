@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Leave : AgentBehaviour {
 
-    public float escapeRadius;
-    public float dangerRadius;
+    public float escapeRadius=1;
+    public float dangerRadius=64;
     public float timeToTarget = 0.1f;
 
 
@@ -12,12 +12,12 @@ public class Leave : AgentBehaviour {
     {
         SteeringOutput steering = new SteeringOutput();
 
-        Vector2 direction = (Vector2)target.transform.position - (Vector2)transform.position; // transform.position es vector3 y queremos vector2, puede dar problemas.
+        Vector2 direction = -(Vector2)target.transform.position + (Vector2)transform.position; // transform.position es vector3 y queremos vector2, puede dar problemas.
         float distance = direction.magnitude;
         float reduce;
-        if (distance < dangerRadius) // si la distancia es menor que el radio del objetivo, es que ya hemos llegado.
+        if (distance > dangerRadius) // si la distancia es mayor que el radio de peligro para(Y cambia de behaviour, probablemente).
             return steering;
-        if (distance > escapeRadius) // si la distancia es mayor que el radio de deceleración
+        if (distance < escapeRadius) // si la distancia es menor que el radio de escape sala  toda hostia
             reduce = 0f;
         else
             reduce = distance / dangerRadius * agent.maxLinearVelocity;

@@ -14,7 +14,8 @@ public class Pursue : Seek {
         targetAgent = target.GetComponent<AgentPositionController>();
         targetAux = target;
         target = new GameObject();
-        
+
+
     }
 
     void Ondestroy() {

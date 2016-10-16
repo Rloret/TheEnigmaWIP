@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Align : AgentBehaviour {
 
-    public float targetRadius;
-    public float slowRadius;
+    public float targetRadius=60;
+    public float slowRadius=10;
     public float timeToTarget=0.1f;
 
     ///<summary>
@@ -14,7 +14,7 @@ public class Align : AgentBehaviour {
     {
         SteeringOutput auxSteering = new SteeringOutput();
 
-        float targetOrientation = target.GetComponent<AgentPositionController>().orientation;
+        float targetOrientation = target.transform.rotation.z;
         float desiredAngularVelocity = targetOrientation - agent.orientation;
 
         //determines which is the best direction of rotation clockwise or counterclockwise to make the wisest (and shortest) rotation
@@ -39,7 +39,6 @@ public class Align : AgentBehaviour {
 
         if (angularAcceleration > agent.maxAngularVelocity)
         {
-
             auxSteering.angularAcceleration /= angularAcceleration;
             auxSteering.angularAcceleration *= agent.maxAngularVelocity;
         }

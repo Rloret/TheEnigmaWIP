@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Arrive : AgentBehaviour {
 
-    public float targetRadius;
-    public float slowRadius;
+    public float targetRadius=1;
+    public float slowRadius=64;
     public float timeToTarget = 0.1f;
 
 
@@ -18,7 +18,7 @@ public class Arrive : AgentBehaviour {
         if (distance < targetRadius) // si la distancia es menor que el radio del objetivo, es que ya hemos llegado.
             return steering;
         if (distance > slowRadius) // si la distancia es mayor que el radio de deceleración
-            targetSpeed = agent.maxLinearVelocity; // vamos a tope
+            targetSpeed = agent.maxLinearVelocity; 
         else
             targetSpeed = agent.maxLinearVelocity * distance / slowRadius; // si no, es que estamos dentro del radio de deceleración y aminoramos progresivamente.
 

@@ -49,9 +49,10 @@ public class AgentPositionController : MonoBehaviour {
 	}
 
     void updateUnityVariables(ref Vector2 currentPosition) {
-        this.transform.Translate(position);
-        this.transform.Rotate(Vector3.up, orientation);
-        //this.transform.Position = currentPosition;
+        //this.transform.Translate(position);
+        //this.transform.Rotate(Vector3.up, angularVelocity * Time.deltaTime);
+        this.transform.position = currentPosition;
+        this.transform.rotation = Quaternion.Euler(Vector3.forward * orientation);
     }
 
     void LateUpdate()
@@ -69,6 +70,7 @@ public class AgentPositionController : MonoBehaviour {
             angularVelocity = 0.0f;
         if (steering.linearAcceleration.sqrMagnitude == 0.0f)
             linearVelocity = Vector2.zero;
+
         steering = new SteeringOutput();
 
     }

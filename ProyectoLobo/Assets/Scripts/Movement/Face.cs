@@ -8,7 +8,6 @@ public class Face : Align
     public override void Awake()
     {
         base.Awake();
-
         targetAux = target;
         target = new GameObject();
         target.AddComponent<AgentPositionController>();
@@ -25,7 +24,7 @@ public class Face : Align
     ///</summary>
     public override SteeringOutput GetSteering()
     {
-        
+       
         Vector2 direction = targetAux.GetComponent<AgentPositionController>().position - new Vector2(transform.position.x, transform.position.y);
 
         if (direction.magnitude > 0.0f)
