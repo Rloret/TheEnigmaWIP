@@ -12,6 +12,7 @@ public class TileMap : MonoBehaviour {
     public Vector2 mapSize = new Vector2(20, 10);
     public Texture2D texture2D; // para almacenar la textura que vamos a usar para sacar las tiles
     public Vector2 tileSize = new Vector2();
+    public Vector2 tilePadding = new Vector2();
     public UnityEngine.Object[] spriteReferences;
     public Vector2 gridSize = new Vector2();
     public int pixelsToUnits = 100;
