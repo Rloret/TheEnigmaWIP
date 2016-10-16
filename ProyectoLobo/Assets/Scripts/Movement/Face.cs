@@ -4,18 +4,20 @@ using System.Collections;
 public class Face : Align
 {
     protected GameObject targetAux;
+    //private GameObject target;
 
     public override void Awake()
     {
         base.Awake();
         targetAux = target;
-        target = new GameObject();
-        target.AddComponent<AgentPositionController>();
+        //target = new GameObject();
+        //target.AddComponent<AgentPositionController>();
     }
 
     void OnDestroy()
     {
-        Destroy(target);
+        //Debug.Log("destruyo al target (no deberia destruir la tile) ");
+        //Destroy(target);
     }
 
     ///<summary>
@@ -24,15 +26,15 @@ public class Face : Align
     ///</summary>
     public override SteeringOutput GetSteering()
     {
-       
-        Vector2 direction = targetAux.GetComponent<AgentPositionController>().position - new Vector2(transform.position.x, transform.position.y);
+        //Vector2 direction = targetAux.GetComponent<AgentPositionController>().position - new Vector2(transform.position.x, transform.position.y);
+        Vector2 direction = target.transform.position - this.transform.position;
+
 
         if (direction.magnitude > 0.0f)
         {
-            float targetOrientation = Mathf.Atan2(direction.x,
-            direction.y);
+            float targetOrientation = Mathf.Atan2(direction.x,direction.y);
             targetOrientation *= Mathf.Rad2Deg;
-            target.GetComponent<AgentPositionController>().orientation = targetOrientation;
+            this.GetComponent<AgentPositionController>().orientation = targetOrientation;
         }
         return base.GetSteering();
     }
