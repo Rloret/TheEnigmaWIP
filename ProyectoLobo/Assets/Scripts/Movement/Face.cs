@@ -45,6 +45,7 @@ public class Face : Align
         }
 
         steering= base.GetSteering();
+        targetAux.transform.rotation = target.transform.rotation;
         DestroyImmediate(target);
         target = targetAux;
         return steering;
