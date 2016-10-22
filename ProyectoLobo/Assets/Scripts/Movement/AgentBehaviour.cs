@@ -51,4 +51,9 @@ public class AgentBehaviour : MonoBehaviour {
         return vector.normalized;
 
     }
+
+    public virtual void OnDrawGizmos() {
+        
+    }
+
 }

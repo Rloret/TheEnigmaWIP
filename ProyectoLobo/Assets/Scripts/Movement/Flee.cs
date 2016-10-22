@@ -12,4 +12,10 @@ public class Flee : AgentBehaviour {
 
         return steering;
     }
+    public override void OnDrawGizmos()
+    {
+        Gizmos.color =Color.Lerp( Color.magenta,Color.red,0.5f);
+        Gizmos.DrawRay(agent.transform.position, (agent.transform.position - target.transform.position).normalized * agent.maxAccel);
+    }
+
 }

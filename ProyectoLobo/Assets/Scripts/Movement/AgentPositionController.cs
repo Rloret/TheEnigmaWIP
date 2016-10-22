@@ -74,4 +74,10 @@ public class AgentPositionController : MonoBehaviour {
         steering = new SteeringOutput();
 
     }
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(position, linearVelocity);
+    }
+
 }

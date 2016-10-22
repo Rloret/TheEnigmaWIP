@@ -13,4 +13,10 @@ public class Seek : AgentBehaviour {
         return steering;
     }
 
+    public override void OnDrawGizmos() {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(agent.transform.position, (target.transform.position - agent.transform.position).normalized * agent.maxAccel);
+
+    }
+
 }

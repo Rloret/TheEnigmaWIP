@@ -40,4 +40,13 @@ public class Evade : Flee {
 
         return base.GetSteering();
     }
+
+    public override void OnDrawGizmos()
+    {
+
+        Gizmos.color = Color.Lerp(Color.magenta, Color.red, 0.5f);
+        Gizmos.DrawCube(target.transform.position, Vector3.one*5);
+        // Gizmos.DrawRay(agent.transform.position, (transform.position - target.transform.position).normalized * agent.maxAccel);
+        base.OnDrawGizmos();
+    }
 }

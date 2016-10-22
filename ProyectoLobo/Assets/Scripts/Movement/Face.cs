@@ -49,7 +49,20 @@ public class Face : Align
         DestroyImmediate(target);
         target = targetAux;
         return steering;
+      
+    }
 
-       
+   public override void OnDrawGizmos()
+    {
+        Vector3 direction = target.transform.position - this.transform.position;
+        float targetOrientation=0;
+        if (direction.magnitude > 0.0f)
+        {
+            targetOrientation = Mathf.Atan2(direction.x, direction.y);
+            targetOrientation *= Mathf.Rad2Deg;
+        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(target.transform.position,base.GetOriAsVec(targetOrientation) *30);
+        base.OnDrawGizmos();
     }
 }
