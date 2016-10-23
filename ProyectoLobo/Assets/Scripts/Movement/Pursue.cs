@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pursue : Seek {
+public class Pursue : Arrive {
 
     public float maxPrediction;
 
