@@ -28,7 +28,9 @@ public class Face : Align
     public override SteeringOutput GetSteering()
     {
         SteeringOutput steering;
+
         targetAux = target;
+
         target = new GameObject();
         target.transform.rotation = targetAux.transform.rotation;
         target.transform.position = targetAux.transform.position;
@@ -65,4 +67,6 @@ public class Face : Align
         Gizmos.DrawRay(target.transform.position,base.GetOriAsVec(targetOrientation) *30);
         base.OnDrawGizmos();
     }
+
+
 }

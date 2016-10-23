@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class ClickPosition : MonoBehaviour {
 
@@ -9,7 +11,21 @@ public class ClickPosition : MonoBehaviour {
         NOTHING,SEEK,FLEE,ARRIVE,LEAVE,PURSUE,EVADE,ALIGN,FACE,WANDER
     };
 
-    public SteeringBehaviour Comportamiento;
+    [System.Serializable]
+    public class WeightedBehaviours
+    {
+       [SerializeField]
+        public SteeringBehaviour Behaviour;
+        [SerializeField]
+        [Range(0, 1)]
+        public float weight;
+
+        
+    }
+    
+    public WeightedBehaviours[] WeightedBehavioursArray;
+ 
+
 
     void Update ()
     {
@@ -17,15 +33,10 @@ public class ClickPosition : MonoBehaviour {
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos = new Vector2(mouseWorldPos.x, mouseWorldPos.y); //Esto coje la posición en la pantalla
-
-            //clickPos = mousePos; //ATENCIÓN, si usamos colliders hay que quitar esta asignación
-          //  Debug.Log(mousePos);
-
-            //TileMap.getTileMapInstance.tilesDataMap[(int)clickPos.x, (int)clickPos.y].Holder.GetComponent<SpriteRenderer>().color = Color.red;
-
             
             Vector2 dir = Vector2.zero;
             RaycastHit2D hit = Physics2D.Raycast(mousePos, dir);
+            int counter = 0;
 
             if (hit.collider != null)
             {
@@ -33,56 +44,58 @@ public class ClickPosition : MonoBehaviour {
 
                 GameObject aux = hit.collider.gameObject;
                 aux.GetComponent<SpriteRenderer>().color = Color.red;
-                addBehaviour(Comportamiento); 
-                GetComponent<AgentBehaviour>().target=aux;// Aqui lo machacamos
-                clickPos = mousePos;
+
+                foreach (var comportamiento in this.GetComponents<AgentBehaviour>())
+                {
+                    DestroyImmediate(comportamiento);
+                }
+
+                foreach (var comportamiento in WeightedBehavioursArray)
+                {
+
+                    addBehaviour(comportamiento.Behaviour,aux,comportamiento.weight);
+                    counter++;
+                }
+
             }
         }
     }
 
-    void addBehaviour(SteeringBehaviour comportamiento)
+    void addBehaviour(SteeringBehaviour comportamiento,GameObject aux,float weight)
     {
-        if (this.GetComponent<AgentBehaviour>() != null)
-        {
-           
-           DestroyImmediate(GetComponent<AgentBehaviour>());
-            // this.gameObject.AddComponent<Align>(); 
-        }
-
+        
         switch (comportamiento)
         {
             case SteeringBehaviour.SEEK:
-                this.gameObject.AddComponent<Seek>();
+                this.gameObject.AddComponent<Seek>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.FLEE:
-                this.gameObject.AddComponent<Flee>();
+                this.gameObject.AddComponent<Flee>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.ARRIVE:
-                this.gameObject.AddComponent<Arrive>();
+                this.gameObject.AddComponent<Arrive>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.LEAVE:
-                this.gameObject.AddComponent<Leave>();
+                this.gameObject.AddComponent<Leave>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.PURSUE:
-                this.gameObject.AddComponent<Pursue>();
+                this.gameObject.AddComponent<Pursue>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.EVADE:
-                this.gameObject.AddComponent<Evade>();
+                this.gameObject.AddComponent<Evade>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.ALIGN:
-                this.gameObject.AddComponent<Align>();
+                this.gameObject.AddComponent<Align>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.FACE:
-                this.gameObject.AddComponent<Face>();
+                this.gameObject.AddComponent<Face>().setTarget(aux).setWeight(weight);
                 break;
             case SteeringBehaviour.WANDER:
-                this.gameObject.AddComponent<Wander>();
+                this.gameObject.AddComponent<Wander>().setTarget(aux).setWeight(weight);
                 break;
             default:
                 break;
         }
-
-
-
+     
     }
 }

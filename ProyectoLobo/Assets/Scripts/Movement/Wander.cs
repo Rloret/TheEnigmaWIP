@@ -16,13 +16,15 @@ public class Wander : Face {
 
     public override SteeringOutput GetSteering()
     {
+        Debug.Log("ahora steering de wander");
+
         targetAux = target;
         GameObject targetauxaux = target;
         target = new GameObject();
         target.transform.position = targetAux.transform.position;
         Vector3 direction = target.transform.position - this.transform.position;
 
-        Debug.Log("ahora getsteering de face");
+
         if (direction.magnitude > 0.0f)
         {
             float Tarorient = Mathf.Atan2(direction.x, direction.y);
@@ -31,7 +33,7 @@ public class Wander : Face {
         }
 
         SteeringOutput steering = new SteeringOutput();
-        Debug.Log("ahora steering de wander");
+
 
         float wanderOrientation = Random.Range(-1.0f, 1.0f) * rate;
         float targetOrientation = wanderOrientation + target.transform.rotation.eulerAngles.z;
@@ -45,9 +47,9 @@ public class Wander : Face {
         steering = base.GetSteering();
 
         //Esto se deberia de quitar, no? el wander se deberia de encargar solo de la rotacion, o que?
-        steering.linearAcceleration = target.transform.position - transform.position;
+      /*  steering.linearAcceleration = target.transform.position - transform.position;
         steering.linearAcceleration.Normalize();
-        steering.linearAcceleration *= agent.maxLinearVelocity;
+        steering.linearAcceleration *= agent.maxLinearVelocity;*/
 
         DestroyImmediate(target);
         target = targetauxaux;

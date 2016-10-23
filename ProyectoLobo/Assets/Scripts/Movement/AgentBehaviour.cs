@@ -4,14 +4,8 @@ using System.Collections;
 public class AgentBehaviour : MonoBehaviour {
 
     public   GameObject target;
+    public float Weight = 1.0f;
     protected AgentPositionController agent;
-
-    //Esto es una errata del libro, estas cuatro variables estan en agentPositionController
-    /*public float MaxLinearVelocity; 
-    public float MaxLinearAcceleration;
-    public float MaxAngularVelocity;
-    public float maxAngularAcceleration;*/
-
 
     public virtual void Awake () {
         agent = gameObject.GetComponent<AgentPositionController>();
@@ -20,9 +14,21 @@ public class AgentBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	public virtual void Update () {
-        agent.SetSteering(GetSteering());
+        agent.SetSteering(GetSteering(),Weight);
 	
 	}
+
+    public AgentBehaviour setTarget(GameObject targ)
+    {
+        this.target = targ;
+        return this;
+    }
+
+    public AgentBehaviour setWeight(float weight)
+    {
+        this.Weight = weight;
+        return this;
+    }
 
     public virtual SteeringOutput GetSteering()
     {

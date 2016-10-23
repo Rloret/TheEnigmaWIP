@@ -28,9 +28,10 @@ public class AgentPositionController : MonoBehaviour {
         position = new Vector2(this.transform.position.x, this.transform.position.y);
 	}
 
-    public void SetSteering (SteeringOutput Steering)
+    public void SetSteering (SteeringOutput Steering, float weight)
     {
-        this.steering = Steering;
+        this.steering.linearAcceleration += (weight* Steering.linearAcceleration);
+        this.steering.angularAcceleration += (weight * Steering.angularAcceleration);
     }
 	
 
