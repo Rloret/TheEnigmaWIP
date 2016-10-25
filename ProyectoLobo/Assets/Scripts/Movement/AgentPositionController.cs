@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class AgentPositionController : MonoBehaviour {
 
@@ -9,6 +11,8 @@ public class AgentPositionController : MonoBehaviour {
     public float maxAccel;
     public float maxAngularVelocity;
     public float orientation; // stores the angle in Rads to turn like if you were looking towards the positive Z Axis counterClockWise
+    [Tooltip("Esta variable es un minimo que se ha de cumplir determinar que grupo se va a aejecutar")]
+    public float priorityThreshold = 0.1f;
     public Vector2 position;
 
     public Vector2 linearVelocity;
@@ -18,7 +22,20 @@ public class AgentPositionController : MonoBehaviour {
 
     #region private Domain
 
- 
+    private Dictionary<int, List<SteeringData>> SteeringGroups;
+
+    private struct SteeringData
+    {
+        public SteeringOutput steering;
+        public float weight;
+        
+        public SteeringData(SteeringOutput steer, float weight)
+        {
+            this.steering = steer;
+            this.weight = weight;
+        }
+    }
+
     #endregion
 
 
@@ -26,12 +43,18 @@ public class AgentPositionController : MonoBehaviour {
     void Start () {
         steering = new SteeringOutput();
         position = new Vector2(this.transform.position.x, this.transform.position.y);
-	}
+        SteeringGroups = new Dictionary<int, List<SteeringData>>();
+    }
 
-    public void SetSteering (SteeringOutput Steering, float weight)
+    public void SetSteering (SteeringOutput Steering,int priority, float weight)
     {
-        this.steering.linearAcceleration += (weight* Steering.linearAcceleration);
-        this.steering.angularAcceleration += (weight * Steering.angularAcceleration);
+        if (!SteeringGroups.ContainsKey(priority))
+        {
+            SteeringGroups.Add(priority, new List<SteeringData>());
+        }
+        SteeringGroups[priority].Add(new SteeringData(Steering,weight));
+       /* this.steering.linearAcceleration += (weight* Steering.linearAcceleration);
+        this.steering.angularAcceleration += (weight * Steering.angularAcceleration);*/
     }
 	
 
@@ -58,6 +81,9 @@ public class AgentPositionController : MonoBehaviour {
 
     void LateUpdate()
     {
+        steering = GetPrioritySteering();
+        SteeringGroups.Clear();
+
         linearVelocity += steering.linearAcceleration * Time.deltaTime;
         angularVelocity += steering.angularAcceleration * Time.deltaTime;
 
@@ -74,6 +100,31 @@ public class AgentPositionController : MonoBehaviour {
 
         steering = new SteeringOutput();
 
+    }
+
+    private SteeringOutput GetPrioritySteering()
+    {
+        SteeringOutput steering = new SteeringOutput();
+        float sqrThreshold = priorityThreshold * priorityThreshold;
+
+        foreach (var steeringdata in SteeringGroups)
+        {
+            steering = new SteeringOutput();
+            for (int i =0;i<steeringdata.Value.Count; i++)
+            {
+                Debug.Log("PRIORITY ES AHORA: " + steeringdata.Key +"su posicion es: " + i);
+                SteeringData singlesteering = steeringdata.Value[i];
+                steering.linearAcceleration += (singlesteering.weight * singlesteering.steering.linearAcceleration);
+                steering.angularAcceleration += (singlesteering.weight * singlesteering.steering.angularAcceleration);
+            }
+            if (steering.linearAcceleration.sqrMagnitude > sqrThreshold ||
+            Mathf.Abs(steering.angularAcceleration) > priorityThreshold)
+            {
+                return steering;
+            }
+
+        }
+        return steering;
     }
 
     void OnDrawGizmos() {

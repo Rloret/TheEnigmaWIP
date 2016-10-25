@@ -38,7 +38,6 @@ public class Face : Align
         //Vector2 direction = targetAux.GetComponent<AgentPositionController>().position - new Vector2(transform.position.x, transform.position.y);
         Vector3 direction = target.transform.position - this.transform.position;
 
-        Debug.Log("ahora getsteering de face");
         if (direction.magnitude > 0.0f)
         {
             float targetOrientation = Mathf.Atan2(-direction.x,direction.y);
