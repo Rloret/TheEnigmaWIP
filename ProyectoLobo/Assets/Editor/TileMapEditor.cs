@@ -6,8 +6,8 @@ using UnityEditor;
 [CustomEditor(typeof(TileMap))]
 public class TileMapEditor : Editor {
 
-    public TileMap map = TileMap.getTileMapInstance;
-    public GameObject tilesParent;
+    public TileMap map;
+
     TileBrush brush;
     Vector3 mouseHitPos;
 
@@ -21,10 +21,8 @@ public class TileMapEditor : Editor {
 
         var oldSize = map.mapSize;
         map.mapSize = EditorGUILayout.Vector2Field("Map Size", map.mapSize); // de esta forma al cambiar las cosas en el inspector se guarda automatiacmente en el valor de mapsize
-
         if (map.mapSize != oldSize) { // esto es para recalcular el tamaño del mapa en el editor en tiempo real.
             UpdateCalculations();
-           // map.restartTilesDataMap();
         }
 
         var oldTexture = map.texture2D;
@@ -42,7 +40,6 @@ public class TileMapEditor : Editor {
         }
         else {
             EditorGUILayout.LabelField("Tile Size:", map.tileSize.x + "x" + map.tileSize.y);
-            map.tilePadding = EditorGUILayout.Vector2Field("Tile Padding",map.tilePadding);
             EditorGUILayout.LabelField("Grid size in units:", map.gridSize.x+"x"+map.gridSize.y);
             EditorGUILayout.LabelField("Pixels to units:", map.pixelsToUnits.ToString());
             UpdateBrush(map.currentTileBrush);
@@ -62,15 +59,15 @@ public class TileMapEditor : Editor {
         Tools.current = Tool.View; // esto es para que al seleccionar el TileMap se cambie el modo de edicion de Unity
 
         if (map.tiles == null) {
-            tilesParent = new GameObject("Tiles");
-            tilesParent.transform.SetParent(map.transform);
-            tilesParent.transform.position = Vector3.zero;
-            map.tiles = tilesParent;
+            var go = new GameObject("Tiles");
+            go.transform.SetParent(map.transform);
+            go.transform.position = Vector3.zero;
+
+            map.tiles = go;
         }
 
         if (map.texture2D != null) {
             UpdateCalculations();
-            //map.restartTilesDataMap();
             NewBrush();
         }
 
@@ -184,37 +181,28 @@ public class TileMapEditor : Editor {
     }
 
     void Draw() {
-        //var id = brush.tileID.ToString(); al parecer ya no hace falta
-        int idnumber = brush.tileID;
+        var id = brush.tileID.ToString();
+
         var posX = brush.transform.position.x;
         var posY = brush.transform.position.y;
-        int fila = (int)(idnumber / map.mapSize.x);
-        int columna = (int)(idnumber % map.mapSize.x);
 
-        GameObject tile = GameObject.Find(map.name + "/Tiles/"+fila+"#"+columna + "#" + map.tileID + "#");
+        GameObject tile = GameObject.Find(map.name + "/Tiles/tile_" + id);
 
-
-        //Creación de tiles.
         if (tile == null ) {
-            fila =(int)( idnumber / map.mapSize.x);
-            columna = (int)(idnumber % map.mapSize.x);
-            tile = new GameObject(fila+"#"+columna+"#"+map.tileID+"#");
+            tile = new GameObject("tile_" + id);
             tile.transform.SetParent(map.tiles.transform);
             tile.transform.position = new Vector3(posX, posY, 0);
             tile.AddComponent<SpriteRenderer>();
-          //  map.addTileDataToTilesDataMap(brush.tileID,tile);
+            
         }
         tile.GetComponent<SpriteRenderer>().sprite = brush.renderer2D.sprite;
      }
 
     void RemoveTile() {
-        //var id = brush.tileID.ToString(); al parecer ya no se usa
-        int idnumber = brush.tileID;
-        int fila = (int)(idnumber / map.mapSize.x);
-        int columna = (int)(idnumber % map.mapSize.x);
 
-        GameObject tile = GameObject.Find(map.name + "/Tiles/" + fila + "#" + columna + "#" + map.tileID + "#");
+        var id = brush.tileID.ToString();
 
+        GameObject tile = GameObject.Find(map.name + "/Tiles/tile_" + id);
 
         if (tile != null) {
             DestroyImmediate(tile);
