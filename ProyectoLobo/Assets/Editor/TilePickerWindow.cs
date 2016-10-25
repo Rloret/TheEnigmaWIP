@@ -29,7 +29,7 @@ public class TilePickerWindow : EditorWindow {
         if (Selection.activeGameObject == null)
             return;
 
-        var selection =/*TileMap.getTileMapInstance*/Selection.activeGameObject.GetComponent<TileMap>();
+        var selection = Selection.activeGameObject.GetComponent<TileMap>();
 
         if (selection != null) {
             var texture2D = selection.texture2D;
@@ -46,6 +46,10 @@ public class TilePickerWindow : EditorWindow {
                 GUI.DrawTexture(new Rect(offset.x, offset.y, newTextureSize.x,newTextureSize.y), texture2D);// esta linea dibuja la textura
 
                 var tile = selection.tileSize * newScale;//este trozo es para que al seleccionar una tile se destaque la seleccionada en la textura
+
+                tile.x += selection.tilePadding.x * newScale;
+                tile.y += selection.tilePadding.y * newScale;
+
                 var grid = new Vector2( newTextureSize.x / tile.x , newTextureSize.y / tile.y);
                 var selectionPos = new Vector2(tile.x * currentSelection.x + offset.x, tile.y * currentSelection.y + offset.y);
         
