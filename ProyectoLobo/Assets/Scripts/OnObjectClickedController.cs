@@ -7,17 +7,23 @@ public class OnObjectClickedController : MonoBehaviour {
     private ConversationMenuController menuController;
 
     [System.Serializable]
-    public class WeightedBehaviours
+
+    public struct WeightedBehaviours
     {
         [SerializeField]
         public SteeringBehaviour Behaviour;
         [SerializeField]
         [Range(0, 1)]
+        [Tooltip("Indica el multipliocador de aceleración o peso. Es decir este comportamiento tendra un weight de influencia. \n"
+            + "Por ejemplo:\n si es seek al 0.5f junto con un face al 1, la aceleración lineal será del 50% mientras que la aceleracion angular sera del 100%."
+            + "Esta hecho para combinar comportamientos con el collision avoiding sobretodo.")]
         public float weight;
+        [Tooltip("El grupo de prioridad al que se añadirá")]
+        public int priority;
 
 
     }
-
+    [Tooltip("Este array sirve para almacenar todos los comportamientos que se van a ejecutar a la vez y sus prioridades.")]
     public WeightedBehaviours[] WeightedBehavioursArray;
 
     public enum SteeringBehaviour
@@ -67,37 +73,37 @@ public class OnObjectClickedController : MonoBehaviour {
     }
 
 
-    void addBehaviour(GameObject behaviorReceiber, SteeringBehaviour comportamiento, GameObject aux, float weight)
+    void addBehaviour(GameObject behaviorReceiber, SteeringBehaviour comportamiento, GameObject aux, float weight,int priority)
     {
 
         switch (comportamiento)
         {
             case SteeringBehaviour.SEEK:
-                this.gameObject.AddComponent<Seek>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Seek>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.FLEE:
-                this.gameObject.AddComponent<Flee>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Flee>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.ARRIVE:
-                this.gameObject.AddComponent<Arrive>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Arrive>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.LEAVE:
-                this.gameObject.AddComponent<Leave>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Leave>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.PURSUE:
-                this.gameObject.AddComponent<Pursue>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Pursue>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.EVADE:
-                this.gameObject.AddComponent<Evade>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Evade>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.ALIGN:
-                this.gameObject.AddComponent<Align>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Align>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.FACE:
-                this.gameObject.AddComponent<Face>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Face>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             case SteeringBehaviour.WANDER:
-                this.gameObject.AddComponent<Wander>().setTarget(aux).setWeight(weight);
+                behaviorReceiber.gameObject.AddComponent<Wander>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             default:
                 break;
@@ -116,9 +122,7 @@ public class OnObjectClickedController : MonoBehaviour {
 
         foreach (var comportamiento in WeightedBehavioursArray)
         {
-
-            addBehaviour(behaviorReceiber, comportamiento.Behaviour, aux, comportamiento.weight);
-            //counter++;
+            addBehaviour(behaviorReceiber, comportamiento.Behaviour, aux, comportamiento.weight,comportamiento.priority);
         }
     }
 

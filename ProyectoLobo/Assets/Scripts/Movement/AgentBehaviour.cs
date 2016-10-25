@@ -3,18 +3,20 @@ using System.Collections;
 
 public class AgentBehaviour : MonoBehaviour {
 
-    public   GameObject target;
+    public GameObject target;
     public float Weight = 1.0f;
+    public int Priority = 1;
     protected AgentPositionController agent;
 
     public virtual void Awake () {
         agent = gameObject.GetComponent<AgentPositionController>();
-        Debug.Log("ahora Awake de agentbehaviour");
     }
 	
 	// Update is called once per frame
 	public virtual void Update () {
-        agent.SetSteering(GetSteering(),Weight);
+        SteeringOutput output = (GetSteering());
+        agent.SetSteering(output,Priority,Weight);
+
 	
 	}
 
@@ -30,6 +32,11 @@ public class AgentBehaviour : MonoBehaviour {
         return this;
     }
 
+    public AgentBehaviour setPriority(int priority)
+    {
+        this.Priority = priority;
+        return this;
+    }
     public virtual SteeringOutput GetSteering()
     {
         return new SteeringOutput();

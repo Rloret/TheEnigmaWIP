@@ -21,7 +21,7 @@ public class Leave : AgentBehaviour {
         if (distance < escapeRadius) // si la distancia es menor que el radio de escape sala  toda hostia
             reduce = 0f;
         else
-            reduce = distance / dangerRadius * agent.maxLinearVelocity;
+            reduce = distance / dangerRadius/2 * agent.maxLinearVelocity;
         float targetSpeed = agent.maxLinearVelocity - reduce;
 
         Vector2 desiredVelocity = direction;

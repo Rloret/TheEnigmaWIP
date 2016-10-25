@@ -13,7 +13,7 @@ public class Align : AgentBehaviour {
     public override SteeringOutput GetSteering()
     {
 
-        Debug.Log("ahora getseteering de Align");
+
         SteeringOutput auxSteering = new SteeringOutput();
 
         float targetOrientation = target.transform.rotation.eulerAngles.z;
@@ -31,7 +31,7 @@ public class Align : AgentBehaviour {
 
         if (desiredAngularVelocitySize == stopTurningAngle)
         {
-            Debug.Log("paro");
+
             return auxSteering;
         }
 

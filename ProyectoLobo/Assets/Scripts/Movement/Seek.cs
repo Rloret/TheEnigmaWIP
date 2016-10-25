@@ -5,13 +5,12 @@ public class Seek : AgentBehaviour {
 
     public override SteeringOutput GetSteering()
     {
-        Debug.Log("ahora getsteering de Seek");
 
         SteeringOutput steering = new SteeringOutput();
         steering.linearAcceleration = target.transform.position - transform.position;
         steering.linearAcceleration.Normalize();
         steering.linearAcceleration = steering.linearAcceleration * agent.maxAccel;
-        Debug.Log("Acaba seek");
+        Debug.Log("steering de seek = " + steering.linearAcceleration);
         return steering;
     }
 
