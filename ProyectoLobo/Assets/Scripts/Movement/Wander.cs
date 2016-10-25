@@ -47,9 +47,9 @@ public class Wander : Face {
         steering = base.GetSteering();
 
         //Esto se deberia de quitar, no? el wander se deberia de encargar solo de la rotacion, o que?
-      /*  steering.linearAcceleration = target.transform.position - transform.position;
+        steering.linearAcceleration = target.transform.position - transform.position;
         steering.linearAcceleration.Normalize();
-        steering.linearAcceleration *= agent.maxLinearVelocity;*/
+        steering.linearAcceleration *= agent.maxLinearVelocity;
 
         DestroyImmediate(target);
         target = targetauxaux;
