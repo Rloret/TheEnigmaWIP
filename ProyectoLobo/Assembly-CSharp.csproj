@@ -45,6 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ConversationMenu\AttackButtonClick.cs" />
+     <Compile Include="Assets\Scripts\ConversationMenu\ButtonAction.cs" />
+     <Compile Include="Assets\Scripts\ConversationMenu\CloseButtonClick.cs" />
+     <Compile Include="Assets\Scripts\ConversationMenu\ConversationMenuController.cs" />
+     <Compile Include="Assets\Scripts\ConversationMenu\ConvinceButtonClick.cs" />
+     <Compile Include="Assets\Scripts\ConversationMenu\OfferButtonClick.cs" />
      <Compile Include="Assets\Scripts\Movement\AgentBehaviour.cs" />
      <Compile Include="Assets\Scripts\Movement\AgentPositionController.cs" />
      <Compile Include="Assets\Scripts\Movement\Align.cs" />
@@ -58,6 +64,7 @@
      <Compile Include="Assets\Scripts\Movement\Seek.cs" />
      <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
      <Compile Include="Assets\Scripts\Movement\Wander.cs" />
+     <Compile Include="Assets\Scripts\OnObjectClickedController.cs" />
      <Compile Include="Assets\Scripts\TileBrush.cs" />
      <Compile Include="Assets\Scripts\TileMap.cs" />
  <Reference Include="UnityEngine.UI">
