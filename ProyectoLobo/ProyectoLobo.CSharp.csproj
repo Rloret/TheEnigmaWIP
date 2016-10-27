@@ -95,6 +95,8 @@
     <Compile Include="Assets\Scripts\Movement\Seek.cs" />
     <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
     <Compile Include="Assets\Scripts\Movement\Wander.cs" />
+    <Compile Include="Assets\Scripts\Objects\ObjectAction.cs" />
+    <Compile Include="Assets\Scripts\Objects\ObjectHandler.cs" />
     <Compile Include="Assets\Scripts\OnObjectClickedController.cs" />
     <Compile Include="Assets\Scripts\TileBrush.cs" />
     <Compile Include="Assets\Scripts\TileMap.cs" />

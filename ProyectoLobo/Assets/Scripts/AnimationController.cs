@@ -16,7 +16,7 @@ public class AnimationController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float linearSpeedClamped = movementController.linearVelocity.magnitude / movementController.maxLinearVelocity;
-        Debug.Log(linearSpeedClamped);
+
         if (linearSpeedClamped ==0f )
         {
             AnimController.speed = 1;
