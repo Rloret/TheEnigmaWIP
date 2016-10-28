@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ObjectHandler : MonoBehaviour {
 
+    #region public domain
     public enum ObjectType
     {
         NONE,AXE,SHIELD,FLASHLIGHT,MEDICALAID,BOOTS
     };
+
     [System.Serializable]
     public struct ObjectData
     {
@@ -21,7 +24,7 @@ public class ObjectHandler : MonoBehaviour {
         public static bool operator ==(ObjectData object1, ObjectData object2)
         {
             float distance = Vector3.Distance(object1.position, object2.position);
-            Debug.Log(distance + "distancia o1 : " + object1.position + "distancia o2: " +object2.position + "tipos o1 : " + object1.type + "tipo o2: " + object2.type);
+
             if (object1.type ==object2.type && distance<ObjectHandler.pickRadius ) // idk
             {
                 return true;
@@ -38,10 +41,17 @@ public class ObjectHandler : MonoBehaviour {
             return true;
         }
     }
-    public static int pickRadius;
-    public int radius;
     public ObjectData desiredObjectData;
 
+    public static int pickRadius;
+    public int radius;
+
+    public Button CurrentObject;
+
+    #endregion
+
+    #region private domain
+    #endregion
     void Update()
     {
         pickRadius = radius;
@@ -75,7 +85,12 @@ public class ObjectHandler : MonoBehaviour {
 
         if(desiredObjectData == new ObjectData(colliderType, g.transform.position))
         {
+            CurrentObject.image.sprite = g.GetComponent<SpriteRenderer>().sprite;
+            if (CurrentObject.image.color.a < 0.3f)
+                CurrentObject.image.color = Color.white;
+           
             Destroy(g);
+
             //pick it up
         }
 
