@@ -112,7 +112,7 @@ public class AgentPositionController : MonoBehaviour {
             steering = new SteeringOutput();
             for (int i =0;i<steeringdata.Value.Count; i++)
             {
-                Debug.Log("PRIORITY ES AHORA: " + steeringdata.Key +"su posicion es: " + i);
+                //Debug.Log("PRIORITY ES AHORA: " + steeringdata.Key +"su posicion es: " + i);
                 SteeringData singlesteering = steeringdata.Value[i];
                 steering.linearAcceleration += (singlesteering.weight * singlesteering.steering.linearAcceleration);
                 steering.angularAcceleration += (singlesteering.weight * singlesteering.steering.angularAcceleration);

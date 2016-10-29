@@ -16,7 +16,7 @@ public class Wander : Face {
 
     public override SteeringOutput GetSteering()
     {
-        Debug.Log("ahora steering de wander");
+        //Debug.Log("ahora steering de wander");
 
         targetAux = target;
         GameObject targetauxaux = target;
