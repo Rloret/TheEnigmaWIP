@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AnimationController : MonoBehaviour {
+public class AnimationControl : MonoBehaviour {
 
     // Use this for initialization
 
