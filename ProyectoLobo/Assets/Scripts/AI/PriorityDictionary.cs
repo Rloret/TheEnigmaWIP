@@ -4,12 +4,12 @@ using System;
 
 public class PriorityDictionary : MonoBehaviour {
 
-    public string name;
+    public GameObject target;
     public int priority;
 
-    public PriorityDictionary(string name, int priority)
+    public PriorityDictionary(GameObject target, int priority) //Referencia a gameObject
     {
-        this.name = name;
+        this.target = target;
         this.priority = priority;
     }
 	

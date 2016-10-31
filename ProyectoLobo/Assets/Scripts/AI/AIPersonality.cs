@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AIPersonality : MonoBehaviour {
 
     public int health = 100;
     public int attack;
+    public int confidence;
 
     public float charisma;
     public float selfAssertion;
@@ -21,8 +23,4 @@ public class AIPersonality : MonoBehaviour {
 
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
