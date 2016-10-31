@@ -37,6 +37,9 @@ public class DecisionTarget : MonoBehaviour {
     public void ChooseTarget(List<GameObject> viewedTargets) // Lista de GameObjects
     {
         int priority;
+        int maxPriority = -1;
+        GameObject chosenTarget = null;
+        
 
         foreach (GameObject target in viewedTargets)
         {
@@ -48,8 +51,16 @@ public class DecisionTarget : MonoBehaviour {
 
         foreach (KeyValuePair<GameObject, int> par in analyzedTargets)
         {
-            Debug.Log(par);
+            if (par.Value > maxPriority)
+            {
+                maxPriority = par.Value;
+                chosenTarget = par.Key;
+            }
+                
         }
+        Debug.Log(chosenTarget);
+
+        //return chosenTarget;
 
     }
 
