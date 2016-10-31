@@ -11,9 +11,7 @@ public class Pursue : Arrive {
     public override void Awake()
     {
         base.Awake();
-        targetAgent = target.GetComponent<AgentPositionController>();
-        targetAux = target;
-        target = new GameObject();
+       
 
 
     }
@@ -24,6 +22,9 @@ public class Pursue : Arrive {
 
     public override SteeringOutput GetSteering()
     {
+        targetAgent = target.GetComponent<AgentPositionController>()==null?new AgentPositionController(): target.GetComponent<AgentPositionController>();
+        targetAux = target;
+        target = new GameObject();
         Vector2 direction = targetAux.transform.position - transform.position;
         float distance = direction.magnitude;
         float speed = agent.linearVelocity.magnitude;
@@ -36,8 +37,9 @@ public class Pursue : Arrive {
 
         Vector3 posAux = new Vector3(targetAgent.linearVelocity.x, targetAgent.linearVelocity.y, 0f);
         target.transform.position +=posAux* prediction;
-
-
+        DestroyImmediate(targetAgent);
+        DestroyImmediate(target);
+        target = targetAux;
         return base.GetSteering();
     }
 
