@@ -13,13 +13,25 @@ public class AIPersonality : MonoBehaviour {
     public float fear;
 
 	
-	void Awake () {
+    public AIPersonality ()
+    {
+        charisma = Random.Range(6.0f, 1.0f);
+        selfAssertion = Random.Range(6.0f, 1.0f);
+        fear = Random.Range(6.0f, 1.0f);
+
+    }
+	/*void Awake () {
 
         charisma = Random.Range(6.0f, 1.0f);
         selfAssertion = Random.Range(6.0f, 1.0f);
         fear = Random.Range(6.0f, 1.0f);
 
-        //Debug.Log("charisma = " + charisma + " selfAssertion = " + selfAssertion + " fear = " + fear);
+        Debug.Log("charisma = " + charisma + " selfAssertion = " + selfAssertion + " fear = " + fear);
+
+    }*/
+
+    void Awake()
+    {
 
     }
 	
