@@ -82,16 +82,18 @@ public class ObjectHandler : MonoBehaviour {
                 colliderType = ObjectType.NONE;
                 break;
         }
-
-        if(desiredObjectData == new ObjectData(colliderType, g.transform.position))
+        //si el objeto que nos manda el mensaje es el que queremos, lo colocamos en el centro del personaje.
+        //el tema de si ya tenemos un objeto lo tendria que manjear el arbol de prioridades, esto solo se encarga
+        //de reemplazar o poner un objeto donde estaba el abnterior.
+        ObjectData? possibleObject = new ObjectData(colliderType, g.transform.position);
+        if (desiredObjectData == possibleObject )
         {
             CurrentObject.image.sprite = g.GetComponent<SpriteRenderer>().sprite;
             if (CurrentObject.image.color.a < 0.3f)
                 CurrentObject.image.color = Color.white;
            
             Destroy(g);
-
-            //pick it up
+            possibleObject = null;
         }
 
     }
