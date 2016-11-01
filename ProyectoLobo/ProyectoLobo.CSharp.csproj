@@ -64,6 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Decision.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionBool.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeNode.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeReactionAfterInteraction.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\FloatDecision.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAttack.cs" />
     <Compile Include="Assets\Scripts\AI\DecisionTarget.cs" />
     <Compile Include="Assets\Scripts\AI\PriorityTree.cs" />
     <Compile Include="Assets\Scripts\AnimationController.cs" />
