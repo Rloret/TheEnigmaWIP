@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\Movement\Face.cs" />
     <Compile Include="Assets\Scripts\Movement\Flee.cs" />
     <Compile Include="Assets\Scripts\Movement\Leave.cs" />
+    <Compile Include="Assets\Scripts\Movement\LookWhereYouAreGoing.cs" />
     <Compile Include="Assets\Scripts\Movement\Pursue.cs" />
     <Compile Include="Assets\Scripts\Movement\Seek.cs" />
     <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
