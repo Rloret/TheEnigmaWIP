@@ -6,7 +6,7 @@ public class DecisionBool : Decision
     public bool valueDecision;
     public bool valueTest;
 
-    public override Action GetBranch()
+    public override DecisionTreeNode GetBranch()
     {
         if (valueDecision == valueTest) {
             return nodeTrue;

@@ -7,7 +7,7 @@ public class FloatDecision : Decision {
     public float minvalue=0;
     public float testValue;
 
-    public override Action GetBranch()
+    public override DecisionTreeNode GetBranch()
     {
         if (maxValue >= testValue &testValue >= minvalue) {
             return nodeTrue;

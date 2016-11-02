@@ -12,12 +12,27 @@ public class AIPersonality : MonoBehaviour {
     public float selfAssertion;
     public float fear;
 
-	
+    public bool isMonster = true; // MOCK
+    public bool inGroup = true; //MOCK
+
+    private ActionsEnum.Actions interactionFromOtherCharacter;
+
+    void Start()
+    {
+        interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
+    }
+    public void SetInteraction(ActionsEnum.Actions a)
+    {
+        interactionFromOtherCharacter = a;
+    }
+
+    public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
+
     public AIPersonality ()
     {
-        charisma = Random.Range(6.0f, 1.0f);
+        /*charisma = Random.Range(6.0f, 1.0f);
         selfAssertion = Random.Range(6.0f, 1.0f);
-        fear = Random.Range(6.0f, 1.0f);
+        fear = Random.Range(6.0f, 1.0f);*/
 
     }
 	/*void Awake () {

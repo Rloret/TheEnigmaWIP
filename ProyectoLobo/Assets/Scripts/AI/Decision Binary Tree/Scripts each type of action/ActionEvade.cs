@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionAttack : Action {
-
+public class ActionEvade : Action {
     public override void LateUpdate()
     {
         if (!DecisionTreeReactionAfterInteraction.DecisionCompleted)
@@ -11,13 +10,13 @@ public class ActionAttack : Action {
 
             //Code for attack
             //Placeholder
-            Debug.Log("voy a atacar");
+            Debug.Log("voy a huir");
 
             // atack()
             // decrease friendship 
             DecisionTreeReactionAfterInteraction.DecisionCompleted = true;
 
-           
+
         }
 
     }

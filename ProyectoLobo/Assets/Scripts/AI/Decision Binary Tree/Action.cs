@@ -7,6 +7,8 @@ public class Action : DecisionTreeNode {
 
     public override DecisionTreeNode MakeDecision()
     {
+
+        Debug.Log("estoy en makedecision() de action");
         return this;
     }
 

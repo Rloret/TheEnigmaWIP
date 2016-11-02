@@ -2,17 +2,19 @@
 using System.Collections;
 
 public class Decision : DecisionTreeNode {
-    public Action nodeTrue;
-    public Action nodeFalse;
+    public DecisionTreeNode nodeTrue;
+    public DecisionTreeNode nodeFalse;
 
-    public virtual Action GetBranch()
+    public virtual DecisionTreeNode GetBranch()
     {
         return null;
     }
 
     public override DecisionTreeNode MakeDecision()
     {
-        Action branch = GetBranch();
-        return branch.MakeDecision();
+        DecisionTreeNode branch = GetBranch();
+        Debug.Log("branch es " + branch);
+
+        return branch;
     }
 }
