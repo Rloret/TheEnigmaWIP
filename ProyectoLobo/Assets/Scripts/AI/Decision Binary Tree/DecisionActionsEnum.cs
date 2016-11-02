@@ -8,7 +8,7 @@ public class DecisionActionsEnum : Decision {
 
     public override DecisionTreeNode GetBranch()
     {
-        Debug.Log("nodeTrue es : " + nodeTrue + " nodeFalse es " + nodeFalse);
+       // Debug.Log("nodeTrue es : " + nodeTrue + " nodeFalse es " + nodeFalse);
         if (valueDecision == valueTest)
         {
             return nodeTrue;

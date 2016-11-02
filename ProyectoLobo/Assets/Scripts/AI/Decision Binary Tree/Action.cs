@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Action : DecisionTreeNode {
 
-    public bool activated = false;
-
     public override DecisionTreeNode MakeDecision()
     {
 
@@ -19,5 +17,9 @@ public class Action : DecisionTreeNode {
 
         //part which should be overriden in each action class
     }
+
+    public virtual void DoAction() {
+        Debug.Log("doAction de padre action");
+        return; }
 
 }

@@ -2,9 +2,11 @@
 using System.Collections;
 
 public class DecisionTreeNode : MonoBehaviour {
-
-	// Use this for initialization
-	public virtual void Start () {
+    public bool activated = false;
+    public DecisionTreeNode nodeTrue;
+    public DecisionTreeNode nodeFalse;
+    // Use this for initialization
+    public virtual void Start () {
 	
 	}
 	
@@ -13,4 +15,6 @@ public class DecisionTreeNode : MonoBehaviour {
 	
 	}
     public virtual DecisionTreeNode MakeDecision() { return null; }
+
+
 }

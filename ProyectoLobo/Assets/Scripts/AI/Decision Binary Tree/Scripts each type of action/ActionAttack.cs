@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ActionAttack : Action {
 
-    public override void LateUpdate()
+   /* public override void LateUpdate()
     {
         if (!DecisionTreeReactionAfterInteraction.DecisionCompleted)
         {
@@ -20,5 +20,18 @@ public class ActionAttack : Action {
            
         }
 
+    }*/
+
+    public override void DoAction()
+    {
+                  //Code for attack
+            //Placeholder
+            Debug.Log("voy a atacar");
+
+            // atack()
+            // decrease friendship 
+
     }
+
+
 }

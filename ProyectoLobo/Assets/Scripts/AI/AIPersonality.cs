@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class AIPersonality : MonoBehaviour {
 
-    public int health = 100;
+    public int health = 30;
     public int attack;
     public int confidence;
 
@@ -13,7 +13,7 @@ public class AIPersonality : MonoBehaviour {
     public float fear;
 
     public bool isMonster = true; // MOCK
-    public bool inGroup = true; //MOCK
+    public bool inGroup = false; //MOCK
 
     private ActionsEnum.Actions interactionFromOtherCharacter;
 

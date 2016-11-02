@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\CastDecisionAction.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Decision.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionActionsEnum.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionBool.cs" />

@@ -9,6 +9,7 @@ public class FloatDecision : Decision {
 
     public override DecisionTreeNode GetBranch()
     {
+     //   Debug.Log(""+maxValue+ " >= " + testValue + " >= " + minvalue);
         if (maxValue >= testValue &testValue >= minvalue) {
             return nodeTrue;
 
