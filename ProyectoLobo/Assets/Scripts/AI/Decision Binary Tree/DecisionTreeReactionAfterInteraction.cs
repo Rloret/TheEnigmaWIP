@@ -7,6 +7,9 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeNode {
 
     public static bool DecisionCompleted=false;
 
+    private int indexCharacterInteractedWithMe;
+    private int myTrustInOther;
+
     public DecisionActionsEnum root;
 
         private DecisionBool isMonster; //true Branch1
@@ -14,7 +17,21 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeNode {
                 private FloatDecision healthBigger70; // true Branch 3
                                                            // false Branch 3 -> Action Attack 
              private FloatDecision fear; //false Branch 2
+                 private FloatDecision healthLess40; //false Branch 3
+
+
         private DecisionActionsEnum givingMeObject; //false Branch1
+            private ActionComparePriorityObjectAgainstPriorityTree comparePriorityTreeAction;
+
+            private FloatDecision trustHimMore6;
+                private FloatDecision trustHimLess3;
+                     private FloatDecision agresive1;
+
+                     private FloatDecision charismatic;
+                     private FloatDecision agresive2;
+
+                          private FloatDecision randomDecision;
+
 
     private AIPersonality aiPersonality;
     
@@ -28,11 +45,17 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeNode {
     void Awake() { }
     public override void Start() {
         aiPersonality = this.gameObject.GetComponent<AIPersonality>();
+
+        indexCharacterInteractedWithMe = aiPersonality.GetIndexOther();
+        myTrustInOther = aiPersonality.TrustInOthers[indexCharacterInteractedWithMe];
+
+        Debug.Log("confio en el " + indexCharacterInteractedWithMe + " tanto " + myTrustInOther);
+
         createTree();
     }
 
     private void createTree() {
-       // Debug.Log("creando  branch 1");
+       // TRUE  branch 1
         root = createDecisionsEnum(ActionsEnum.Actions.ATTACK);
 
         isMonster = createDecisionsBool(true, aiPersonality.isMonster);
@@ -45,7 +68,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeNode {
 
              //  Debug.Log("creando  branch 2");
             inGroup = createDecisionsBool(true, aiPersonality.inGroup);
-            fear = createDecisionsFloat(0, 40, aiPersonality.health);
+            fear = createDecisionsFloat(3, 10, aiPersonality.fear);
             isMonster.nodeTrue = inGroup;
             isMonster.nodeFalse = fear;
 
@@ -58,17 +81,52 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeNode {
 
                 createLeaves(healthBigger70 as Decision, addActionAttack(), addActionEvade());
 
-        /* createDecisionsEnum(out root, ActionsEnum.Actions.ATTACK);
-         createDecisionsBool(out isMonster, true, aiPersonality.isMonster);
-         createDecisionsEnum(out givingMeObject, ActionsEnum.Actions.OFFER);
-         createBranches(root, isMonster, givingMeObject);*/
+
+                healthLess40 = createDecisionsFloat(0, 40, aiPersonality.health);
+                fear.nodeTrue = addActionEvade();
+                fear.nodeFalse = healthLess40;
+
+               createLeaves(healthLess40, addActionEvade(), addActionAttack());
 
 
-       // createLeaves(inGroup , addActionAttack(), addActionOffer());
+        // FALSE branch 1
 
-        /*actionNew =root.toAction();
-        actionOld = actionNew;
-        Debug.Log("actionNew antes es " + actionNew);*/
+        trustHimMore6 = createDecisionsFloat(6, 10, myTrustInOther);
+
+        givingMeObject.nodeTrue = addActionOffer(); //MOCK-ASINES SALTARINES
+        givingMeObject.nodeFalse = trustHimMore6;
+
+        // comparePriorityTreeAction = addActionComparePriorityTree();                    DUDAS SERIAS DE COMO HACER ESTO JI
+        // comparePriorityTreeAction.nodeFalse = addActionOffer();
+        // comparePriorityTreeAction.nodeTrue = comparePriorityTreeAction.nodeFalse;
+
+
+        trustHimLess3 = createDecisionsFloat(0, 3, myTrustInOther);
+            trustHimMore6.nodeTrue = addActionJoin();
+            trustHimMore6.nodeFalse = trustHimLess3;
+       
+
+        agresive1 = createDecisionsFloat(3, 10, aiPersonality.selfAssertion);
+        charismatic = createDecisionsFloat(3, 10, aiPersonality.charisma);
+        trustHimLess3.nodeTrue = agresive1;
+        trustHimLess3.nodeFalse = charismatic;
+        createLeaves(agresive1, addActionAttack(), addActionNothing());
+
+            agresive2= createDecisionsFloat(2.5f, 10, aiPersonality.selfAssertion);
+            charismatic.nodeTrue = addActionJoin();
+            charismatic.nodeFalse = agresive2;
+
+                randomDecision = createDecisionsFloat(8, 10, Random.Range(1, 10));
+                agresive2.nodeTrue = addActionAttack();
+                agresive2.nodeFalse = randomDecision;
+
+                createLeaves(randomDecision,  addActionJoin(),addActionNothing());
+
+
+
+
+
+
 
         decisionNew = root;
 
@@ -85,7 +143,10 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeNode {
     private ActionAttack addActionAttack() { return gameObject.AddComponent<ActionAttack>(); }
     private ActionOffer addActionOffer() { return gameObject.AddComponent<ActionOffer>(); }
     private ActionEvade addActionEvade() { return gameObject.AddComponent<ActionEvade>(); }
-    //  private Decision addActionDecision() { return gameObject.AddComponent<Decision>(); }
+    private ActionJoinGroup addActionJoin() { return gameObject.AddComponent<ActionJoinGroup>();  }
+    private ActionNothing addActionNothing() { return gameObject.AddComponent<ActionNothing>(); }
+
+    //private ActionComparePriorityObjectAgainstPriorityTree addActionComparePriorityTree() { return gameObject.AddComponent<ActionComparePriorityObjectAgainstPriorityTree>(); }
 
 
 

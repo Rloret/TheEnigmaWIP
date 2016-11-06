@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionEvade : Action {
-  
+public class ActionComparePriorityObjectAgainstPriorityTree : Action
+{
 
     public override void DoAction()
     {
+
         //Code for attack
         //Placeholder
-        Debug.Log("voy a huir y bajo confianza");
-
-        // atack()
-        // decrease friendship 
+        Debug.Log("comparo mi objeto con el arbol de decisiones");
 
     }
 }

@@ -26,7 +26,7 @@ public class ActionAttack : Action {
     {
                   //Code for attack
             //Placeholder
-            Debug.Log("voy a atacar");
+            Debug.Log("voy a atacar y bajo confianza");
 
             // atack()
             // decrease friendship 

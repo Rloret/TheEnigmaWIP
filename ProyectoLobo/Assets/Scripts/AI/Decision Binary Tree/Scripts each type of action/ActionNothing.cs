@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionEvade : Action {
-  
+public class ActionNothing : Action {
 
     public override void DoAction()
     {
         //Code for attack
         //Placeholder
-        Debug.Log("voy a huir y bajo confianza");
+        Debug.Log("nada: paso de todo, no me interesa");
 
-        // atack()
-        // decrease friendship 
-
+       
     }
 }

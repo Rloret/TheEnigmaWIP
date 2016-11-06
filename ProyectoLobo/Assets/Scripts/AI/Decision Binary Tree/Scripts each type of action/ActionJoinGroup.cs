@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionEvade : Action {
-  
-
+public class ActionJoinGroup : Action {
     public override void DoAction()
     {
         //Code for attack
         //Placeholder
-        Debug.Log("voy a huir y bajo confianza");
+        Debug.Log("me uno a tu grupo loqui");
 
-        // atack()
-        // decrease friendship 
+
 
     }
 }
