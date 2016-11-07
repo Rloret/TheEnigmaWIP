@@ -8,6 +8,7 @@ public class AvoidWall : Seek {
 
     private GameObject auxTarget;
     private Sprite sp;
+    private float agentRadius;
 
     public override void Awake()
     {
@@ -15,6 +16,7 @@ public class AvoidWall : Seek {
         target = new GameObject();
         auxTarget = new GameObject();
         sp = this.GetComponent<SpriteRenderer>().sprite;
+        agentRadius = sp.bounds.min.x * transform.localScale.x;
     }
 
     public override SteeringOutput GetSteering()
@@ -25,15 +27,17 @@ public class AvoidWall : Seek {
         Vector2 direction = rayVector;
         int wallMask = 1 << 8; // sólo se revisarán las colisiones con los objetos en la capa 8
 
-        RaycastHit2D hit3 = Physics2D.Raycast( sp.border , direction , lookAhead , wallMask);
-        Debug.DrawRay(position, direction, Color.green, 0.2f);
+        Vector2 rayOrigin1 = position + PerpendicularClockWise(direction) * agentRadius;
+        Vector2 rayOrigin2 = position + PerpendicularCounterClockWise(direction) * agentRadius;
 
-        Debug.Log("Centro = " + position + "; / Bounds.Min = " + sp.bounds.min + "");
+        RaycastHit2D hit = Physics2D.Raycast( rayOrigin1  , direction , lookAhead , wallMask);
+        Debug.DrawRay(rayOrigin1, direction, Color.green, 0.2f);
 
-        //RaycastHit2D hit2 = Physics2D.Raycast(sp.bounds.max, direction, lookAhead, wallMask);
-        //Debug.DrawRay(position, direction, Color.blue, 0.2f);
-        RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, wallMask);
-        Debug.DrawRay(position, direction, Color.yellow, 0.2f);
+        RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, direction, lookAhead, wallMask);
+        Debug.DrawRay(rayOrigin2, direction, Color.blue, 0.2f);
+        
+        //RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, wallMask); ESTE ES SOLO UN RAYO DESDE EL CENTRO
+        //Debug.DrawRay(position, direction, Color.yellow, 0.2f);
 
         if ( hit ) {
             Debug.Log("Hay colision! collider = " + hit.collider.name);
@@ -54,7 +58,17 @@ public class AvoidWall : Seek {
     {
         Gizmos.color = Color.red;
         Gizmos.DrawCube(target.transform.position, Vector3.one * 10);
+        Gizmos.DrawWireSphere(transform.position, (sp.bounds.min.x * transform.localScale.x));
+
         base.OnDrawGizmos();
+    }
+
+    private Vector2 PerpendicularClockWise(Vector2 v2) {
+        return new Vector2( -v2.y , v2.x ).normalized;
+    }
+    private Vector2 PerpendicularCounterClockWise(Vector2 v2)
+    {
+        return new Vector2( v2.y, -v2.x ).normalized;
     }
 
 }
