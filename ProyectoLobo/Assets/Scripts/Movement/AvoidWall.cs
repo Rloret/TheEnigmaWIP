@@ -12,9 +12,16 @@ public class AvoidWall : Seek {
 
     public override void Awake()
     {
+        if (GameObject.Find("target") != null) {
+            //Debug.Log("Hay un target preexistente");
+            DestroyImmediate(GameObject.Find("target"));
+            DestroyImmediate(GameObject.Find("auxTarget"));
+        }
+
         base.Awake();
         target = new GameObject();
         auxTarget = new GameObject();
+        target.name = "target";
         auxTarget.name = "auxTarget";
         sp = this.GetComponent<SpriteRenderer>().sprite;
         agentRadius = sp.bounds.min.x * transform.localScale.x;
@@ -58,6 +65,7 @@ public class AvoidWall : Seek {
             steering = base.GetSteering();
 
         }
+
 
         return steering;
     }
