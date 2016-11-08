@@ -4,7 +4,7 @@ using System.Collections;
 public class AvoidWall : Seek {
 
     public float avoidDistance =  100; // distancia de la pared a la que se posicionará el nuevo target
-    public float lookAhead = 100; // distancia de RayCast
+    public float lookAhead = 50; // distancia de RayCast
 
     private GameObject auxTarget;
     private Sprite sp;
@@ -15,6 +15,7 @@ public class AvoidWall : Seek {
         base.Awake();
         target = new GameObject();
         auxTarget = new GameObject();
+        auxTarget.name = "auxTarget";
         sp = this.GetComponent<SpriteRenderer>().sprite;
         agentRadius = sp.bounds.min.x * transform.localScale.x;
     }
@@ -47,11 +48,18 @@ public class AvoidWall : Seek {
             base.target = auxTarget;
             steering = base.GetSteering();
             
+        }else if (hit2)
+        {
+            Debug.Log("Hay colision! collider = " + hit2.collider.name);
+            position = hit2.point + hit2.normal * avoidDistance;
+            auxTarget.transform.position = position;
+            target = auxTarget;
+            base.target = auxTarget;
+            steering = base.GetSteering();
+
         }
 
-
         return steering;
-
     }
 
     public override void OnDrawGizmos()
