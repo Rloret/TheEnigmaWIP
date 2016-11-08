@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DecisionTarget : MonoBehaviour {
 
-    private AIPersonality personality;
+    //private AIPersonality personality;
     private Dictionary<GameObject, int> analyzedTargets;
     private PriorityTree priorityTree;
 
@@ -17,28 +17,27 @@ public class DecisionTarget : MonoBehaviour {
 	void Awake () {
 
         analyzedTargets = new Dictionary<GameObject, int>();
-        personality = new AIPersonality();
+        //personality = ;
         priorityTree = new PriorityTree();
 
         boots = GameObject.Find("Boots");
         axe = GameObject.Find("Axe");
-
-        Debug.Log(personality.charisma + " " + personality.selfAssertion + " " + personality.fear);
 
         //para testear
         targets = new List<GameObject>();
         targets.Add(axe);
         targets.Add(boots);
 
-        ChooseTarget(targets);
+        //ChooseTarget(targets);
 	
 	}
 
-    public void ChooseTarget(List<GameObject> viewedTargets) // Lista de GameObjects
+    public void ChooseTarget(List<GameObject> viewedTargets, GameObject Ai) // Lista de GameObjects
     {
         int priority;
         int maxPriority = -1;
         GameObject chosenTarget = null;
+        AIPersonality personality = Ai.GetComponent<AIPersonality>();
         
 
         foreach (GameObject target in viewedTargets)
