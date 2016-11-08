@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class DecisionTreeNode : MonoBehaviour {
-    public bool activated = false;
+    [HideInInspector]    public bool activated = false;
     public DecisionTreeNode nodeTrue;
     public DecisionTreeNode nodeFalse;
     // Use this for initialization
