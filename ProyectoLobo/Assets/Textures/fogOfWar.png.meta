@@ -10,10 +10,10 @@ TextureImporter:
     enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
-    fadeOut: 0
+    fadeOut: 1
     borderMipMap: 0
-    mipMapFadeDistanceStart: 1
-    mipMapFadeDistanceEnd: 3
+    mipMapFadeDistanceStart: 2
+    mipMapFadeDistanceEnd: 4
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
@@ -29,8 +29,8 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
-    aniso: 0
+    filterMode: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -50,7 +50,7 @@ TextureImporter:
   textureType: 5
   buildTargetSettings:
   - buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     textureFormat: 5
     compressionQuality: 50
     allowsAlphaSplitting: 0

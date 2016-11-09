@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class visibilityCone:MonoBehaviour  {
+public class VisibilityCone:MonoBehaviour  {
 
     public GameObject sourceOfCone;
-    public GameObject[] CollisionPoints;
+    public Vector3[] CollisionPoints;
     public GameObject fogOfWarPlane;
     public static List<Vector2> pixelsColored;
     [Range(1,4)]
     public int sampleModifier=2;
-    public int Radius = 50;
+    public static int Radius = 100;
 
     public Color ColorOfCone;
     public Color ColorOfPath;
@@ -113,7 +113,7 @@ public class visibilityCone:MonoBehaviour  {
 
         for (int i = 0; i < CollisionPoints.Length - 1; i++)
         {
-            Vector3 tempb = CollisionPoints[i].transform.position, tempc = CollisionPoints[i + 1].transform.position;
+            Vector3 tempb = CollisionPoints[i], tempc = CollisionPoints[i + 1];
 
             float distab = Vector2.Distance(sourcePos, tempb);
             float distac = Vector2.Distance(sourcePos, tempc);
@@ -187,7 +187,8 @@ public class visibilityCone:MonoBehaviour  {
         return data;
 
     }
-    public void addCollisionPoints(GameObject[] CollisionPoints) {
+    public void addCollisionPoints(Vector3[] CollisionPoints) {
+
         this.CollisionPoints = CollisionPoints;
     }
 }
