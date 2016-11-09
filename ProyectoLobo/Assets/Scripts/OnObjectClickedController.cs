@@ -28,7 +28,7 @@ public class OnObjectClickedController : MonoBehaviour {
 
     public enum SteeringBehaviour
     {
-        NOTHING, SEEK, FLEE, ARRIVE, LEAVE, PURSUE, EVADE, ALIGN, FACE, WANDER , AVOIDWALL
+        NOTHING, SEEK, FLEE, ARRIVE, LEAVE, PURSUE, EVADE, ALIGN, FACE, WANDER , AVOIDWALL ,LOOKWHEREYOUAREGOING
     };
 
 
@@ -52,7 +52,7 @@ public class OnObjectClickedController : MonoBehaviour {
             {
                 Debug.Log("esta lejos, me acercare");
 
-              //  floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
+                floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
             }
         }
 
@@ -66,7 +66,6 @@ public class OnObjectClickedController : MonoBehaviour {
         }
         else
         { // target is floor
-            Debug.Log(aux.name);
             floorAction(behaviorReceiber, aux);
         }
         
@@ -107,6 +106,8 @@ public class OnObjectClickedController : MonoBehaviour {
                 break;
             case SteeringBehaviour.AVOIDWALL:
                 behaviorReceiber.gameObject.AddComponent<AvoidWall>().setTarget(aux).setWeight(weight).setPriority(priority);
+            case SteeringBehaviour.LOOKWHEREYOUAREGOING:
+                behaviorReceiber.gameObject.AddComponent<LookWhereYouAreGoing>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             default:
                 break;

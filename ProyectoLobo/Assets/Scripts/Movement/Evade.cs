@@ -11,9 +11,7 @@ public class Evade : Flee {
     public override void Awake()
     {
         base.Awake();
-        targetAgent = target.GetComponent<AgentPositionController>();
-        targetAux = target;
-        target = new GameObject();
+
 
     }
 
@@ -24,6 +22,10 @@ public class Evade : Flee {
 
     public override SteeringOutput GetSteering()
     {
+        targetAgent = target.GetComponent<AgentPositionController>() == null ? new AgentPositionController() : target.GetComponent<AgentPositionController>();
+        targetAux = target;
+        target = new GameObject();
+
         Vector2 direction = targetAux.transform.position - transform.position;
         float distance = direction.magnitude;
         float speed = agent.linearVelocity.magnitude;
@@ -38,6 +40,8 @@ public class Evade : Flee {
         target.transform.position += posAux * prediction;
 
 
+        DestroyImmediate(target);
+        target = targetAux;
         return base.GetSteering();
     }
 

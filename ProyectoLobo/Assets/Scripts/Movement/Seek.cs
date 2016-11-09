@@ -10,7 +10,7 @@ public class Seek : AgentBehaviour {
         steering.linearAcceleration = target.transform.position - transform.position;
         steering.linearAcceleration.Normalize();
         steering.linearAcceleration = steering.linearAcceleration * agent.maxAccel;
-        //Debug.Log("steering de seek = " + steering.linearAcceleration);
+
         return steering;
     }
 

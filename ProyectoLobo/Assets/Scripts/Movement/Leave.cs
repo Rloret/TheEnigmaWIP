@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Leave : AgentBehaviour {
 
-    public float escapeRadius=10;
-    public float dangerRadius=64;
+    public float escapeRadius=20;
+    public float dangerRadius=164;
     public float timeToTarget = 0.1f;
 
 
