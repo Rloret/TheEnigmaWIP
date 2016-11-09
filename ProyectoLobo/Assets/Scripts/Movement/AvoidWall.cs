@@ -4,7 +4,7 @@ using System.Collections;
 public class AvoidWall : Seek {
 
     public float avoidDistance =  100; // distancia de la pared a la que se posicionará el nuevo target
-    public float lookAhead = 50; // distancia de RayCast
+    public float lookAhead = 80; // distancia de RayCast
 
     private GameObject auxTarget;
     private Sprite sp;
