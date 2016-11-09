@@ -21,7 +21,6 @@ public class Align : AgentBehaviour {
         float desiredAngularVelocity = targetOrientation - agent.orientation;
         //reduceTurningAngle = 0.25f * stopTurningAngle;
 
-        Debug.Log("targetorientation es " + targetOrientation + "desired es " + desiredAngularVelocity);
 
         //determines which is the best direction of rotation clockwise or counterclockwise to make the wisest (and shortest) rotation
         desiredAngularVelocity = MapToRange(desiredAngularVelocity);
