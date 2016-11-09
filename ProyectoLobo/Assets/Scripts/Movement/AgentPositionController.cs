@@ -75,7 +75,7 @@ public class AgentPositionController : MonoBehaviour {
     void updateUnityVariables(ref Vector2 currentPosition) {
         //this.transform.Translate(position);
         //this.transform.Rotate(Vector3.up, angularVelocity * Time.deltaTime);
-        this.transform.position = new Vector3(currentPosition.x,currentPosition.y,-10);
+        this.transform.position = new Vector3(currentPosition.x,currentPosition.y,-30);
         this.transform.rotation = Quaternion.Euler(Vector3.forward * orientation);
     }
 

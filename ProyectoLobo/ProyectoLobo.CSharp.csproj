@@ -75,8 +75,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AnimationController.cs" />
-    <Compile Include="Assets\Scripts\Animations\AnimationControl.cs" />
     <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\ConversationMenu\AttackButtonClick.cs" />
     <Compile Include="Assets\Scripts\ConversationMenu\ButtonAction.cs" />
@@ -88,6 +86,7 @@
     <Compile Include="Assets\Scripts\Movement\AgentPositionController.cs" />
     <Compile Include="Assets\Scripts\Movement\Align.cs" />
     <Compile Include="Assets\Scripts\Movement\Arrive.cs" />
+    <Compile Include="Assets\Scripts\Movement\AvoidWall.cs" />
     <Compile Include="Assets\Scripts\Movement\ClickPosition.cs" />
     <Compile Include="Assets\Scripts\Movement\Evade.cs" />
     <Compile Include="Assets\Scripts\Movement\Face.cs" />

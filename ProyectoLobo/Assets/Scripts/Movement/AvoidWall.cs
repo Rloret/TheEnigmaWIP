@@ -48,7 +48,7 @@ public class AvoidWall : Seek {
         //Debug.DrawRay(position, direction, Color.yellow, 0.2f);
 
         if ( hit ) {
-            Debug.Log("Hay colision! collider = " + hit.collider.name);
+            //Debug.Log("Hay colision! collider = " + hit.collider.name);
             position = hit.point + hit.normal * avoidDistance;
             auxTarget.transform.position = position;
             target = auxTarget;
@@ -57,7 +57,7 @@ public class AvoidWall : Seek {
             
         }else if (hit2)
         {
-            Debug.Log("Hay colision! collider = " + hit2.collider.name);
+            //Debug.Log("Hay colision! collider = " + hit2.collider.name);
             position = hit2.point + hit2.normal * avoidDistance;
             auxTarget.transform.position = position;
             target = auxTarget;
