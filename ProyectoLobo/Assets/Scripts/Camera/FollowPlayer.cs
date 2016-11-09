@@ -26,7 +26,7 @@ public class FollowPlayer : MonoBehaviour {
 	void Update () {
         Vector3 From = this.transform.position;
         Vector3 To = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
-        Debug.Log(mapheightHalf);
+
         if (player.transform.position.x + mainCam.pixelWidth / 2 >=  mapWidthHalf)
         {
             Debug.Log("limite Derecho");
@@ -35,6 +35,7 @@ public class FollowPlayer : MonoBehaviour {
 
         else if (player.transform.position.x - mainCam.pixelWidth / 2 <= -mapWidthHalf)
         {
+            Debug.Log("limite iaquierdo");
             To = new Vector3(-mapWidthHalf + mainCam.pixelWidth / 2, From.y, From.z);
         }
 

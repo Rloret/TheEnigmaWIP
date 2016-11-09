@@ -106,6 +106,7 @@ public class OnObjectClickedController : MonoBehaviour {
                 break;
             case SteeringBehaviour.AVOIDWALL:
                 behaviorReceiber.gameObject.AddComponent<AvoidWall>().setTarget(aux).setWeight(weight).setPriority(priority);
+                break;
             case SteeringBehaviour.LOOKWHEREYOUAREGOING:
                 behaviorReceiber.gameObject.AddComponent<LookWhereYouAreGoing>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;

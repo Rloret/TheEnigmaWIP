@@ -7,9 +7,12 @@ public class ClickPosition : MonoBehaviour {
 
     public Vector2 clickPos;
     public OnObjectClickedController clickController;
+    public GameObject fogOfWar;
 
-
-
+    void Start()
+    {
+        fogOfWar = GameObject.FindGameObjectWithTag("FogOfWar");
+    }
     void Update ()
     {
         if (Input.GetMouseButtonDown(0)) //Si clicamos
