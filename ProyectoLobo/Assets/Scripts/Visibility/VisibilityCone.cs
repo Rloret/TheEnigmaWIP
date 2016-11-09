@@ -10,7 +10,7 @@ public class VisibilityCone:MonoBehaviour  {
     public static List<Vector2> pixelsColored;
     [Range(1,4)]
     public int sampleModifier=2;
-    public static int Radius = 100;
+    public static int Radius = 200;
 
     public Color ColorOfCone;
     public Color ColorOfPath;
