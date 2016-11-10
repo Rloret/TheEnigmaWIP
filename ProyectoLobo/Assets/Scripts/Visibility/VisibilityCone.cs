@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class VisibilityCone:MonoBehaviour  {
 
     public GameObject sourceOfCone;
+    [SerializeField]
+    public List<GameObject> Objects;
     [HideInInspector]
     public List<Vector3> CollisionPoints;
     public GameObject fogOfWarPlane;

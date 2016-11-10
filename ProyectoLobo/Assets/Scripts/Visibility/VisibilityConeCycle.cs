@@ -8,16 +8,15 @@ public class VisibilityConeCycle : MonoBehaviour {
     public float Angle;
     [Range(2, 10)]
     public int CuantityOfRays;
+    [SerializeField]
+    public List<GameObject> Objects;
     public LayerMask layers;
 
     private Vector2 source;
     private Vector2 vi;
     private VisibilityCone Cone;
 
-
     private int colorauxIterator=0;
-
-
 
     private struct hitInfo
     {
@@ -32,8 +31,10 @@ public class VisibilityConeCycle : MonoBehaviour {
             this.collisionCollider = collisionCollider;
         }
     }
+
     private LinkedList<Vector2> VisibleConePoints;
     private List<hitInfo> hitsList;
+    private List<GameObject> visibleGameobjects;
     private float AngleRads;
     private int Radius;
 
@@ -46,7 +47,8 @@ public class VisibilityConeCycle : MonoBehaviour {
         Radius = Cone.Radius;
         hitsList = new List<hitInfo>();
         VisibleConePoints = new LinkedList<Vector2>();
-
+        visibleGameobjects = new List<GameObject>();
+        visibleGameobjects.Capacity = 50;
         hitsList.Capacity = (int)Angle;
 
     }
@@ -70,6 +72,8 @@ public class VisibilityConeCycle : MonoBehaviour {
         sweepRayCastAll(source, vi, AngleRads);
         determineVisiblePoints();
         sendVisiblePointsToCone();
+
+        checkObjectsWithinCone();
 
         hitsList.Clear();
         VisibleConePoints.Clear();
@@ -212,5 +216,24 @@ public class VisibilityConeCycle : MonoBehaviour {
             Visiblepoints.Add(new Vector3(point.x, point.y, this.transform.position.z));
         }
         Cone.addCollisionPoints(Visiblepoints);
+    }
+
+    private void checkObjectsWithinCone()
+    {
+        Vector2 A, B, C, Object;
+        A = VisibleConePoints.First.Value;
+        B = source;
+        C = VisibleConePoints.Last.Value;
+        foreach (var singleObject in Objects)
+        {
+            Debug.DrawLine(A, B);
+            Debug.DrawLine(B, C);
+            Debug.DrawLine(C, A);
+            if (isInTriangleABC(singleObject.transform.position, A, B, C))
+            {
+                visibleGameobjects.Add(singleObject);
+                singleObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, Random.Range(0f, 1f));
+            }
+        }
     }
 }
