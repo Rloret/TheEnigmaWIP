@@ -6,18 +6,35 @@ public class VisibilityConeCycle : MonoBehaviour {
     [Tooltip("Angle of raycastSweep")]
     [Range(0,90)]
     public float Angle;
-    [Range(2, 30)]
+    [Range(2, 10)]
     public int CuantityOfRays;
     public LayerMask layers;
 
-    private Vector3 source,a,b,pointAtRadius;
-    private Vector3 vi;
+    private Vector2 source;
+    private Vector2 vi;
     private VisibilityCone Cone;
-    private Ray2D ray;
-    private List<RaycastHit2D> hitsList;
-    private List<Vector3> VisibleConePoints;
 
-    private float cosmedios, sinmedios, AngleRads,beta,alpha;
+
+    private int colorauxIterator=0;
+
+
+
+    private struct hitInfo
+    {
+        public bool collision;
+        public Vector2 pointOfCollision;
+        public Collider2D collisionCollider;
+
+        public hitInfo(bool collision,Vector2 pointOfCollision, Collider2D collisionCollider)
+        {
+            this.collision = collision;
+            this.pointOfCollision = pointOfCollision;
+            this.collisionCollider = collisionCollider;
+        }
+    }
+    private LinkedList<Vector2> VisibleConePoints;
+    private List<hitInfo> hitsList;
+    private float AngleRads;
     private int Radius;
 
 
@@ -26,84 +43,129 @@ public class VisibilityConeCycle : MonoBehaviour {
     {
         AngleRads = Mathf.Deg2Rad * Angle;
         Cone = this.GetComponent<VisibilityCone>();
-        Radius = VisibilityCone.Radius;
-        hitsList = new List<RaycastHit2D>();
-        VisibleConePoints = new List<Vector3>();
-        hitsList.Capacity = 100;
-        VisibleConePoints.Capacity = 100;
+        Radius = Cone.Radius;
+        hitsList = new List<hitInfo>();
+        VisibleConePoints = new LinkedList<Vector2>();
+
+        hitsList.Capacity = (int)Angle;
 
     }
-    void OnDrawGizmos()
+
+   /* void OnDrawGizmos()
     {
-
-    }
-
+        foreach (var item in VisibleConePoints)
+        {
+            Gizmos.DrawSphere(item, 5);
+        }
+    }*/
     // Update is called once per frame
     void Update()
     {
-        vi =this.transform.up;
+
+
+        vi = this.transform.up;
         source = this.transform.position;
         AngleRads = Mathf.Deg2Rad * Angle;
+
+        sweepRayCastAll(source, vi, AngleRads);
+        determineVisiblePoints();
+        sendVisiblePointsToCone();
+
         hitsList.Clear();
         VisibleConePoints.Clear();
-        sweepRayCastAll(source, vi, AngleRads);
-        pointAtRadius = this.transform.position + (Vector3)vi * Radius;
-
-        //float beta = Mathf.Atan2(vi.y, vi.x);
-        
-       /* a = (Vector3)rotateVectorTowards(beta, AngleRads, AngleRads/2, Radius) + this.transform.position;
-        ThrowRayCastAll(source, (a - source).normalized, Radius);
-       
-        b = (Vector3)rotateVectorTowards(beta, AngleRads, AngleRads, Radius) + this.transform.position;*/
-
-
     }
+    
 
 
-
-    private void sweepRayCastAll(Vector3 From, Vector3 Up, float AngleInRads)
+    private void sweepRayCastAll(Vector2 From, Vector2 Up, float AngleInRads)
     {
         float scaler;
         float beta = Mathf.Atan2(Up.y,Up.x);
         int increment = (int)(Angle / CuantityOfRays);
         
-        Vector3 viS;
+        Vector2 viS;
         
-        for (int i = 0; i < Angle; i += increment)
+        for (int i = 0; i <= Angle; i += increment)
         {
             scaler = i / Angle;
-            vi= (Vector3)rotateVectorTowards(beta, AngleRads, (scaler * Angle) * Mathf.Deg2Rad, Radius) + source;
+            vi= rotateVectorTowards(beta, AngleRads, (scaler * Angle) * Mathf.Deg2Rad, Radius) + source;
             viS = (vi -source).normalized;
-            vi = ThrowRayCastAll(source, viS, Radius,vi);
-            VisibleConePoints.Add(vi);
+            ThrowRayCast(source, viS, Radius, vi);
         }
 
-        vi = (Vector3)rotateVectorTowards(beta, AngleRads, AngleInRads, Radius) + source;
-        viS = (vi - source).normalized;
-        vi = ThrowRayCastAll(source, viS, Radius, vi);
-        VisibleConePoints.Add(vi);
-        Debug.DrawLine(source, vi, Color.red);
-
-
-        Cone.addCollisionPoints(VisibleConePoints);
 
     }
 
-    private Vector3 ThrowRayCastAll(Vector3 from, Vector3 direction, float distance,Vector3 raycastvector)
+    private void ThrowRayCast(Vector2 from, Vector2 direction, float distance,Vector2 raycastvector)
     {
+
         RaycastHit2D hit = Physics2D.Raycast(from, direction, distance, layers);
-        Debug.DrawLine(from, direction*distance + from );
+        hitInfo hitInformation;
+        Debug.DrawLine(from, direction*distance + from,Color.red *(1-colorauxIterator/Angle) );
 
         if (hit)
         {
-            //Debug.DrawLine(from,direction,Color.red);
 
-            raycastvector= new Vector3(hit.point.x, hit.point.y, from.z);
-            //hitsList.AddRange(hits);
+            raycastvector = new Vector2(hit.point.x, hit.point.y);
+           
+        }
+        hitInformation = new hitInfo(true, raycastvector, hit.collider);
+        hitsList.Add(hitInformation);
+    }
+
+    private void determineVisiblePoints()
+    {
+        hitInfo currentHitinfo, lastHitInfo =hitsList[0];
+        Vector2 firstCollision =lastHitInfo.pointOfCollision;
+        Vector2[] currentColliderVertices;
+        VisibleConePoints.AddFirst(firstCollision);
+
+        LinkedListNode<Vector2> currentpoint;
+        LinkedListNode<Vector2> previouspoint;
+        Collider2D colliderBetweenpoints = new Collider2D();
+
+
+
+        for (int i = 1; i < hitsList.Count; i++)
+        {
+            currentHitinfo = hitsList[i];
+
+            currentpoint = VisibleConePoints.AddLast(lastHitInfo.pointOfCollision);
+            //si uno de los dos 
+            if (lastHitInfo.collisionCollider != currentHitinfo.collisionCollider)
+            {
+
+
+                if (currentpoint.Previous != null)
+                {
+                    previouspoint = currentpoint.Previous;
+
+                    colliderBetweenpoints = currentHitinfo.collisionCollider == null ? lastHitInfo.collisionCollider : currentHitinfo.collisionCollider;
+
+                }
+
+            }
+            else
+            {
+
+                Vector2 direction = currentHitinfo.pointOfCollision - lastHitInfo.pointOfCollision;
+                RaycastHit2D hit = Physics2D.Raycast(lastHitInfo.pointOfCollision, direction.normalized, direction.magnitude, layers);
+
+                if (hit)
+                {
+                    colliderBetweenpoints = hit.collider;
+                }
+
+            }
+            if (colliderBetweenpoints != null)
+            {
+                currentColliderVertices = colliderBetweenpoints.gameObject.GetComponent<SpriteRenderer>().sprite.vertices;
+                addVertexInTriangle(currentColliderVertices, colliderBetweenpoints, lastHitInfo, currentHitinfo, currentpoint);
+            }
+            lastHitInfo = currentHitinfo;
 
         }
-
-        return raycastvector;
+       VisibleConePoints.AddLast(hitsList[hitsList.Count-1].pointOfCollision);
     }
 
 
@@ -112,5 +174,43 @@ public class VisibilityConeCycle : MonoBehaviour {
         float alphai = beta - (alpha / 2f) + i;
         return new Vector2(Mathf.Cos(alphai), Mathf.Sin(alphai)) * radi;
 
+    }
+
+    bool isInTriangleABC(Vector2 s, Vector2 a, Vector2 b, Vector2 c)
+    {
+        float as_x =( s.x - a.x);
+        float as_y =( s.y - a.y);
+
+        bool s_ab = (b.x - a.x) * as_y - (b.y - a.y) * as_x > 0;
+
+        if ((c.x - a.x) * as_y - (c.y - a.y) * as_x > 0 == s_ab) return false;
+
+        if ((c.x - b.x) * (s.y - b.y) - (c.y - b.y) * (s.x - b.x) > 0 != s_ab) return false;
+
+        return true;
+    }
+
+    private void  addVertexInTriangle(Vector2[]currentColliderVertices, Collider2D colliderBetweenpoints,hitInfo lastHitInfo, hitInfo currentHitinfo,LinkedListNode<Vector2> currentpoint)
+    {
+        foreach (var vertex in currentColliderVertices)
+        {
+            Vector2 vertPosition = (Vector2)colliderBetweenpoints.gameObject.transform.position + vertex;
+
+            if (isInTriangleABC(vertPosition, lastHitInfo.pointOfCollision, currentHitinfo.pointOfCollision, source))
+            {
+                VisibleConePoints.AddAfter(currentpoint, vertPosition);
+            }
+
+        }
+    }
+
+    private void sendVisiblePointsToCone()
+    {
+        List<Vector3> Visiblepoints = new List<Vector3>();
+        foreach (var point in VisibleConePoints)
+        {
+            Visiblepoints.Add(new Vector3(point.x, point.y, this.transform.position.z));
+        }
+        Cone.addCollisionPoints(Visiblepoints);
     }
 }

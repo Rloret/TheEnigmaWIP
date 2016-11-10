@@ -11,12 +11,12 @@ public class VisibilityCone:MonoBehaviour  {
     public static List<Vector2> pixelsColored;
     [Range(1,4)]
     public int sampleModifier=2;
-    public static int Radius = 200;
+    public int Radius = 200;
 
     public Color ColorOfCone;
     public Color ColorOfPath;
     public Color ColorOfFog;
-    private int dimensionsOfQuad = 64, dimensionsOfTexture = 512,n;
+    private int dimensionsOfQuad , dimensionsOfTexture,n;
     private float auxrad = 0;
     private struct vertexData
     {
@@ -86,7 +86,6 @@ public class VisibilityCone:MonoBehaviour  {
 	// Use this for initialization
 	void Start () {
        
-        //fogOfWarText =(Texture2D)fogOfWarPlane.GetComponent<Renderer>().material.mainTexture;
         pixelsColored = new List<Vector2>();
         for (int y = 0; y < fogOfWarText.height; y++)
         {
@@ -96,7 +95,7 @@ public class VisibilityCone:MonoBehaviour  {
             }
         }
         dimensionsOfTexture = fogOfWarText.width;
-        dimensionsOfQuad = (int)fogOfWarPlane.transform.localScale.x;
+        dimensionsOfQuad = Mathf.RoundToInt( fogOfWarPlane.transform.localScale.x);
         CollisionPoints = new List<Vector3>();
 
     }
