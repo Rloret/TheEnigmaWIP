@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class VisibilityCone:MonoBehaviour  {
 
     public GameObject sourceOfCone;
-    public Vector3[] CollisionPoints;
+    [HideInInspector]
+    public List<Vector3> CollisionPoints;
     public GameObject fogOfWarPlane;
     public static List<Vector2> pixelsColored;
     [Range(1,4)]
@@ -84,7 +85,7 @@ public class VisibilityCone:MonoBehaviour  {
 
 	// Use this for initialization
 	void Start () {
-      
+       
         //fogOfWarText =(Texture2D)fogOfWarPlane.GetComponent<Renderer>().material.mainTexture;
         pixelsColored = new List<Vector2>();
         for (int y = 0; y < fogOfWarText.height; y++)
@@ -96,6 +97,7 @@ public class VisibilityCone:MonoBehaviour  {
         }
         dimensionsOfTexture = fogOfWarText.width;
         dimensionsOfQuad = (int)fogOfWarPlane.transform.localScale.x;
+        CollisionPoints = new List<Vector3>();
 
     }
 
@@ -113,7 +115,7 @@ public class VisibilityCone:MonoBehaviour  {
         pixelsColored.Clear();
 
 
-        for (int i = 0; i < CollisionPoints.Length - 1; i++)
+        for (int i = 0; i < CollisionPoints.Count - 1; i++)
         {
             Vector3 tempb = CollisionPoints[i], tempc = CollisionPoints[i + 1];
 
@@ -192,7 +194,7 @@ public class VisibilityCone:MonoBehaviour  {
         return data;
 
     }
-    public void addCollisionPoints(Vector3[] otherCollisionPoints) {
+    public void addCollisionPoints(List<Vector3> otherCollisionPoints) {
 
         this.CollisionPoints = otherCollisionPoints;
     }
