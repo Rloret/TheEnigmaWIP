@@ -5,8 +5,7 @@ using System.Collections.Generic;
 public class VisibilityCone:MonoBehaviour  {
 
     public GameObject sourceOfCone;
-    [SerializeField]
-    public List<GameObject> Objects;
+
     [HideInInspector]
     public List<Vector3> CollisionPoints;
     public GameObject fogOfWarPlane;
@@ -141,7 +140,6 @@ public class VisibilityCone:MonoBehaviour  {
     private void iterateOverCone(int n ,ref vertexData a,ref vertexData b,ref  vertexData c)
     {
         float alpha,scaler_i,length;
-        Color auxColor = ColorOfCone;
         vertexData cprime, bprime;
         Vector2 biv, civ;
         for (int i = 0; i < n; i++)
@@ -164,8 +162,7 @@ public class VisibilityCone:MonoBehaviour  {
                 //Vector2 pixelOFTexture = (civ - biv).normalized * scaler_j * dimensionsOfTexture;
                 Vector2 pixelOfTexture = Vector2.Lerp(biv, civ, scaler_j) * dimensionsOfTexture;
                 pixelsColored.Add(pixelOfTexture);
-                auxColor.a = 1 - alpha;
-                fogOfWarText.SetPixel((int)(pixelOfTexture.x), (int)(pixelOfTexture.y), (ColorOfCone * (1 - alpha) + ColorOfPath * alpha));
+                fogOfWarText.SetPixel((int)(pixelOfTexture.x), (int)(pixelOfTexture.y), ColorOfCone);
             }
         }
     }
