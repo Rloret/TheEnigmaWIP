@@ -41,6 +41,7 @@ public class FloatDecision : Decision {
 
             case FloatDecisionTypes.CONFIDENCEINOTHER:
                 int value = characterPersonality.TrustInOthers[targetPersonality.GetMyOwnIndex()];
+                Debug.Log(" i trust in him " + value);
                 if (maxValue >=value  && value >= minvalue)
                 {
                     return nodeTrue;

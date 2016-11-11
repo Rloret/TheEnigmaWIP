@@ -8,7 +8,7 @@ public class DecisionBool : Decision
 
     public AIPersonality personalityScript;
 
-    public enum BoolDecisionEnum { ISMONSTER, INGROUP };
+    public enum BoolDecisionEnum { ISMONSTER, INGROUP, IAMGROUPLEADER };
     public BoolDecisionEnum actualDecisionenum;
 
     public override DecisionTreeNode GetBranch()
@@ -26,6 +26,15 @@ public class DecisionBool : Decision
             case BoolDecisionEnum.INGROUP:
                 if (valueDecision == personalityScript.inGroup)
                 {
+                    return nodeTrue;
+
+                }
+                break;
+
+            case BoolDecisionEnum.IAMGROUPLEADER:
+                if (this.gameObject == personalityScript.groupLeader) //check if the group leader is me
+                {
+                    Debug.Log(personalityScript.gameObject.name);
                     return nodeTrue;
 
                 }

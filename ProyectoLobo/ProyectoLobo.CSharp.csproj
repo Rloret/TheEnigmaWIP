@@ -74,10 +74,13 @@
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionJoinGroup.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionNothing.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionOffer.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionOfferOtherJoinMyGroup.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionActionsEnum.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DistanceDecision.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\FloatDecision.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\ObjectDecision.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\PriorityObjectDecision.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\RandomFloatDecision.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeISeeSomeoneWhatShouldIDo.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeReactionAfterInteraction.cs" />

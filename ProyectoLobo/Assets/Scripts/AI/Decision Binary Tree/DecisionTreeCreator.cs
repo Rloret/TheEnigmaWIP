@@ -35,7 +35,7 @@ public class DecisionTreeCreator : DecisionTreeNode
         indexCharacterInteractedWithMe = targetPersonality.GetMyOwnIndex();
         myTrustInOther = myPersonality.TrustInOthers[indexCharacterInteractedWithMe];
 
-        Debug.Log("confio en el " + indexCharacterInteractedWithMe + " tanto " + myTrustInOther);
+
 
         CreateTree();
     }
@@ -60,6 +60,7 @@ public class DecisionTreeCreator : DecisionTreeNode
     protected ActionEvade addActionEvade() { return gameObject.AddComponent<ActionEvade>(); }
     protected ActionJoinGroup addActionJoin() { return gameObject.AddComponent<ActionJoinGroup>(); }
     protected ActionNothing addActionNothing() { return gameObject.AddComponent<ActionNothing>(); }
+    protected ActionOfferOtherJoinMyGroup addActionOfferJoinGroup() { return gameObject.AddComponent<ActionOfferOtherJoinMyGroup>(); }
 
     //private ActionComparePriorityObjectAgainstPriorityTree addActionComparePriorityTree() { return gameObject.AddComponent<ActionComparePriorityObjectAgainstPriorityTree>(); }
 
@@ -128,14 +129,23 @@ public class DecisionTreeCreator : DecisionTreeNode
         return d;
     }
 
+    protected ObjectDecision createObjectDecision(ObjectHandler.ObjectType objecttest, AIPersonality pers) {
+        ObjectDecision d = gameObject.AddComponent<ObjectDecision>() as ObjectDecision;
+        d.myPersonality = pers;
+        d.objectWanted = objecttest;
+
+        return d;
+
+    }
+
     void Update()
     {
         if (!DecisionCompleted)
         {
             decisionNew = decisionNew.MakeDecision() as Decision;
 
-            /* Debug.Log("decisionNew es " + decisionNew);
-              if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);*/
+             Debug.Log("decisionNew es " + decisionNew);
+              if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);
 
             if (decisionNew == null)
             {
