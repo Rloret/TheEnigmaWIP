@@ -198,13 +198,20 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
                                              createLeaves(random5, addActionAttack(), addActionNothing());
                                              createLeaves(random6, addActionOfferJoinGroup(), addActionNothing());
-
-
-        decisionNew = root;
+        DecisionCompleted = true;
+        // decisionNew = root;
 
 
     }
 
+    public override void StartTheDecision()
+    {
 
+
+        base.DecisionCompleted = false;
+        decisionNew = root;
+
+
+    }
 
 }

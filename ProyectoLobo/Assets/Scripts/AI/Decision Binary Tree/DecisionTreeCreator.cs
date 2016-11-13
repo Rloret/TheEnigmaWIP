@@ -3,8 +3,8 @@ using System.Collections;
 
 public class DecisionTreeCreator : DecisionTreeNode
 {
-    public GameObject target;
-
+    [HideInInspector]     public GameObject target;
+    public bool TreeCompletelyCreated = false;
 
     protected Action actionNew;
     protected Action actionOld;
@@ -21,11 +21,12 @@ public class DecisionTreeCreator : DecisionTreeNode
     protected int indexCharacterInteractedWithMe;
     protected int myTrustInOther;
 
-    private bool DecisionCompleted = false;
+    protected bool DecisionCompleted = true;
 
 
     public override void Start()
     {
+        target = this.gameObject; //just to create the decisiontree
         myPersonality = this.gameObject.GetComponent<AIPersonality>();
         targetPersonality = target.gameObject.GetComponent<AIPersonality>();
 
@@ -142,6 +143,8 @@ public class DecisionTreeCreator : DecisionTreeNode
     {
         if (!DecisionCompleted)
         {
+            Debug.Log("Entro en update");
+
             decisionNew = decisionNew.MakeDecision() as Decision;
 
              Debug.Log("decisionNew es " + decisionNew);
@@ -163,6 +166,11 @@ public class DecisionTreeCreator : DecisionTreeNode
                 decisionOld = decisionNew;
             }
         }
+
+    }
+
+    public virtual void StartTheDecision()
+    {
 
     }
 

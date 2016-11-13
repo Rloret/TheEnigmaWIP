@@ -3,6 +3,7 @@ using System.Collections;
 
 public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
+    
     public DecisionActionsEnum root;
         private DecisionBool iAmMonster;
              private DecisionBool heIsInGroup;
@@ -91,9 +92,8 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
                 agresive2.nodeFalse = randomDecision;
 
                 createLeaves(randomDecision,  addActionJoin(),addActionNothing());
-
-
-        decisionNew = root;
+        DecisionCompleted = true;
+        // decisionNew = root;
 
     }
 
@@ -105,6 +105,15 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
     
 
-   
+    public override void StartTheDecision()
+    {
+       
+        Debug.Log("empiezxo a decidir");
+
+        base.DecisionCompleted = false;
+        decisionNew = root;
+
+
+    }
 
 }
