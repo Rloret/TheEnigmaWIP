@@ -27,7 +27,7 @@ public class FollowPlayer : MonoBehaviour {
         Vector3 From = this.transform.position;
         Vector3 To = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
 
-        if (player.transform.position.x + mainCam.pixelWidth / 2 >=  mapWidthHalf)
+       /* if (player.transform.position.x + mainCam.pixelWidth / 2 >=  mapWidthHalf)
         {
             Debug.Log("limite Derecho");
             To = new Vector3(mapWidth - mapWidthHalf -mainCam.pixelWidth/2, From.y, From.z);
@@ -47,7 +47,7 @@ public class FollowPlayer : MonoBehaviour {
         else if(player.transform.position.y + mainCam.pixelHeight / 2 <= -mapheightHalf)
         {
             To = new Vector3(From.x, - mapheightHalf+mainCam.pixelHeight / 2, From.z);
-        }
+        }*/
           
         this.transform.position = Vector3.Lerp(From, To, 0.9f * Time.deltaTime);
 	}

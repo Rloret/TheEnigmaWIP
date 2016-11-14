@@ -5,17 +5,20 @@ using System.Collections.Generic;
 public class VisibilityCone:MonoBehaviour  {
 
     public GameObject sourceOfCone;
-    public Vector3[] CollisionPoints;
+    [SerializeField]
+    public List<GameObject> Objects;
+    [HideInInspector]
+    public List<Vector3> CollisionPoints;
     public GameObject fogOfWarPlane;
     public static List<Vector2> pixelsColored;
     [Range(1,4)]
     public int sampleModifier=2;
-    public static int Radius = 200;
+    public int Radius = 200;
 
     public Color ColorOfCone;
     public Color ColorOfPath;
     public Color ColorOfFog;
-    private int dimensionsOfQuad = 64, dimensionsOfTexture = 512,n;
+    private int dimensionsOfQuad , dimensionsOfTexture,n;
     private float auxrad = 0;
     private struct vertexData
     {
@@ -78,14 +81,13 @@ public class VisibilityCone:MonoBehaviour  {
             return " {" + position + "," + iv + "}";
         }
     }
-    private Texture2D fogOfWarText;
+    public Texture2D fogOfWarText;
 
 
 
 	// Use this for initialization
 	void Start () {
-      
-        fogOfWarText =(Texture2D)fogOfWarPlane.GetComponent<Renderer>().material.mainTexture;
+       
         pixelsColored = new List<Vector2>();
         for (int y = 0; y < fogOfWarText.height; y++)
         {
@@ -95,7 +97,9 @@ public class VisibilityCone:MonoBehaviour  {
             }
         }
         dimensionsOfTexture = fogOfWarText.width;
-        dimensionsOfQuad = (int)fogOfWarPlane.transform.localScale.x;
+        dimensionsOfQuad = Mathf.RoundToInt( fogOfWarPlane.transform.localScale.x);
+        CollisionPoints = new List<Vector3>();
+
     }
 
     // Update is called once per frame
@@ -111,7 +115,8 @@ public class VisibilityCone:MonoBehaviour  {
 
         pixelsColored.Clear();
 
-        for (int i = 0; i < CollisionPoints.Length - 1; i++)
+
+        for (int i = 0; i < CollisionPoints.Count - 1; i++)
         {
             Vector3 tempb = CollisionPoints[i], tempc = CollisionPoints[i + 1];
 
@@ -125,7 +130,7 @@ public class VisibilityCone:MonoBehaviour  {
             float tempDist = (distab > distac ? distab : distac);
             float n = tempDist / dimensionsOfQuad * dimensionsOfTexture * sampleModifier;
 
-            // Debug.Log("itero " + n + "veces");
+
             iterateOverCone((int)n, ref a, ref b, ref c);
         }
 
@@ -135,29 +140,32 @@ public class VisibilityCone:MonoBehaviour  {
 
     private void iterateOverCone(int n ,ref vertexData a,ref vertexData b,ref  vertexData c)
     {
-        float alpha;
+        float alpha,scaler_i,length;
         Color auxColor = ColorOfCone;
+        vertexData cprime, bprime;
+        Vector2 biv, civ;
         for (int i = 0; i < n; i++)
         {
-            float scaler_i = (float)i / n;
+            scaler_i = (float)i / n;
             alpha = i / (float)auxrad;
-            vertexData cprime = c * scaler_i;
-            cprime.Iv = Vector2.Lerp(a.Iv, c.Iv, scaler_i);
-            vertexData bprime = b * scaler_i;
-            bprime.Iv = Vector2.Lerp(a.Iv, b.Iv, scaler_i);
+            cprime= c * scaler_i;
+            civ=cprime.Iv = Vector2.Lerp(a.Iv, c.Iv, scaler_i);
+            bprime = b * scaler_i;
+            biv= bprime.Iv = Vector2.Lerp(a.Iv, b.Iv, scaler_i);
 
             
             vertexData bprime_cprime = cprime - bprime;
-            float length = bprime_cprime.length / dimensionsOfQuad * dimensionsOfTexture;
+            length = bprime_cprime.length / dimensionsOfQuad * dimensionsOfTexture;
 
 
-            for (int j = 0; j <length; j++)
+            for (int j = 0; j < length; j++)
             {
                 float scaler_j = j / length;
-                Vector2 pixelOfTexture =Vector2.Lerp(bprime.Iv, cprime.Iv, scaler_j) *dimensionsOfTexture;
+                //Vector2 pixelOFTexture = (civ - biv).normalized * scaler_j * dimensionsOfTexture;
+                Vector2 pixelOfTexture = Vector2.Lerp(biv, civ, scaler_j) * dimensionsOfTexture;
                 pixelsColored.Add(pixelOfTexture);
-                auxColor.a = 1-alpha;
-                fogOfWarText.SetPixel((int)(pixelOfTexture.x),(int)(pixelOfTexture.y), (ColorOfCone*(1-alpha)+ColorOfPath*alpha));
+                auxColor.a = 1 - alpha;
+                fogOfWarText.SetPixel((int)(pixelOfTexture.x), (int)(pixelOfTexture.y), (ColorOfCone * (1 - alpha) + ColorOfPath * alpha));
             }
         }
     }
@@ -168,8 +176,8 @@ public class VisibilityCone:MonoBehaviour  {
 
         if (Physics.Raycast(position, Vector3.forward,out ray))
         {
-          
-            if(ray.collider.tag == "FogOfWar")
+
+            if (ray.collider.tag == "FogOfWar")
             {
                 return ray.textureCoord;
             }
@@ -187,8 +195,8 @@ public class VisibilityCone:MonoBehaviour  {
         return data;
 
     }
-    public void addCollisionPoints(Vector3[] CollisionPoints) {
+    public void addCollisionPoints(List<Vector3> otherCollisionPoints) {
 
-        this.CollisionPoints = CollisionPoints;
+        this.CollisionPoints = otherCollisionPoints;
     }
 }

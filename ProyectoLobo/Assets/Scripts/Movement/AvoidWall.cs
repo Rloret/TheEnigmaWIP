@@ -44,11 +44,11 @@ public class AvoidWall : Seek {
         RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, direction, lookAhead, wallMask);
         Debug.DrawRay(rayOrigin2, direction, Color.blue, 0.2f);
         
-        //RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, wallMask); ESTE ES SOLO UN RAYO DESDE EL CENTRO
+        //RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, wallMask); ESTE ES SOLO UN RAYO DESDE EL CENTROº
         //Debug.DrawRay(position, direction, Color.yellow, 0.2f);
 
         if ( hit ) {
-            Debug.Log("Hay colision! collider = " + hit.collider.name);
+            //Debug.Log("Hay colision! collider = " + hit.collider.name);
             position = hit.point + hit.normal * avoidDistance;
             auxTarget.transform.position = position;
             target = auxTarget;
@@ -57,7 +57,7 @@ public class AvoidWall : Seek {
             
         }else if (hit2)
         {
-            Debug.Log("Hay colision! collider = " + hit2.collider.name);
+            //Debug.Log("Hay colision! collider = " + hit2.collider.name);
             position = hit2.point + hit2.normal * avoidDistance;
             auxTarget.transform.position = position;
             target = auxTarget;
