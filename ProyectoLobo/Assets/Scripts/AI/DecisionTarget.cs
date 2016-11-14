@@ -31,8 +31,10 @@ public class DecisionTarget : MonoBehaviour {
     public GameObject ChooseTarget(List<GameObject> viewedTargets, GameObject Ai)
     {
         int priority;
-        string nameCarriedTarget;
+        int currentTargetpriority;
+        string nameCurrentTarget;
         GameObject chosenTarget = null;
+        GameObject currentTarget = null;
         AIPersonality personality = Ai.GetComponent<AIPersonality>();
 
 
@@ -45,20 +47,38 @@ public class DecisionTarget : MonoBehaviour {
         }
 
         chosenTarget = GivePriorityTarget(analyzedTargets); // Recoge el GameObject más prioritario
-        nameCarriedTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
+        nameCurrentTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
 
-        if(chosenTarget.name == nameCarriedTarget) // Si lleva un objeto y es el que ha visto más prioritario: ese objeto se elimina del diccionario y se recoge el siguiente con más prioridad
+        if (chosenTarget.name == "PERSON")
         {
-            analyzedTargets.Remove(chosenTarget);
-            chosenTarget = GivePriorityTarget(analyzedTargets);
+            analyzedTargets.Clear();
+            return chosenTarget;
+        }
+        else
+        {
+            currentTarget = GameObject.Find(nameCurrentTarget);
+            currentTargetpriority = priorityTree.GetPriority(currentTarget, personality);
+
+            if (currentTargetpriority > analyzedTargets[chosenTarget])
+            {
+                analyzedTargets.Clear();
+                chosenTarget = null;
+            }
+            else
+            {
+                if (chosenTarget.name == nameCurrentTarget) // Si lleva un objeto y es el que ha visto más prioritario: ese objeto se elimina del diccionario y se recoge el siguiente con más prioridad
+                {
+                    analyzedTargets.Remove(chosenTarget);
+                    chosenTarget = GivePriorityTarget(analyzedTargets);
+                    analyzedTargets.Clear();
+                }
+
+            }
+
+            return chosenTarget;
+
         }
         
-        Debug.Log(chosenTarget);
-
-        analyzedTargets.Clear();
-
-        return chosenTarget;
-
     }
     /// <summary>
     /// Determina el objeto más prioritario que hay en el diccionario
