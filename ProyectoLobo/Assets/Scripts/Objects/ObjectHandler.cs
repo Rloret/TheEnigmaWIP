@@ -100,8 +100,12 @@ public class ObjectHandler : MonoBehaviour {
         {
             if (hasObject)
             {
-                   instantiateGO(lastObjecttype,this.transform.position);
-
+                instantiateGO(lastObjecttype, this.transform.position);
+                lastObjecttype = desiredObjectData.type;
+            }
+            else
+            {
+                lastObjecttype = desiredObjectData.type;
             }
             if(this.tag == "IA")
             {
@@ -121,7 +125,7 @@ public class ObjectHandler : MonoBehaviour {
     }
     private void instantiateGO( ObjectType type, Vector3 position)
     {
-
+        GameObject auxGO = new GameObject();
         switch (type)
         {
             case ObjectType.NONE:
@@ -129,26 +133,33 @@ public class ObjectHandler : MonoBehaviour {
                 break;
 
             case ObjectType.AXE:
-                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Axe") as GameObject, position, Quaternion.identity) as GameObject);
+                Destroy(auxGO);
+                auxGO=(Instantiate(Resources.Load("Prefabs/Objects/Axe") as GameObject, position, Quaternion.identity) as GameObject);
+                auxGO.name = "Axe";
                 break;
             case ObjectType.SHIELD:
-                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Shield") as GameObject, position, Quaternion.identity)as GameObject);
+                Destroy(auxGO);
+                auxGO = (Instantiate(Resources.Load("Prefabs/Objects/Shield") as GameObject, position, Quaternion.identity) as GameObject);
+                auxGO.name = "Shield";
                 break;
             case ObjectType.FLASHLIGHT:
-                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Flashlight") as GameObject, position, Quaternion.identity) as GameObject);
+                Destroy(auxGO);
+                auxGO = (Instantiate(Resources.Load("Prefabs/Objects/Flashlight") as GameObject, position, Quaternion.identity) as GameObject);
+                auxGO.name = "Flashlight";
                 break;
             case ObjectType.MEDICALAID:
                 break;
             case ObjectType.BOOTS:
-                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Boots") as GameObject, position, Quaternion.identity) as GameObject);
+                Destroy(auxGO);
+                auxGO = (Instantiate(Resources.Load("Prefabs/Objects/Boots") as GameObject, position, Quaternion.identity) as GameObject);
+                auxGO.name = "Boots";
                 break;
             case ObjectType.JUMPSUIT:
                 break;
             default:
-
                 break;
         }
-      
+        VisibleElements.visibleGameObjects.Add(auxGO);      
     }
 
     public void setDesiredGameObject(GameObject desired)

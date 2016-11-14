@@ -7,12 +7,11 @@ public class ClickPosition : MonoBehaviour {
 
     public Vector2 clickPos;
     public OnObjectClickedController clickController;
-    public GameObject fogOfWar;
     public LayerMask avoidCollisionWith;
 
     void Start()
     {
-        //fogOfWar = GameObject.FindGameObjectWithTag("FogOfWar");
+
     }
     void Update ()
     {

@@ -21,6 +21,13 @@ public class OnObjectClickedController : MonoBehaviour {
         [Tooltip("El grupo de prioridad al que se añadirá")]
         public int priority;
 
+        public  WeightedBehaviours(SteeringBehaviour behav,float weight,int priority)
+        {
+            Behaviour = behav;
+            this.weight = weight;
+            this.priority = 0;
+        }
+
 
     }
     [Tooltip("Este array sirve para almacenar todos los comportamientos que se van a ejecutar a la vez y sus prioridades.")]
@@ -51,7 +58,10 @@ public class OnObjectClickedController : MonoBehaviour {
             else
             {
                 Debug.Log("esta lejos, me acercare");
-
+                WeightedBehaviours pursue = new WeightedBehaviours(SteeringBehaviour.PURSUE, 0.7f, 0);
+                WeightedBehaviours avoidWall = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, 1f, 0);
+                WeightedBehaviours face = new WeightedBehaviours(SteeringBehaviour.FACE, 1f, 0);
+                WeightedBehavioursArray =new WeightedBehaviours[] {pursue,avoidWall,face };
                 floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
             }
         }
@@ -66,7 +76,11 @@ public class OnObjectClickedController : MonoBehaviour {
         }
         else
         { // target is floor
-            floorAction(behaviorReceiber, aux);
+            WeightedBehaviours arrive   = new WeightedBehaviours(SteeringBehaviour.ARRIVE, 0.7f, 0);
+            WeightedBehaviours avoidWall = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, 1f, 0);
+            WeightedBehaviours lookwyg = new WeightedBehaviours(SteeringBehaviour.LOOKWHEREYOUAREGOING, 1f, 0);
+            WeightedBehavioursArray = new WeightedBehaviours[] { arrive, avoidWall, lookwyg };
+            floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
         }
         
     }

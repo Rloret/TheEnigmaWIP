@@ -22,7 +22,10 @@ public class Pursue : Arrive {
 
     public override SteeringOutput GetSteering()
     {
-        targetAgent = target.GetComponent<AgentPositionController>()==null?new AgentPositionController(): target.GetComponent<AgentPositionController>();
+        if (target.GetComponent<AgentPositionController>() == null)
+            targetAgent = new AgentPositionController();
+        else
+            targetAgent =target.GetComponent<AgentPositionController>();
         targetAux = target;
         target = new GameObject();
         Vector2 direction = targetAux.transform.position - transform.position;
