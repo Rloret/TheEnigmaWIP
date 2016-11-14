@@ -30,6 +30,7 @@ namespace Assets.Scripts.States
 		}
 
 		public void StateFixedUpdate(){
+
 		}
 
         public void SwitchScene(int sceneIndex)

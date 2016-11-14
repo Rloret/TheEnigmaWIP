@@ -7,7 +7,7 @@ public class ObjectHandler : MonoBehaviour {
     #region public domain
     public enum ObjectType
     {
-        NONE,AXE,SHIELD,FLASHLIGHT,MEDICALAID,BOOTS
+        NONE,AXE,SHIELD,FLASHLIGHT,MEDICALAID,BOOTS,JUMPSUIT
     };
 
     [System.Serializable]
@@ -77,6 +77,9 @@ public class ObjectHandler : MonoBehaviour {
                 break;
             case "Boots":
                 colliderType = ObjectType.BOOTS;
+                break;
+            case "Jumpsuit":
+                colliderType = ObjectType.JUMPSUIT;
                 break;
             default:
                 colliderType = ObjectType.NONE;
