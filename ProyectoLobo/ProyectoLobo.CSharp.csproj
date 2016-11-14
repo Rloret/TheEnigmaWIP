@@ -61,10 +61,20 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-=======
     <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Decision.cs" />
@@ -89,9 +99,6 @@
     <Compile Include="Assets\Scripts\AI\DecisionTarget.cs" />
     <Compile Include="Assets\Scripts\AI\PriorityTree.cs" />
     <Compile Include="Assets\Scripts\ActionsEnum.cs" />
-    <Compile Include="Assets\Scripts\AnimationController.cs" />
-    <Compile Include="Assets\Scripts\Animations\AnimationControl.cs" />
->>>>>>> EliRama
     <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\ConversationMenu\AttackButtonClick.cs" />
     <Compile Include="Assets\Scripts\ConversationMenu\ButtonAction.cs" />
@@ -99,6 +106,9 @@
     <Compile Include="Assets\Scripts\ConversationMenu\ConversationMenuController.cs" />
     <Compile Include="Assets\Scripts\ConversationMenu\ConvinceButtonClick.cs" />
     <Compile Include="Assets\Scripts\ConversationMenu\OfferButtonClick.cs" />
+    <Compile Include="Assets\Scripts\GameOverScripts\ShortCutsButtons.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\EmptyInterface.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IStateBase.cs" />
     <Compile Include="Assets\Scripts\Movement\AgentBehaviour.cs" />
     <Compile Include="Assets\Scripts\Movement\AgentPositionController.cs" />
     <Compile Include="Assets\Scripts\Movement\Align.cs" />
@@ -117,10 +127,16 @@
     <Compile Include="Assets\Scripts\Objects\ObjectAction.cs" />
     <Compile Include="Assets\Scripts\Objects\ObjectHandler.cs" />
     <Compile Include="Assets\Scripts\OnObjectClickedController.cs" />
+    <Compile Include="Assets\Scripts\StateManager.cs" />
+    <Compile Include="Assets\Scripts\States\BeginState.cs" />
+    <Compile Include="Assets\Scripts\States\EndGameState.cs" />
+    <Compile Include="Assets\Scripts\States\PlayState.cs" />
     <Compile Include="Assets\Scripts\TileBrush.cs" />
     <Compile Include="Assets\Scripts\TileMap.cs" />
     <Compile Include="Assets\Scripts\Visibility\VisibilityCone.cs" />
     <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycle.cs" />
+    <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" />
+    <Compile Include="Assets\Scripts\Visibility\VisibleElements.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

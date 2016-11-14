@@ -72,7 +72,7 @@ public class OnObjectClickedController : MonoBehaviour {
     }
 
 
-    void addBehaviour(GameObject behaviorReceiber, SteeringBehaviour comportamiento, GameObject aux, float weight,int priority)
+    public void addBehaviour(GameObject behaviorReceiber, SteeringBehaviour comportamiento, GameObject aux, float weight,int priority)
     {
 
         switch (comportamiento)

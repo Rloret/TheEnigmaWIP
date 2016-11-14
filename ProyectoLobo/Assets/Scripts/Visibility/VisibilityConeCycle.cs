@@ -8,8 +8,7 @@ public class VisibilityConeCycle : MonoBehaviour {
     public float Angle;
     [Range(2, 10)]
     public int CuantityOfRays;
-    [SerializeField]
-    public List<GameObject> Objects;
+
     public LayerMask layers;
 
     private Vector2 source;
@@ -35,6 +34,9 @@ public class VisibilityConeCycle : MonoBehaviour {
     private LinkedList<Vector2> VisibleConePoints;
     private List<hitInfo> hitsList;
     private List<GameObject> visibleGameobjects;
+    private List<GameObject> Objects;
+
+
     private float AngleRads;
     private int Radius;
 
@@ -51,6 +53,11 @@ public class VisibilityConeCycle : MonoBehaviour {
         visibleGameobjects.Capacity = 50;
         hitsList.Capacity = (int)Angle;
 
+
+        Objects = VisibleElements.visibleGameObjects;
+
+        
+
     }
 
    /* void OnDrawGizmos()
@@ -63,7 +70,6 @@ public class VisibilityConeCycle : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
 
         vi = this.transform.up;
         source = this.transform.position;
@@ -232,8 +238,9 @@ public class VisibilityConeCycle : MonoBehaviour {
             if (isInTriangleABC(singleObject.transform.position, A, B, C))
             {
                 visibleGameobjects.Add(singleObject);
-                singleObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, Random.Range(0f, 1f));
+                //singleObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, Random.Range(0f, 1f));
             }
         }
+
     }
 }

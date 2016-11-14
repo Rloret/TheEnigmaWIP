@@ -8,6 +8,7 @@ public class ClickPosition : MonoBehaviour {
     public Vector2 clickPos;
     public OnObjectClickedController clickController;
     public GameObject fogOfWar;
+    public LayerMask avoidCollisionWith;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class ClickPosition : MonoBehaviour {
             Vector2 mousePos = new Vector2(mouseWorldPos.x, mouseWorldPos.y); //Esto coje la posición en la pantalla
             
             Vector2 dir = Vector2.zero;
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, dir);
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, dir,10000,avoidCollisionWith);
 
             //int counter = 0;
 

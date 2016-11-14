@@ -14,7 +14,7 @@ public class ObjectHandler : MonoBehaviour {
     public struct ObjectData
     {
         [SerializeField]
-        ObjectType type;
+       public ObjectType type;
         [SerializeField]
         Vector3 position;
         public ObjectData(ObjectType type, Vector3 position) {
@@ -23,9 +23,9 @@ public class ObjectHandler : MonoBehaviour {
         }
         public static bool operator ==(ObjectData object1, ObjectData object2)
         {
-            float distance = Vector3.Distance(object1.position, object2.position);
+           // float distance = Vector3.Distance(object1.position, object2.position);
 
-            if (object1.type ==object2.type && distance<ObjectHandler.pickRadius ) // idk
+            if (object1.type ==object2.type ) // idk
             {
                 return true;
             }
@@ -33,8 +33,8 @@ public class ObjectHandler : MonoBehaviour {
         }
         public static bool operator !=(ObjectData object1, ObjectData object2)
         {
-            float distance = Vector3.Distance(object1.position, object2.position);
-            if (object1.type == object2.type &&distance < ObjectHandler.pickRadius) // idk
+           // float distance = Vector3.Distance(object1.position, object2.position);
+            if (object1.type == object2.type/* &&distance < ObjectHandler.pickRadius*/) // idk
             {
                 return false;
             }
@@ -47,10 +47,16 @@ public class ObjectHandler : MonoBehaviour {
     public int radius;
 
     public Button CurrentObject;
+    public ObjectType lastObjecttype;
+
+
+
 
     #endregion
 
     #region private domain
+    private bool hasObject = false;
+
     #endregion
     void Update()
     {
@@ -60,6 +66,7 @@ public class ObjectHandler : MonoBehaviour {
     public void youAreOnA(GameObject g)
     {
         string name = g.name;
+        Debug.Log(name);
         ObjectType colliderType;
         switch (name)
         {
@@ -91,12 +98,86 @@ public class ObjectHandler : MonoBehaviour {
         ObjectData? possibleObject = new ObjectData(colliderType, g.transform.position);
         if (desiredObjectData == possibleObject )
         {
+            if (hasObject)
+            {
+                   instantiateGO(lastObjecttype,this.transform.position);
+
+            }
+            if(this.tag == "IA")
+            {
+                this.GetComponent<AIPersonality>().myObject = desiredObjectData.type ;
+            }
             CurrentObject.image.sprite = g.GetComponent<SpriteRenderer>().sprite;
             if (CurrentObject.image.color.a < 0.3f)
                 CurrentObject.image.color = Color.white;
-           
+
+            VisibleElements.visibleGameObjects.Remove(g);
             Destroy(g);
             possibleObject = null;
+            hasObject = true;
+            
+        }
+
+    }
+    private void instantiateGO( ObjectType type, Vector3 position)
+    {
+
+        switch (type)
+        {
+            case ObjectType.NONE:
+               
+                break;
+
+            case ObjectType.AXE:
+                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Axe") as GameObject, position, Quaternion.identity) as GameObject);
+                break;
+            case ObjectType.SHIELD:
+                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Shield") as GameObject, position, Quaternion.identity)as GameObject);
+                break;
+            case ObjectType.FLASHLIGHT:
+                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Flashlight") as GameObject, position, Quaternion.identity) as GameObject);
+                break;
+            case ObjectType.MEDICALAID:
+                break;
+            case ObjectType.BOOTS:
+                VisibleElements.visibleGameObjects.Add(Instantiate(Resources.Load("Prefabs/Objects/Boots") as GameObject, position, Quaternion.identity) as GameObject);
+                break;
+            case ObjectType.JUMPSUIT:
+                break;
+            default:
+
+                break;
+        }
+      
+    }
+
+    public void setDesiredGameObject(GameObject desired)
+    {
+        string name =desired.name;
+
+        switch (name)
+        {
+            case "Axe":
+                desiredObjectData =new ObjectData( ObjectType.AXE,desired.transform.position);
+                break;
+            case "Shield":
+                desiredObjectData = new ObjectData(ObjectType.SHIELD, desired.transform.position);
+                break;
+            case "Flashlight":
+                desiredObjectData = new ObjectData(ObjectType.FLASHLIGHT, desired.transform.position);
+                break;
+            case "Medicalaid":
+                desiredObjectData = new ObjectData(ObjectType.MEDICALAID, desired.transform.position);
+                break;
+            case "Boots":
+                desiredObjectData = new ObjectData(ObjectType.BOOTS, desired.transform.position);
+                break;
+            case "Jumpsuit":
+                desiredObjectData = new ObjectData(ObjectType.JUMPSUIT, desired.transform.position);
+                break;
+            default:
+                desiredObjectData = new ObjectData(ObjectType.AXE, desired.transform.position);
+                break;
         }
 
     }
