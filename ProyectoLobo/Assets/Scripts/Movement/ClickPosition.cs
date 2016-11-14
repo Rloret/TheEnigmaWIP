@@ -11,7 +11,7 @@ public class ClickPosition : MonoBehaviour {
 
     void Start()
     {
-        fogOfWar = GameObject.FindGameObjectWithTag("FogOfWar");
+        //fogOfWar = GameObject.FindGameObjectWithTag("FogOfWar");
     }
     void Update ()
     {

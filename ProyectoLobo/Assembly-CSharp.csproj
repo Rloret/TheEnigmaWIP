@@ -45,8 +45,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AnimationController.cs" />
-     <Compile Include="Assets\Scripts\Animations\AnimationControl.cs" />
      <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\AttackButtonClick.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\ButtonAction.cs" />
