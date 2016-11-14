@@ -51,6 +51,9 @@
      <Compile Include="Assets\Scripts\ConversationMenu\ConversationMenuController.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\ConvinceButtonClick.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\OfferButtonClick.cs" />
+     <Compile Include="Assets\Scripts\GameOverScripts\ShortCutsButtons.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\EmptyInterface.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IStateBase.cs" />
      <Compile Include="Assets\Scripts\Movement\AgentBehaviour.cs" />
      <Compile Include="Assets\Scripts\Movement\AgentPositionController.cs" />
      <Compile Include="Assets\Scripts\Movement\Align.cs" />
@@ -66,6 +69,10 @@
      <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
      <Compile Include="Assets\Scripts\Movement\Wander.cs" />
      <Compile Include="Assets\Scripts\OnObjectClickedController.cs" />
+     <Compile Include="Assets\Scripts\StateManager.cs" />
+     <Compile Include="Assets\Scripts\States\BeginState.cs" />
+     <Compile Include="Assets\Scripts\States\EndGameState.cs" />
+     <Compile Include="Assets\Scripts\States\PlayState.cs" />
      <Compile Include="Assets\Scripts\TileBrush.cs" />
      <Compile Include="Assets\Scripts\TileMap.cs" />
  <Reference Include="UnityEngine.UI">
