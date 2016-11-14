@@ -47,6 +47,7 @@ public class ObjectHandler : MonoBehaviour {
     public int radius;
 
     public Button CurrentObject;
+ 
 
     #endregion
 
@@ -92,6 +93,7 @@ public class ObjectHandler : MonoBehaviour {
         if (desiredObjectData == possibleObject )
         {
             CurrentObject.image.sprite = g.GetComponent<SpriteRenderer>().sprite;
+
             if (CurrentObject.image.color.a < 0.3f)
                 CurrentObject.image.color = Color.white;
            

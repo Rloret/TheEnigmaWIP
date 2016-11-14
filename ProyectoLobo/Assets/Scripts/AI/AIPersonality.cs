@@ -20,11 +20,15 @@ public class AIPersonality: MonoBehaviour {
     public ActionsEnum.Actions interactionFromOtherCharacter;
     public int[] TrustInOthers;
 
-    public int MyOwnIndex; 
+    public int MyOwnIndex;
+
+    private Memory myMemory;
+    private GameObject rememberedMedicalaid;
 
     void Start()
     {
         TrustInOthers= new int[5]; // 5 characters
+        myMemory = GetComponent<Memory>();
         
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers();
@@ -45,14 +49,15 @@ public class AIPersonality: MonoBehaviour {
     }
     public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
 
-	/*void Awake () {
-
-
-        charisma = Random.Range(6.0f, 1.0f);
-        selfAssertion = Random.Range(6.0f, 1.0f);
-        fear = Random.Range(6.0f, 1.0f);
-
-        //Debug.Log("charisma = " + charisma + " selfAssertion = " + selfAssertion + " fear = " + fear);
-
-    }*/
+    void update()
+    {
+        if(health < 20)
+        {
+            rememberedMedicalaid = myMemory.SearchInMemory("MEDICALAID");
+            if (rememberedMedicalaid != null)
+            {
+                //moverse hacia alli
+            }
+        }
+    }
 }

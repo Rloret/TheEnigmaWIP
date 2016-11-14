@@ -9,7 +9,7 @@ public class PriorityTree : MonoBehaviour {
     public int GetPriority (GameObject target, AIPersonality personality)
     {
         
-        if (target.name == "botiquin") // Es botiquin
+        if (target.name == "MEDICALAID") // Es botiquin
         {
             if (personality.health < 50)
                 priority = 4;
@@ -22,7 +22,7 @@ public class PriorityTree : MonoBehaviour {
             if (personality.charisma > personality.selfAssertion && personality.charisma > personality.fear) //Es carismática
             {
                 Debug.Log("SUperCarismática");
-                if (target.name == "persona") // Es una persona
+                if (target.name == "PERSON") // Es una persona
                 {
                     if (personality.confidence > 50) // Confía en ella
                         priority = 3;
@@ -31,14 +31,14 @@ public class PriorityTree : MonoBehaviour {
                 }
                 else // No es una persona
                 {
-                    if (target.name == "Axe") // es un hacha FALTA condicion y no llevo
+                    if (target.name == "AXE") // es un hacha FALTA condicion y no llevo
                     {
                         if (personality.selfAssertion > personality.fear) // más agresivo que miedoso
                             priority = 2;
                         else // más miedoso que agresivo
                             priority = 1;
                     }
-                    else if (target.name == "Shield") // es un mono// no es hacha
+                    else if (target.name == "SHIELD") // es un mono// no es hacha
                     {
                         if (personality.selfAssertion > personality.fear) // es agresivo más que miedoso
                             priority = 1;
@@ -55,7 +55,7 @@ public class PriorityTree : MonoBehaviour {
                 Debug.Log("Miedo: " + personality.fear);
                 Debug.Log("Agresividad: " + personality.selfAssertion);
                 Debug.Log("Miedoso");
-                if (target.name == "persona")
+                if (target.name == "PERSON")
                 {
                    if (personality.confidence > 50)
                         priority = 1;
@@ -64,9 +64,9 @@ public class PriorityTree : MonoBehaviour {
                 }
                 else
                 {
-                    if (target.name == "Shield")
+                    if (target.name == "SHIELD")
                         priority = 2;
-                    else if (target.name == "Axe")
+                    else if (target.name == "AXE")
                     {
                         if (personality.selfAssertion > personality.charisma)
                             priority = 2;
@@ -82,7 +82,7 @@ public class PriorityTree : MonoBehaviour {
                 Debug.Log("Miedo: " + personality.fear);
                 Debug.Log("Agresividad: " + personality.selfAssertion);
                 Debug.Log("Agresivo");
-                if (target.name == "persona")
+                if (target.name == "PERSON")
                 {
                    if (personality.confidence > 50)
                     {
@@ -94,18 +94,18 @@ public class PriorityTree : MonoBehaviour {
                     else
                         priority = 0;
                 }
-                else if (target.name == "Axe")
+                else if (target.name == "AXE")
                     priority = 3;
                 else if (personality.fear > personality.charisma)
                 {
-                    if (target.name == "Shield")
+                    if (target.name == "SHIELD")
                         priority = 2;
                     else
                         priority = 1;
                 }
                 else
                 {
-                    if (target.name == "Boots")
+                    if (target.name == "BOOTS")
                         priority = 2;
                     else
                         priority = 1;
