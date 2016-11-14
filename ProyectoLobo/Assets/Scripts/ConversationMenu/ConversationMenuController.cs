@@ -22,4 +22,8 @@ public class ConversationMenuController:MonoBehaviour  {
     public void CloseConversationMenu() {
         menu.SetActive(false);
     }
+
+    public GameObject GetTargetIA() {
+        return targetIA;
+    }
 }

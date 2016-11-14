@@ -28,7 +28,7 @@ public class OnObjectClickedController : MonoBehaviour {
 
     public enum SteeringBehaviour
     {
-        NOTHING, SEEK, FLEE, ARRIVE, LEAVE, PURSUE, EVADE, ALIGN, FACE, WANDER
+        NOTHING, SEEK, FLEE, ARRIVE, LEAVE, PURSUE, EVADE, ALIGN, FACE, WANDER , AVOIDWALL ,LOOKWHEREYOUAREGOING
     };
 
 
@@ -103,6 +103,12 @@ public class OnObjectClickedController : MonoBehaviour {
                 break;
             case SteeringBehaviour.WANDER:
                 behaviorReceiber.gameObject.AddComponent<Wander>().setTarget(aux).setWeight(weight).setPriority(priority);
+                break;
+            case SteeringBehaviour.AVOIDWALL:
+                behaviorReceiber.gameObject.AddComponent<AvoidWall>().setTarget(aux).setWeight(weight).setPriority(priority);
+                break;
+            case SteeringBehaviour.LOOKWHEREYOUAREGOING:
+                behaviorReceiber.gameObject.AddComponent<LookWhereYouAreGoing>().setTarget(aux).setWeight(weight).setPriority(priority);
                 break;
             default:
                 break;
