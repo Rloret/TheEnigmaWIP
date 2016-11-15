@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeISeeSomeoneWhatShouldIDo.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeReactionAfterInteraction.cs" />
      <Compile Include="Assets\Scripts\AI\DecisionTarget.cs" />
+     <Compile Include="Assets\Scripts\AI\Memory.cs" />
      <Compile Include="Assets\Scripts\AI\PriorityTree.cs" />
      <Compile Include="Assets\Scripts\ActionsEnum.cs" />
      <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
@@ -105,6 +106,8 @@
      <Compile Include="Assets\Scripts\TileMap.cs" />
      <Compile Include="Assets\Scripts\Visibility\VisibilityCone.cs" />
      <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycle.cs" />
+     <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" />
+     <Compile Include="Assets\Scripts\Visibility\VisibleElements.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Programas/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

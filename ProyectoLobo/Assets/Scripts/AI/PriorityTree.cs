@@ -20,7 +20,7 @@ public class PriorityTree : MonoBehaviour {
         {
             if (Personality.charisma > Personality.selfAssertion && Personality.charisma > Personality.fear) //Es carismática
             {
-                Debug.Log("SUperCarismática");
+                //Debug.Log("SUperCarismática");
                 if (target.name == "MockIA") // Es una MockIAa
                 {
                     if (Personality.confidence > 50) // Confía en ella

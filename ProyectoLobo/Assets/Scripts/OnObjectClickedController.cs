@@ -75,6 +75,8 @@ public class OnObjectClickedController : MonoBehaviour {
         }
         else if (aux.tag == "Player") {
             Debug.Log("Pa k clikas en el player, jaja salu2");
+        } else if (aux.layer == 8) {
+            //Esto es para que al clickar en un muro no haga nada
         }
         else
         { // target is floor
@@ -130,9 +132,8 @@ public class OnObjectClickedController : MonoBehaviour {
         }
 
     }
-
-    public void floorAction(GameObject behaviorReceiber, GameObject aux) {
-        if (aux.tag != "IA") aux.GetComponent<SpriteRenderer>().color = Color.red;
+    void floorAction(GameObject behaviorReceiber, GameObject aux) {
+        //if (aux.tag != "IA") aux.GetComponent<SpriteRenderer>().color = Color.red; ESTO ES PARA PONER ROJO EL PUNTO DE DESTINO
 
         //copied from clickPosition
         foreach (var comportamiento in behaviorReceiber.GetComponents<AgentBehaviour>())
