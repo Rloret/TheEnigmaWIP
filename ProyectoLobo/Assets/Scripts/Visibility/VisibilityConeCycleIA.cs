@@ -183,7 +183,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private void moveRandomly(Vector2 A, Vector2 C)
     {
         Vector3 AC = C - A;
-        int random = Random.Range(1, 10);
+        int random = Random.Range(1, 4);
         Vector3 percentageAC = AC / (float)random;
         Vector3 target = A + (Vector2)percentageAC;
         Debug.DrawLine(A, percentageAC, Color.green);
