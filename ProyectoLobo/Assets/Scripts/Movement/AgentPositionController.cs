@@ -70,6 +70,7 @@ public class AgentPositionController : MonoBehaviour {
         transform.rotation = new Quaternion();
 
         updateUnityVariables(ref position);
+
 	}
 
     void updateUnityVariables(ref Vector2 currentPosition) {

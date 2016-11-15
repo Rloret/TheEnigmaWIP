@@ -29,6 +29,7 @@ public class AvoidWall : Seek {
 
     public override SteeringOutput GetSteering()
     {
+        lookAhead = agent.linearVelocity.magnitude + 60;
         SteeringOutput steering = new SteeringOutput();
         Vector2 position = transform.position;
         Vector2 rayVector = agent.linearVelocity.normalized * lookAhead; 
@@ -43,19 +44,21 @@ public class AvoidWall : Seek {
 
         RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, direction, lookAhead, wallMask);
         Debug.DrawRay(rayOrigin2, direction, Color.blue, 0.2f);
-        
+
         //RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, wallMask); ESTE ES SOLO UN RAYO DESDE EL CENTROº
         //Debug.DrawRay(position, direction, Color.yellow, 0.2f);
 
-        if ( hit ) {
+        if (hit && !hit2)
+        {
             //Debug.Log("Hay colision! collider = " + hit.collider.name);
             position = hit.point + hit.normal * avoidDistance;
             auxTarget.transform.position = position;
             target = auxTarget;
             base.target = auxTarget;
             steering = base.GetSteering();
-            
-        }else if (hit2)
+
+        }
+        else if (hit2 && !hit)
         {
             //Debug.Log("Hay colision! collider = " + hit2.collider.name);
             position = hit2.point + hit2.normal * avoidDistance;
@@ -64,6 +67,9 @@ public class AvoidWall : Seek {
             base.target = auxTarget;
             steering = base.GetSteering();
 
+        }
+        else if (hit && hit2) {
+            agent.linearVelocity = Vector2.zero;
         }
 
 
