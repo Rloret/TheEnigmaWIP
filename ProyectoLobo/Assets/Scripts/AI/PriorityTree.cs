@@ -6,12 +6,11 @@ public class PriorityTree : MonoBehaviour {
 
     private int priority;
 
-    public int GetPriority (GameObject target, AIPersonality personality)
+    public int GetPriority (GameObject target, AIPersonality Personality)
     {
-
-        if (target.name == "botiquin") // Es botiquin
+        if (target.name == "MedicalAid") // Es botiquin
         {
-            if (personality.health < 50)
+            if (Personality.health < 50)
                 priority = 4;
 
             else
@@ -19,28 +18,28 @@ public class PriorityTree : MonoBehaviour {
         }
         else // No es botiquin
         {
-            if (personality.charisma > personality.selfAssertion && personality.charisma > personality.fear) //Es carismática
+            if (Personality.charisma > Personality.selfAssertion && Personality.charisma > Personality.fear) //Es carismática
             {
                 Debug.Log("SUperCarismática");
-                if (target.name == "persona") // Es una persona
+                if (target.name == "MockIA") // Es una MockIAa
                 {
-                    if (personality.confidence > 50) // Confía en ella
+                    if (Personality.confidence > 50) // Confía en ella
                         priority = 3;
                     else // No confía en ella
                         priority = 0;
                 }
-                else // No es una persona
+                else // No es una MockIAa
                 {
                     if (target.name == "Axe") // es un hacha FALTA condicion y no llevo
                     {
-                        if (personality.selfAssertion > personality.fear) // más agresivo que miedoso
+                        if (Personality.selfAssertion > Personality.fear) // más agresivo que miedoso
                             priority = 2;
                         else // más miedoso que agresivo
                             priority = 1;
                     }
                     else if (target.name == "Shield") // es un mono// no es hacha
                     {
-                        if (personality.selfAssertion > personality.fear) // es agresivo más que miedoso
+                        if (Personality.selfAssertion > Personality.fear) // es agresivo más que miedoso
                             priority = 1;
                         else 
                             priority = 2;
@@ -50,14 +49,14 @@ public class PriorityTree : MonoBehaviour {
                 }
             }
 
-            else if (personality.fear > personality.selfAssertion)
+            else if (Personality.fear > Personality.selfAssertion)
             {
-                Debug.Log("Miedo: " + personality.fear);
-                Debug.Log("Agresividad: " + personality.selfAssertion);
-                Debug.Log("Miedoso");
-                if (target.name == "persona")
+              /*  Debug.Log("Miedo: " + Personality.fear);
+                Debug.Log("Agresividad: " + Personality.selfAssertion);
+                Debug.Log("Miedoso");*/
+                if (target.name == "MockIA")
                 {
-                   if (personality.confidence > 50)
+                   if (Personality.confidence > 50)
                         priority = 1;
                     else
                         priority = 0;
@@ -68,7 +67,7 @@ public class PriorityTree : MonoBehaviour {
                         priority = 2;
                     else if (target.name == "Axe")
                     {
-                        if (personality.selfAssertion > personality.charisma)
+                        if (Personality.selfAssertion > Personality.charisma)
                             priority = 2;
                         else
                             priority = 1;
@@ -79,14 +78,14 @@ public class PriorityTree : MonoBehaviour {
             }
             else
             {
-                Debug.Log("Miedo: " + personality.fear);
-                Debug.Log("Agresividad: " + personality.selfAssertion);
-                Debug.Log("Agresivo");
-                if (target.name == "persona")
+               /* Debug.Log("Miedo: " + Personality.fear);
+                Debug.Log("Agresividad: " + Personality.selfAssertion);
+                Debug.Log("Agresivo");*/
+                if (target.name == "MockIA")
                 {
-                   if (personality.confidence > 50)
+                   if (Personality.confidence > 50)
                     {
-                        if (personality.charisma > personality.fear)
+                        if (Personality.charisma > Personality.fear)
                             priority = 3;
                         else
                             priority = 2;
@@ -96,7 +95,7 @@ public class PriorityTree : MonoBehaviour {
                 }
                 else if (target.name == "Axe")
                     priority = 3;
-                else if (personality.fear > personality.charisma)
+                else if (Personality.fear > Personality.charisma)
                 {
                     if (target.name == "Shield")
                         priority = 2;
@@ -113,7 +112,7 @@ public class PriorityTree : MonoBehaviour {
             }
 
         }
-        Debug.Log("La prioridad es: " + priority);
+//        Debug.Log("La prioridad es: " + priority);
 
         return priority;
     }

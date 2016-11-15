@@ -4,6 +4,7 @@ using System.Collections;
 public class OnObjectClickedController : MonoBehaviour {
 
     public float MinDistanceOpenMenu = 40f;
+    public LayerMask mask;
     private ConversationMenuController menuController;
 
     [System.Serializable]
@@ -245,11 +246,20 @@ public class OnObjectClickedController : MonoBehaviour {
     }
     void IAAction(GameObject behaviourreceiver,Vector3 target)
     {
-      
-        Collider2D coli= Physics2D.OverlapCircle((Vector2)target, 16);
-        if (coli != null)
+
+        Collider2D[] coli= Physics2D.OverlapCircleAll((Vector2)target, 16,mask);
+        Collider2D selected =null;
+
+        foreach (var colis in coli)
         {
-            GameObject targetgo = coli.gameObject;
+            if(colis.tag != "Object" ) {
+                selected = colis;
+                break;
+            }
+        }
+        if (selected != null )
+        {
+            GameObject targetgo = selected.gameObject;
             floorAction(behaviourreceiver, targetgo);
         }
         else

@@ -4,11 +4,14 @@ using System.Collections.Generic;
 
 public class VisibilityConeCycleIA : MonoBehaviour {
 
+    public List<GameObject> visibleGameobjects;
+    public LayerMask layers;
+
     private Vector2 source;
     private Vector2 vi;
 
     private LinkedList<Vector2> VisibleConePoints;
-    private List<GameObject> visibleGameobjects;
+
     private List<GameObject> Objects;
 
     private float AngleRads,Angle=70;
@@ -17,6 +20,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     private DecisionTarget decisionTargetScript;
     private OnObjectClickedController movementController;
+    private ObjectHandler objecthand;
 
     // Use this for initialization
     void Start()
@@ -33,6 +37,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         decisionTargetScript = this.GetComponent<DecisionTarget>();
         movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
         Objects = VisibleElements.visibleGameObjects;
+        objecthand = this.GetComponent<ObjectHandler>();
     }
 
     /* void OnDrawGizmos()
@@ -55,6 +60,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         checkObjectsWithinCone();
 
         VisibleConePoints.Clear();
+
     }
 
 
@@ -71,12 +77,29 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         {
             scaler = i / Angle;
             vi = rotateVectorTowards(beta, AngleRads, (scaler * Angle) * Mathf.Deg2Rad, Radius) + source;
-            viS = (vi - source).normalized;
-            VisibleConePoints.AddLast(vi);
+            viS = (vi - source);
+            VisibleConePoints.AddLast( ThrowRayCast(source, viS.normalized, viS.magnitude, vi));
+                
         }
+        
 
 
     }
+    private Vector2 ThrowRayCast(Vector2 from, Vector2 direction, float distance, Vector2 raycastvector)
+    {
+
+        RaycastHit2D hit = Physics2D.Raycast(from, direction, distance, layers);
+       
+
+        if (hit)
+        {
+
+            raycastvector = new Vector2(hit.point.x, hit.point.y);
+
+        }
+        return raycastvector;
+    }
+    
 
 
     private Vector2 rotateVectorTowards(float beta, float alpha, float i, float radi)
@@ -124,7 +147,27 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         if (visibleGameobjects.Count > 0)
         {
 
-           //GameObject PriorityObject = decisionTargetScript.ChooseTarget(visibleGameobjects);
+            GameObject priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
+            visibleGameobjects.Clear();
+            if (priorityGO == null)
+            {
+                moveRandomly(A, C);
+            }
+            else
+            {
+                if(priorityGO.tag == "IA")
+                {
+                    //ELi
+                }
+                else
+                {
+                    objecthand.setDesiredGameObject(priorityGO);
+                    string[] behaviours = { "Arrive", "AvoidWall", "Face" };
+                    float[] weightedBehavs = { 0.7f, 1, 1 };
+                    movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+
+                }
+            }
         }
         else
         {
@@ -132,19 +175,21 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                 Debug.Log("no tengo control de movimiento y lo añado");
                 this.gameObject.AddComponent<AgentPositionController>();
             }
-            Vector3 AC = C - A;
-            int random = Random.Range(1, 10);
-            Vector3 percentageAC = AC /(float) random;
-            Vector3 target = A + (Vector2)percentageAC;
-            Debug.DrawLine(A, percentageAC, Color.green);
-            string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
-            float[] weightedBehavs = { 0.7f,1,1};
-            movementController.addBehavioursOver(this.gameObject, target,behaviours,weightedBehavs);
-
-
-
+            moveRandomly(A, C);
         }
 
+    }
+
+    private void moveRandomly(Vector2 A, Vector2 C)
+    {
+        Vector3 AC = C - A;
+        int random = Random.Range(1, 10);
+        Vector3 percentageAC = AC / (float)random;
+        Vector3 target = A + (Vector2)percentageAC;
+        Debug.DrawLine(A, percentageAC, Color.green);
+        string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
+        float[] weightedBehavs = { 0.7f, 1, 1 };
+        movementController.addBehavioursOver(this.gameObject, target, behaviours, weightedBehavs);
     }
 }
 

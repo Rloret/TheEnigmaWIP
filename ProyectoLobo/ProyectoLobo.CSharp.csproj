@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeISeeSomeoneWhatShouldIDo.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeReactionAfterInteraction.cs" />
     <Compile Include="Assets\Scripts\AI\DecisionTarget.cs" />
+    <Compile Include="Assets\Scripts\AI\Memory.cs" />
     <Compile Include="Assets\Scripts\AI\PriorityTree.cs" />
     <Compile Include="Assets\Scripts\ActionsEnum.cs" />
     <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />

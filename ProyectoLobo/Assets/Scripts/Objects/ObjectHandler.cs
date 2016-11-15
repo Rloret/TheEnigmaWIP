@@ -47,8 +47,8 @@ public class ObjectHandler : MonoBehaviour {
     public int radius;
 
     public Button CurrentObject;
-    public ObjectType lastObjecttype;
 
+    public ObjectType lastObjecttype;
 
 
 
@@ -56,8 +56,17 @@ public class ObjectHandler : MonoBehaviour {
 
     #region private domain
     private bool hasObject = false;
+    private VisibilityConeCycleIA cycleIA;
 
     #endregion
+
+    void Start()
+    {
+        if(this.tag == "IA")
+        {
+            cycleIA = this.GetComponent<VisibilityConeCycleIA>();
+        }
+    }
     void Update()
     {
         pickRadius = radius;
@@ -110,12 +119,15 @@ public class ObjectHandler : MonoBehaviour {
             if(this.tag == "IA")
             {
                 this.GetComponent<AIPersonality>().myObject = desiredObjectData.type ;
+                cycleIA.visibleGameobjects.Clear();
             }
             CurrentObject.image.sprite = g.GetComponent<SpriteRenderer>().sprite;
+
             if (CurrentObject.image.color.a < 0.3f)
                 CurrentObject.image.color = Color.white;
 
             VisibleElements.visibleGameObjects.Remove(g);
+           
             Destroy(g);
             possibleObject = null;
             hasObject = true;
@@ -192,4 +204,5 @@ public class ObjectHandler : MonoBehaviour {
         }
 
     }
+
 }
