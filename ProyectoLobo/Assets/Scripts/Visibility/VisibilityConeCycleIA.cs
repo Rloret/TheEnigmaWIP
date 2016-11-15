@@ -6,6 +6,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     public List<GameObject> visibleGameobjects;
     public LayerMask layers;
+    public int sentido;
 
     private Vector2 source;
     private Vector2 vi;
@@ -40,6 +41,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
+        sentido = 1;
     }
 
     /* void OnDrawGizmos()
@@ -182,8 +184,10 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     }
 
-    private void moveRandomly(Vector2 A, Vector2 C)
+    public void moveRandomly(Vector2 A, Vector2 C)
     {
+        A = A * sentido;
+        C *= sentido;
         Vector3 AC = C - A;
         int random = Random.Range(1, 4);
         Vector3 percentageAC = AC / (float)random;
@@ -192,6 +196,10 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
         movementController.addBehavioursOver(this.gameObject, target, behaviours, weightedBehavs);
+
+        if (sentido == -1)
+            sentido = 1;
+
     }
 }
 

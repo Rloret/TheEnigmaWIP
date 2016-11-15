@@ -8,9 +8,9 @@ public class AIPersonality: MonoBehaviour {
     public int attack;
     public int confidence;
 
-    public float charisma=3;
+    public float charisma=9;
     public float selfAssertion=2; // supongo que esto es agresividad para los arboles de decisiones ¿?
-    public float fear=4;
+    public float fear=1;
 
     public bool isMonster = false; // MOCK
     public bool inGroup = false; //MOCK

@@ -5,6 +5,7 @@ public class AvoidWall : Seek {
 
     public float avoidDistance =  100; // distancia de la pared a la que se posicionará el nuevo target
     public float lookAhead = 80; // distancia de RayCast
+    public bool stuck = false;
 
     private GameObject auxTarget;
     private Sprite sp;
@@ -68,8 +69,18 @@ public class AvoidWall : Seek {
             steering = base.GetSteering();
 
         }
-        else if (hit && hit2) {
-            agent.linearVelocity = Vector2.zero;
+        else if (hit && hit2)
+        {
+            if (agent.gameObject.tag == "IA")
+            {
+                Debug.Log("Soy IA y estoy atascada");
+                //this.gameObject.GetComponent<VisibilityConeCycleIA>().sentido = -1;
+                agent.linearVelocity *= -1;
+            }
+            else
+            {
+                agent.linearVelocity = Vector2.zero;
+            }
         }
 
 

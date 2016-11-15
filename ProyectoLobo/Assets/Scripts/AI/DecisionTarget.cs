@@ -14,7 +14,7 @@ public class DecisionTarget : MonoBehaviour {
     void Awake() {
 
         analyzedTargets = new Dictionary<GameObject, int>();
-        priorityTree = new PriorityTree();
+        priorityTree = AI.GetComponent<PriorityTree>(); //new PriorityTree();
         memory = AI.GetComponent<Memory>();
 
 
@@ -106,10 +106,10 @@ public class DecisionTarget : MonoBehaviour {
                 chosenTarget = par.Key;
                 
             }
-            if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
+            /*if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
             {
                 memory.objectsSeenBefore.Add(par.Key.name, par.Key);
-            }
+            }*/ // ESTO A VECES FALLA
 
         }
         return chosenTarget;
