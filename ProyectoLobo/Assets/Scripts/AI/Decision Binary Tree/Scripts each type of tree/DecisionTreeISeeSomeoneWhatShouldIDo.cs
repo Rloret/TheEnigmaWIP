@@ -51,7 +51,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
                         
     protected override void CreateTree()
     {
-        root = createDistanceDecisionFloat(myTransform, targetTransform, 25);
+        root = createDistanceDecisionFloat(myTransform, targetTransform, 60);
 
         iAmMonster = createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         targetIsHuman = createDecisionsBool(false, targetPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
