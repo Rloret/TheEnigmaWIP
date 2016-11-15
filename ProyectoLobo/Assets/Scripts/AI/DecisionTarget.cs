@@ -25,13 +25,13 @@ public class DecisionTarget : MonoBehaviour {
 
         Debug.Log(personality.charisma + " " + personality.selfAssertion + " " + personality.fear);
 
-        //para testear
+      /*  //para testear
         targets = new List<GameObject>();
         targets.Add(axe);
         targets.Add(boots);
 
         ChooseTarget(targets);
-	
+	*/
 	}
 
     public void ChooseTarget(List<GameObject> viewedTargets) // Lista de GameObjects

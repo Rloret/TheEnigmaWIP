@@ -70,14 +70,14 @@ public class AvoidWall : Seek {
         return steering;
     }
 
-    public override void OnDrawGizmos()
+    /*public override void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawCube(target.transform.position, Vector3.one * 10);
         Gizmos.DrawWireSphere(transform.position, (sp.bounds.min.x * transform.localScale.x));
 
         base.OnDrawGizmos();
-    }
+    }*/
 
     private Vector2 PerpendicularClockWise(Vector2 v2) {
         return new Vector2( -v2.y , v2.x ).normalized;

@@ -16,7 +16,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private int CuantityOfRays = 1;
 
     private DecisionTarget decisionTargetScript;
-
+    private OnObjectClickedController movementController;
 
     // Use this for initialization
     void Start()
@@ -31,6 +31,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         Objects = new List<GameObject>();
 
         decisionTargetScript = this.GetComponent<DecisionTarget>();
+        movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
         Objects = VisibleElements.visibleGameObjects;
     }
 
@@ -114,6 +115,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             Debug.DrawLine(C, A);
             if (isInTriangleABC(singleObject.transform.position, A, B, C))
             {
+                if (singleObject!=this.gameObject)
                 visibleGameobjects.Add(singleObject);
                 //singleObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, Random.Range(0f, 1f));
             }
@@ -123,6 +125,24 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         {
 
            //GameObject PriorityObject = decisionTargetScript.ChooseTarget(visibleGameobjects);
+        }
+        else
+        {
+            if (this.GetComponent<AgentPositionController>() == null) {
+                Debug.Log("no tengo control de movimiento y lo añado");
+                this.gameObject.AddComponent<AgentPositionController>();
+            }
+            Vector3 AC = C - A;
+            int random = Random.Range(1, 10);
+            Vector3 percentageAC = AC /(float) random;
+            Vector3 target = A + (Vector2)percentageAC;
+            Debug.DrawLine(A, percentageAC, Color.green);
+            string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
+            float[] weightedBehavs = { 0.7f,1,1};
+            movementController.addBehavioursOver(this.gameObject, target,behaviours,weightedBehavs);
+
+
+
         }
 
     }

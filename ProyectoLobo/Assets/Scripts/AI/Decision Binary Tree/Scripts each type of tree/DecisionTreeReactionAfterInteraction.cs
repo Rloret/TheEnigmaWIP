@@ -93,6 +93,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
                 createLeaves(randomDecision,  addActionJoin(),addActionNothing());
         DecisionCompleted = true;
+
         // decisionNew = root;
 
     }

@@ -199,6 +199,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
                                              createLeaves(random5, addActionAttack(), addActionNothing());
                                              createLeaves(random6, addActionOfferJoinGroup(), addActionNothing());
         DecisionCompleted = true;
+        target = this.gameObject;
         // decisionNew = root;
 
 

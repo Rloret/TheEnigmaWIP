@@ -12,8 +12,6 @@ public class Pursue : Arrive {
     {
         base.Awake();
        
-
-
     }
 
     void Ondestroy() {
@@ -40,7 +38,8 @@ public class Pursue : Arrive {
 
         Vector3 posAux = new Vector3(targetAgent.linearVelocity.x, targetAgent.linearVelocity.y, 0f);
         target.transform.position +=posAux* prediction;
-        DestroyImmediate(targetAgent);
+
+
         DestroyImmediate(target);
         target = targetAux;
         return base.GetSteering();

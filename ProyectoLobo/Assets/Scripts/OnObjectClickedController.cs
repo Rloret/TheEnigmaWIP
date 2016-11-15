@@ -58,6 +58,7 @@ public class OnObjectClickedController : MonoBehaviour {
             else
             {
                 Debug.Log("esta lejos, me acercare");
+             
                 WeightedBehaviours pursue = new WeightedBehaviours(SteeringBehaviour.PURSUE, 0.7f, 0);
                 WeightedBehaviours avoidWall = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, 1f, 0);
                 WeightedBehaviours face = new WeightedBehaviours(SteeringBehaviour.FACE, 1f, 0);
@@ -76,11 +77,10 @@ public class OnObjectClickedController : MonoBehaviour {
         }
         else
         { // target is floor
-            WeightedBehaviours arrive   = new WeightedBehaviours(SteeringBehaviour.ARRIVE, 0.7f, 0);
-            WeightedBehaviours avoidWall = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, 1f, 0);
-            WeightedBehaviours lookwyg = new WeightedBehaviours(SteeringBehaviour.LOOKWHEREYOUAREGOING, 1f, 0);
-            WeightedBehavioursArray = new WeightedBehaviours[] { arrive, avoidWall, lookwyg };
-            floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
+            string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
+            float[] weightedBehavs = { 0.7f, 1, 1 };
+           addBehavioursOver(behaviorReceiber, aux, behaviours, weightedBehavs);
+            //floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
         }
         
     }
@@ -130,7 +130,7 @@ public class OnObjectClickedController : MonoBehaviour {
 
     }
 
-    void floorAction(GameObject behaviorReceiber, GameObject aux) {
+    public void floorAction(GameObject behaviorReceiber, GameObject aux) {
         if (aux.tag != "IA") aux.GetComponent<SpriteRenderer>().color = Color.red;
 
         //copied from clickPosition
@@ -148,4 +148,120 @@ public class OnObjectClickedController : MonoBehaviour {
     void openConversationMenu(GameObject character, GameObject targetIA) {
         menuController.OpenConversationMenu(character, targetIA);
     }
+
+    public void addBehavioursOver(GameObject behaviourReceiver, Vector3 target,string[] behaviours, float[] weights)
+    {
+        if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
+        WeightedBehaviours aux_behav = new WeightedBehaviours();
+        WeightedBehavioursArray = new WeightedBehaviours[behaviours.Length];
+        int iterator = 0;
+        foreach (var behav in behaviours)
+        {
+            switch (behav)
+            {
+                case "Pursue":
+                    WeightedBehavioursArray[iterator]= new WeightedBehaviours(SteeringBehaviour.PURSUE, weights[iterator], 0);
+                    break;
+                case "Face":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.FACE, weights[iterator], 0);
+                    break;
+                case "LookWhereYouAreGoing":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.LOOKWHEREYOUAREGOING, weights[iterator], 0);
+                    break;
+                case "AvoidWall":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, weights[iterator], 0);
+                    break;
+                case "Evade":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.EVADE, weights[iterator], 0);
+                    break;
+                case "Wander":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.WANDER, weights[iterator], 0);
+                    break;
+                case "Arrive":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.ARRIVE, weights[iterator], 0);
+                    break;
+                case "Leave":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.LEAVE, weights[iterator], 0);
+                    break;
+                default:
+                    Debug.LogError("ESE COMPORTAMIENTO NO ESTA CIONTEMPLADO ;(");
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);
+                    break;
+            }
+            iterator++;
+
+        }
+        IAAction(behaviourReceiver, target);
+
+    }
+
+    public void addBehavioursOver(GameObject behaviourReceiver, GameObject target, string[] behaviours, float[] weights)
+    {
+        if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
+        WeightedBehaviours aux_behav = new WeightedBehaviours();
+        WeightedBehavioursArray = new WeightedBehaviours[behaviours.Length];
+        int iterator = 0;
+        foreach (var behav in behaviours)
+        {
+            switch (behav)
+            {
+                case "Pursue":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.PURSUE, weights[iterator], 0);
+                    break;
+                case "Face":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.FACE, weights[iterator], 0);
+                    break;
+                case "LookWhereYouAreGoing":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.LOOKWHEREYOUAREGOING, weights[iterator], 0);
+                    break;
+                case "AvoidWall":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, weights[iterator], 0);
+                    break;
+                case "Evade":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.EVADE, weights[iterator], 0);
+                    break;
+                case "Wander":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.WANDER, weights[iterator], 0);
+                    break;
+                case "Arrive":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.ARRIVE, weights[iterator], 0);
+                    break;
+                case "Leave":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.LEAVE, weights[iterator], 0);
+                    break;
+                case "Flee":
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.FLEE, weights[iterator], 0);
+                    break;
+                default:
+                    Debug.LogError("ESE COMPORTAMIENTO NO ESTA CIONTEMPLADO ;(");
+                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);
+                    break;
+            }
+            iterator++;
+
+        }
+        IAAction(behaviourReceiver, target);
+
+    }
+    void IAAction(GameObject behaviourreceiver,Vector3 target)
+    {
+      
+        Collider2D coli= Physics2D.OverlapCircle((Vector2)target, 16);
+        if (coli != null)
+        {
+            GameObject targetgo = coli.gameObject;
+            floorAction(behaviourreceiver, targetgo);
+        }
+        else
+        {
+            Debug.LogError("En ese punto no hay absolutamente nada");
+        }
+
+    }
+    void IAAction(GameObject behaviourreceiver, GameObject target)
+    {
+            floorAction(behaviourreceiver, target);
+
+    }
+
 }

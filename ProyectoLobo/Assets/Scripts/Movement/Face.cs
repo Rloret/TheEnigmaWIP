@@ -6,15 +6,6 @@ public class Face : Align
     protected GameObject targetAux;
     //private GameObject target;
 
-  /*  public override void Awake()
-    {
-        base.Awake();
-        targetAux = target;
-        target = new GameObject();
-        //target.AddComponent<AgentPositionController>();
-        Debug.Log("ahora Awake de face");
-    }*/
-
     void OnDestroy()
     {
         //Debug.Log("destruyo al target (no deberia destruir la tile) ");
@@ -35,7 +26,6 @@ public class Face : Align
         target.transform.rotation = targetAux.transform.rotation;
         target.transform.position = targetAux.transform.position;
 
-        //Vector2 direction = targetAux.GetComponent<AgentPositionController>().position - new Vector2(transform.position.x, transform.position.y);
         Vector3 direction = target.transform.position - this.transform.position;
 
         if (direction.magnitude > 0.0f)
