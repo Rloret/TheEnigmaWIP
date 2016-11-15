@@ -226,19 +226,22 @@ public class VisibilityConeCycle : MonoBehaviour {
 
     private void checkObjectsWithinCone()
     {
-        Vector2 A, B, C, Object;
+        Vector2 A, B, C;
         A = VisibleConePoints.First.Value;
         B = source;
         C = VisibleConePoints.Last.Value;
         foreach (var singleObject in Objects)
         {
-            Debug.DrawLine(A, B);
-            Debug.DrawLine(B, C);
-            Debug.DrawLine(C, A);
-            if (isInTriangleABC(singleObject.transform.position, A, B, C))
+            if (singleObject != this.gameObject)
             {
-                visibleGameobjects.Add(singleObject);
-                //singleObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, Random.Range(0f, 1f));
+                Debug.DrawLine(A, B);
+                Debug.DrawLine(B, C);
+                Debug.DrawLine(C, A);
+                if (isInTriangleABC(singleObject.transform.position, A, B, C))
+                {
+                    visibleGameobjects.Add(singleObject);
+                    //singleObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, Random.Range(0f, 1f));
+                }
             }
         }
 

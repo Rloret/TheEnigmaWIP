@@ -11,6 +11,7 @@ public class VisibleElements : MonoBehaviour {
         visibleGameObjects = new List<GameObject>();
         visibleGameObjects.AddRange(GameObject.FindGameObjectsWithTag("Object"));
         visibleGameObjects.AddRange(GameObject.FindGameObjectsWithTag("IA"));
+        visibleGameObjects.Add(GameObject.FindGameObjectWithTag("Player"));
 	}
 	
 }

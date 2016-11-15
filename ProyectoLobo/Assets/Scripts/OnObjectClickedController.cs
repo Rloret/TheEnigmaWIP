@@ -262,10 +262,10 @@ public class OnObjectClickedController : MonoBehaviour {
             GameObject targetgo = selected.gameObject;
             floorAction(behaviourreceiver, targetgo);
         }
-        else
+      /*  else
         {
             Debug.LogError("En ese punto no hay absolutamente nada");
-        }
+        }*/
 
     }
     void IAAction(GameObject behaviourreceiver, GameObject target)

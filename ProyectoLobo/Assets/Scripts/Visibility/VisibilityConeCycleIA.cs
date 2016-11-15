@@ -21,6 +21,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private DecisionTarget decisionTargetScript;
     private OnObjectClickedController movementController;
     private ObjectHandler objecthand;
+    private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
 
     // Use this for initialization
     void Start()
@@ -36,6 +37,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         decisionTargetScript = this.GetComponent<DecisionTarget>();
         movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
+        whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
     }
@@ -157,7 +159,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             {
                 if(priorityGO.tag == "IA")
                 {
-                    //ELi
+                    whatToDoScript.target = priorityGO;
                 }
                 else
                 {
@@ -186,7 +188,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         int random = Random.Range(1, 4);
         Vector3 percentageAC = AC / (float)random;
         Vector3 target = A + (Vector2)percentageAC;
-        Debug.DrawLine(A, percentageAC, Color.green);
+
         string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
         movementController.addBehavioursOver(this.gameObject, target, behaviours, weightedBehavs);
