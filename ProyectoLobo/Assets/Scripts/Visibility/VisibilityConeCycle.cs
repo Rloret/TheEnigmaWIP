@@ -79,7 +79,7 @@ public class VisibilityConeCycle : MonoBehaviour {
         determineVisiblePoints();
         sendVisiblePointsToCone();
 
-        checkObjectsWithinCone();
+     //   checkObjectsWithinCone();
 
         hitsList.Clear();
         VisibleConePoints.Clear();
@@ -224,7 +224,7 @@ public class VisibilityConeCycle : MonoBehaviour {
         Cone.addCollisionPoints(Visiblepoints);
     }
 
-    private void checkObjectsWithinCone()
+   /* private void checkObjectsWithinCone()
     {
         Vector2 A, B, C;
         A = VisibleConePoints.First.Value;
@@ -245,5 +245,5 @@ public class VisibilityConeCycle : MonoBehaviour {
             }
         }
 
-    }
+    }*/
 }

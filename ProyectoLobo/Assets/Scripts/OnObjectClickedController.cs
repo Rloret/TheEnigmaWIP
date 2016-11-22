@@ -245,7 +245,7 @@ public class OnObjectClickedController : MonoBehaviour {
         IAAction(behaviourReceiver, target);
 
     }
-    void IAAction(GameObject behaviourreceiver,Vector3 target)
+    void IAAction(GameObject behaviourreceiver,Vector3 target)// busca el primer gameobjeto diferente de objext
     {
 
         Collider2D[] coli= Physics2D.OverlapCircleAll((Vector2)target, 16,mask);

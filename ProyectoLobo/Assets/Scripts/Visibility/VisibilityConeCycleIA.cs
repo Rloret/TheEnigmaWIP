@@ -157,18 +157,22 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             }
             else
             {
-                if(priorityGO.tag == "IA")
+                string[] behaviours = new string[3];
+                if (priorityGO.tag == "IA")
                 {
                     whatToDoScript.target = priorityGO;
+                    behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
                 }
                 else
                 {
                     objecthand.setDesiredGameObject(priorityGO);
-                    string[] behaviours = { "Arrive", "AvoidWall", "Face" };
-                    float[] weightedBehavs = { 0.7f, 1, 1 };
-                    movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+                    behaviours = new string[3]{ "Arrive", "AvoidWall", "Face" };
+
 
                 }
+                float[] weightedBehavs = { 0.7f, 1, 1 };
+                movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+
             }
         }
         else
