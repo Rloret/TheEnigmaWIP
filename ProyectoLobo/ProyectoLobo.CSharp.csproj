@@ -68,8 +68,8 @@
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Decision.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeCreator.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeNode.cs" />
+    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAcceptObjectOffered.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAttack.cs" />
-    <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionComparePriorityObjectAgainstPriorityTree.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionEvade.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionJoinGroup.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionNothing.cs" />

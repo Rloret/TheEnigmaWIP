@@ -3,8 +3,10 @@ using System.Collections;
 
 public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
-    
-    public DecisionActionsEnum root;
+    //   public AIPersonality targetpers; TESTING
+
+
+    protected DecisionActionsEnum root;
         private DecisionBool iAmMonster;
              private DecisionBool heIsInGroup;
                 private DecisionBool isMonster; //true Branch1
@@ -16,7 +18,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
 
         private DecisionActionsEnum givingMeObject; //false Branch1
-            private ActionComparePriorityObjectAgainstPriorityTree comparePriorityTreeAction;
+            private PriorityObjectDecision comparePriorityTreeAction;
 
             private FloatDecision trustHimMore6;
                 private FloatDecision trustHimLess3;
@@ -30,7 +32,11 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
 
 
-    protected override void CreateTree() { 
+    protected override void CreateTree() {
+
+       // base.targetPersonality = targetpers; TESTING
+
+
         root = createDecisionsEnum(ActionsEnum.Actions.ATTACK, myPersonality);
         iAmMonster= createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         heIsInGroup= createDecisionsBool(true, targetPersonality, DecisionBool.BoolDecisionEnum.INGROUP);
@@ -68,15 +74,15 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
                createLeaves(healthLess40, addActionEvade(), addActionAttack());
 
+        comparePriorityTreeAction = createPriorityObjectDecision(myPersonality, targetPersonality);
 
-        givingMeObject.nodeTrue = addActionOffer(); //MOCK-ASINES SALTARINES
+        givingMeObject.nodeTrue = comparePriorityTreeAction; //MOCK-ASINES SALTARINES
         givingMeObject.nodeFalse = trustHimMore6;
 
-        // comparePriorityTreeAction = addActionComparePriorityTree();                    DUDAS SERIAS DE COMO HACER ESTO JI
-        // comparePriorityTreeAction.nodeFalse = addActionOffer();
-        // comparePriorityTreeAction.nodeTrue = comparePriorityTreeAction.nodeFalse;
+         comparePriorityTreeAction.nodeFalse = addActionNothing();
+        comparePriorityTreeAction.nodeTrue = addActionAcceptObjectOffered();
 
-            trustHimMore6.nodeTrue = addActionJoin();
+        trustHimMore6.nodeTrue = addActionJoin();
             trustHimMore6.nodeFalse = trustHimLess3;
        
 
@@ -94,8 +100,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
                 createLeaves(randomDecision,  addActionJoin(),addActionNothing());
         DecisionCompleted = true;
 
-        // decisionNew = root;
-
+      //  StartTheDecision(); TESTING
     }
 
 
