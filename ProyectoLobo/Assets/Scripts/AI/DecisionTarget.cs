@@ -51,7 +51,7 @@ public class DecisionTarget : MonoBehaviour {
         chosenTarget = GivePriorityTarget(analyzedTargets); // Recoge el GameObject más prioritario
         nameCurrentTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
 
-        if (chosenTarget.tag == "IA" && !IDecided)
+        if ((chosenTarget.tag == "IA" || chosenTarget.tag=="Player") && !IDecided)
         {
             IDecided = true;
             analyzedTargets.Clear();
