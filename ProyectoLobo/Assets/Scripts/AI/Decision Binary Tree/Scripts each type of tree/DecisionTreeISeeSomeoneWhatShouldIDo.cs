@@ -3,10 +3,10 @@ using System.Collections;
 
 public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 {
-    public AIPersonality targetpers; //TESTING
+   // public AIPersonality targetpers; //TESTING
 
 
-    protected DistanceDecision root;
+    [HideInInspector] public DistanceDecision root;
 
          private DecisionBool iAmMonster;
              private DecisionBool targetIsHuman;
@@ -49,11 +49,13 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
                               private RandomFloatDecision random5;
                         private FloatDecision CharismaBigger3_5;
                             private RandomFloatDecision random6;
+
+    
                         
     protected override void CreateTree()
     {
 
-        base.targetPersonality = targetpers; //TESTING
+      //  base.targetPersonality = targetpers; //TESTING
 
 
         root = createDistanceDecisionFloat(myTransform, targetTransform, 60);
@@ -207,15 +209,17 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
         target = this.gameObject;
         // decisionNew = root;
 
-        StartTheDecision();
+    //    StartTheDecision();
 
     }
 
     public override void StartTheDecision()
     {
+        Debug.Log("Empiezo a decidir");
+
+        decisionNew = root;
 
         base.DecisionCompleted = false;
-        decisionNew = root;
 
     }
  
@@ -253,6 +257,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
             }
 
             DecisionTreeReactionAfterInteraction reaction = target.GetComponent<DecisionTreeReactionAfterInteraction>();
+            reaction.target = this.gameObject;
             if(reaction!=null)reaction.StartTheDecision();
         }
     }

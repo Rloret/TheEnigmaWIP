@@ -7,8 +7,9 @@ public class ActionAttack : Action {
 
     public override void DoAction()
     {
-                  //Code for attack
-            //Placeholder
+
+        this.GetComponent<DecisionTarget>().IDecided = true;
+
             Debug.Log("voy a atacar y bajo confianza");
 
             // atack()

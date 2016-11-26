@@ -6,7 +6,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
     //   public AIPersonality targetpers; TESTING
 
 
-    protected DecisionActionsEnum root;
+    [HideInInspector] public DecisionActionsEnum root;
         private DecisionBool iAmMonster;
              private DecisionBool heIsInGroup;
                 private DecisionBool isMonster; //true Branch1
@@ -30,7 +30,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
                           private RandomFloatDecision randomDecision;
 
 
-
+    private bool treeCreated = false;
 
     protected override void CreateTree() {
 
@@ -99,6 +99,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
                 createLeaves(randomDecision,  addActionJoin(),addActionNothing());
         DecisionCompleted = true;
+        treeCreated = true;
 
       //  StartTheDecision(); TESTING
     }
@@ -114,10 +115,13 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
     public override void StartTheDecision()
     {
        
-        Debug.Log("empiezxo a decidir");
+        Debug.Log("empiezxo a decidir. mi accion recibida es "+ this.GetComponent<AIPersonality>().interactionFromOtherCharacter);
+
+        if (!treeCreated) CreateTree();
+
+        decisionNew = root;
 
         base.DecisionCompleted = false;
-        decisionNew = root;
 
 
     }
