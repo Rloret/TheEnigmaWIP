@@ -41,7 +41,6 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         decisionTargetScript = this.GetComponent<DecisionTarget>();
         movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
-        whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
     }
@@ -165,17 +164,26 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                 if (priorityGO.tag == "IA"  )
                 {
                     if (!IDecided) { 
-                    Debug.Log("veo una Ia voy a decidir");
-                    IDecided = true;
+                        Debug.Log("veo una Ia voy a decidir");
+                        IDecided = true;
 
-                    Debug.Log("en visibility cone: yo " + this.gameObject.transform + " target " + priorityGO);
+                        Debug.Log("en visibility cone: yo " + this.gameObject.transform + " target " + priorityGO);
+                        if (this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>() == null)
+                        {
+                            whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+                        }
+                        else {
+                            whatToDoScript = this.gameObject.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
 
-                    whatToDoScript.target = priorityGO;
-                    whatToDoScript.StartTheDecision();
 
-                    string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
-                    float[] weightedBehavs = { 0.7f, 1, 1 };
-                    movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+                        }
+
+                        whatToDoScript.target = priorityGO;
+                        whatToDoScript.StartTheDecision();
+
+                        string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
+                        float[] weightedBehavs = { 0.7f, 1, 1 };
+                        movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
 
                     }
 

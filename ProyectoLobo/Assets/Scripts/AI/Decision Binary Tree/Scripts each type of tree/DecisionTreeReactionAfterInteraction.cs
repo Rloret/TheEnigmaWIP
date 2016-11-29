@@ -101,7 +101,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
         DecisionCompleted = true;
         treeCreated = true;
 
-      //  StartTheDecision(); TESTING
+        StartTheDecision(); //TESTING
     }
 
 

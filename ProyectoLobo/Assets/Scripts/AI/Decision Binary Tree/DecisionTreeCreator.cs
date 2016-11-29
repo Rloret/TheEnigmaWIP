@@ -26,7 +26,7 @@ public class DecisionTreeCreator : DecisionTreeNode
     {
         Debug.Log("start dec tree creator");
 
-        target = this.gameObject; //just to create the decisiontree
+        //target = this.gameObject; //just to create the decisiontree
 
         myPersonality = this.gameObject.GetComponent<AIPersonality>();
         targetPersonality = target.gameObject.GetComponent<AIPersonality>();

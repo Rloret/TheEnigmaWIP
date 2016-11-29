@@ -22,4 +22,10 @@ public class Action : DecisionTreeNode {
         return;
     }
 
+    protected void DestroyTrees() {
+        if (this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>() != null)Destroy( this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>());
+        if (this.GetComponent<DecisionTreeReactionAfterInteraction>() != null) Destroy(this.GetComponent<DecisionTreeReactionAfterInteraction>());
+
+    }
+
 }

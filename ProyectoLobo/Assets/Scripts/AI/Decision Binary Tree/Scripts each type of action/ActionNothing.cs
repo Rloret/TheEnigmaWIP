@@ -11,6 +11,14 @@ public class ActionNothing : Action {
         //Placeholder
         Debug.Log("nada: paso de todo, no me interesa");
 
-       
+        base.DestroyTrees();
+
+        Invoke("EnableCone", 10f);
+    }
+
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
+
     }
 }

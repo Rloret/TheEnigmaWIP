@@ -10,7 +10,14 @@ public class ActionOfferOtherJoinMyGroup : Action {
         //Code for attack
         //Placeholder
         Debug.Log("unete a mi grupo");
+        base.DestroyTrees();
 
+        Invoke("EnableCone", 10f);
+    }
+
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
 
     }
 }

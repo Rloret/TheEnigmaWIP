@@ -209,7 +209,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
         target = this.gameObject;
         // decisionNew = root;
 
-    //    StartTheDecision();
+        StartTheDecision();
 
     }
 
@@ -255,13 +255,20 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
 
             }
+            DecisionTreeReactionAfterInteraction reaction;
+            if (target.GetComponent<DecisionTreeReactionAfterInteraction>() == null)
+            {
+                reaction = target.AddComponent<DecisionTreeReactionAfterInteraction>();
+            }
+            else {
+                reaction = target.GetComponent<DecisionTreeReactionAfterInteraction>();
+            }
 
-            DecisionTreeReactionAfterInteraction reaction = target.GetComponent<DecisionTreeReactionAfterInteraction>();
             reaction.target = this.gameObject;
             target.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
             reaction.target = this.gameObject;
-            if(reaction!=null)reaction.StartTheDecision();
+           // if(reaction!=null)reaction.StartTheDecision();
         }
     }
 

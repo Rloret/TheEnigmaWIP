@@ -10,8 +10,18 @@ public class ActionAcceptObjectOffered : Action {
         Debug.Log("aceptar objeto y aumentar confianza");
         base.visibiCone.IDecided = false;
 
+        base.DestroyTrees();
+
+
         // atack()
         // decrease friendship 
+
+        Invoke("EnableCone", 10f);
+    }
+
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
 
     }
 }

@@ -11,11 +11,18 @@ public class ActionAttack : Action {
         base.visibiCone.IDecided = false;
 
         Debug.Log("voy a atacar y bajo confianza");
+        base.DestroyTrees();
 
-            // atack()
-            // decrease friendship 
+        // atack()
+        // decrease friendship 
 
+        Invoke("EnableCone", 10f);
     }
 
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
+
+    }
 
 }

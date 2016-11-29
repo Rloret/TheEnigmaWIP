@@ -10,7 +10,14 @@ public class ActionJoinGroup : Action {
         string[] behaviours = { "Pursue", "AvoidWall", "Face" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
         GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>().addBehavioursOver(this.gameObject, this.GetComponent<DecisionTreeCreator>().target, behaviours, weightedBehavs);
+        base.DestroyTrees();
 
+        Invoke("EnableCone", 10f);
+    }
+
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
 
     }
 }
