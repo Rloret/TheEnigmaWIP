@@ -41,7 +41,8 @@ public class OnObjectClickedController : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         menuController = this.gameObject.GetComponent<ConversationMenuController>();
 	}
 	
@@ -73,9 +74,12 @@ public class OnObjectClickedController : MonoBehaviour {
             Debug.Log("menuButton");
             aux.GetComponent<ButtonAction>().Action();
         }
-        else if (aux.tag == "Player") {
+        else if (aux.tag == "Player")
+        {
             Debug.Log("Pa k clikas en el player, jaja salu2");
-        } else if (aux.layer == 8) {
+        }
+        else if (aux.layer == 8)
+        {
             //Esto es para que al clickar en un muro no haga nada
         }
         else
