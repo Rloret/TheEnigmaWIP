@@ -58,7 +58,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
       //  base.targetPersonality = targetpers; //TESTING
 
 
-        root = createDistanceDecisionFloat(myTransform, targetTransform, 60);
+        root = createDistanceDecisionFloat(this.gameObject.transform, target.transform, 60);
 
         iAmMonster = createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         targetIsHuman = createDecisionsBool(false, targetPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
@@ -215,7 +215,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
     public override void StartTheDecision()
     {
-        Debug.Log("Empiezo a decidir");
+        Debug.Log("Empiezo a decidir"+ this.gameObject.name);
 
         decisionNew = root;
 
@@ -257,6 +257,9 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
             }
 
             DecisionTreeReactionAfterInteraction reaction = target.GetComponent<DecisionTreeReactionAfterInteraction>();
+            reaction.target = this.gameObject;
+            target.GetComponent<VisibilityConeCycleIA>().enabled = false;
+
             reaction.target = this.gameObject;
             if(reaction!=null)reaction.StartTheDecision();
         }

@@ -12,7 +12,19 @@ public class ActionEvade : Action {
         
         string[] behaviours = { "Flee", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
+
+        GetComponent<VisibilityConeCycleIA>().enabled = false;
+        base.visibiCone.IDecided = false;
+
+
         GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>().addBehavioursOver(this.gameObject, this.GetComponent<DecisionTreeCreator>().target, behaviours, weightedBehavs);
+
+        Invoke("EnableCone", 10f);
+    }
+
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
 
     }
 }

@@ -96,6 +96,7 @@
     <Compile Include="Assets\Scripts\ConversationMenu\ConvinceButtonClick.cs" />
     <Compile Include="Assets\Scripts\ConversationMenu\OfferButtonClick.cs" />
     <Compile Include="Assets\Scripts\GameOverScripts\ShortCutsButtons.cs" />
+    <Compile Include="Assets\Scripts\GroupScript.cs" />
     <Compile Include="Assets\Scripts\Health\HealthController.cs" />
     <Compile Include="Assets\Scripts\Interfaces\EmptyInterface.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IStateBase.cs" />

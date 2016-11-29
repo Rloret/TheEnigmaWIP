@@ -11,7 +11,6 @@ public class DecisionTarget : MonoBehaviour {
 
     public GameObject AI;
 
-    public bool IDecided = false;
 
     void Awake() {
 
@@ -51,15 +50,13 @@ public class DecisionTarget : MonoBehaviour {
         chosenTarget = GivePriorityTarget(analyzedTargets); // Recoge el GameObject más prioritario
         nameCurrentTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
 
-        if ((chosenTarget.tag == "IA" || chosenTarget.tag=="Player") && !IDecided)
+        if ((chosenTarget.tag == "IA" || chosenTarget.tag=="Player"))
         {
-            IDecided = true;
             analyzedTargets.Clear();
 
             //active tree
 
-            this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>().target = chosenTarget;
-            this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>().StartTheDecision();
+           
 
             return chosenTarget;
         }

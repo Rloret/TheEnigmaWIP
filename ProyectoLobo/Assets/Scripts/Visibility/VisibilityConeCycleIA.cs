@@ -23,6 +23,10 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private ObjectHandler objecthand;
     private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
 
+    public bool IDecided = false;
+
+
+
     // Use this for initialization
     void Start()
     {
@@ -157,19 +161,40 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             }
             else
             {
-                if(priorityGO.tag == "IA")
+
+                if (priorityGO.tag == "IA"  )
                 {
+                    if (!IDecided) { 
+                    Debug.Log("veo una Ia voy a decidir");
+                    IDecided = true;
+
+                    Debug.Log("en visibility cone: yo " + this.gameObject.transform + " target " + priorityGO);
+
                     whatToDoScript.target = priorityGO;
+                    whatToDoScript.StartTheDecision();
+
+                    string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
+                    float[] weightedBehavs = { 0.7f, 1, 1 };
+                    movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+
+                    }
+
                 }
-                else
+                else //(priorityGO.tag!="IA")
                 {
                     objecthand.setDesiredGameObject(priorityGO);
-                    string[] behaviours = { "Arrive", "AvoidWall", "Face" };
+
+                    string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
                     float[] weightedBehavs = { 0.7f, 1, 1 };
                     movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
 
                 }
+
+
             }
+
+           
+
         }
         else
         {

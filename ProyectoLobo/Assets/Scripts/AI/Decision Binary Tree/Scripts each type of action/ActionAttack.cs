@@ -8,9 +8,9 @@ public class ActionAttack : Action {
     public override void DoAction()
     {
 
-        this.GetComponent<DecisionTarget>().IDecided = true;
+        base.visibiCone.IDecided = false;
 
-            Debug.Log("voy a atacar y bajo confianza");
+        Debug.Log("voy a atacar y bajo confianza");
 
             // atack()
             // decrease friendship 

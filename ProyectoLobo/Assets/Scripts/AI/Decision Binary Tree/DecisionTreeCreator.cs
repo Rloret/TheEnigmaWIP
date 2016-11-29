@@ -15,8 +15,6 @@ public class DecisionTreeCreator : DecisionTreeNode
     protected AIPersonality myPersonality;
     protected AIPersonality targetPersonality;
 
-    protected Transform myTransform;
-    protected Transform targetTransform;
 
     protected int indexCharacterInteractedWithMe;
     protected int myTrustInOther;
@@ -29,11 +27,9 @@ public class DecisionTreeCreator : DecisionTreeNode
         Debug.Log("start dec tree creator");
 
         target = this.gameObject; //just to create the decisiontree
+
         myPersonality = this.gameObject.GetComponent<AIPersonality>();
         targetPersonality = target.gameObject.GetComponent<AIPersonality>();
-
-        myTransform = this.gameObject.transform;
-        targetTransform = target.gameObject.transform;
 
         indexCharacterInteractedWithMe = targetPersonality.GetMyOwnIndex();
         myTrustInOther = myPersonality.TrustInOthers[indexCharacterInteractedWithMe];
@@ -156,12 +152,12 @@ public class DecisionTreeCreator : DecisionTreeNode
     {
         if (!DecisionCompleted)
         {
-            Debug.Log("Entro en update");
+        //    Debug.Log("Entro en update");
 
             decisionNew = decisionNew.MakeDecision() as Decision;
 
-            Debug.Log("decisionNew es " + decisionNew);
-            if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);
+           // Debug.Log("decisionNew es " + decisionNew);
+         //   if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);
 
             if (decisionNew == null)
             {

@@ -14,6 +14,8 @@ public class DistanceDecision : Decision {
 
         if (Vector3.Distance(MySelfTransform.position, TargetTransform.position) <= mindistance)
         {
+            Debug.Log("yo " + MySelfTransform + "target " + TargetTransform);
+            Debug.Log("la distancoia es " + Vector3.Distance(MySelfTransform.position, TargetTransform.position));
             return nodeTrue;
         }
         return nodeFalse;
