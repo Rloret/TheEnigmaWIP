@@ -34,7 +34,7 @@ public class Evade : Flee {
 
         if (speed <= distance / maxPrediction) prediction = maxPrediction;
         else prediction = distance / (speed + 0.001f);
-        Debug.Log("evade prediction = " + prediction);
+      //  Debug.Log("evade prediction = " + prediction);
 
         target.transform.position = targetAux.transform.position;
 

@@ -38,7 +38,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         visibleGameobjects = new List<GameObject>();
         visibleGameobjects.Capacity = 50;
         Objects = new List<GameObject>();
-
+        whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         decisionTargetScript = this.GetComponent<DecisionTarget>();
         movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
         Objects = VisibleElements.visibleGameObjects;
@@ -168,12 +168,13 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                         IDecided = true;
 
                         Debug.Log("en visibility cone: yo " + this.gameObject.transform + " target " + priorityGO);
-                        if (this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>() == null)
+                        if (whatToDoScript == null)
                         {
                             whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
                         }
                         else {
-                            whatToDoScript = this.gameObject.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+                            DestroyImmediate(whatToDoScript);
+                            whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
 
 
                         }

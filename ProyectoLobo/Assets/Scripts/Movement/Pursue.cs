@@ -33,7 +33,7 @@ public class Pursue : Arrive {
 
         if (speed <= distance / maxPrediction) prediction = maxPrediction;
         else prediction = distance / (speed + 0.001f);
-        Debug.Log("prediction = " + prediction);
+        //Debug.Log("prediction = " + prediction);
 
         target.transform.position = targetAux.transform.position;
 

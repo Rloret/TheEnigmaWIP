@@ -20,7 +20,7 @@ public class PriorityObjectDecision : Decision
         decisiontargetScript = GetComponent<DecisionTarget>();
         prioTree = GetComponent<PriorityTree>();
 
-        string objectName = decisiontargetScript.objectTraduction(targetPersonality);
+        string objectName = decisiontargetScript.objectTraduction(this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>()/*targetPersonality*/);
 
         GameObject aux = new GameObject();
 

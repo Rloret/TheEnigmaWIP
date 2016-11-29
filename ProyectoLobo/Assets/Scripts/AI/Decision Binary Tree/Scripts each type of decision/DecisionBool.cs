@@ -15,6 +15,7 @@ public class DecisionBool : Decision
 
     public override DecisionTreeNode GetBranch()
     {
+        
         switch (actualDecisionenum)
         {
             case BoolDecisionEnum.ISMONSTER:

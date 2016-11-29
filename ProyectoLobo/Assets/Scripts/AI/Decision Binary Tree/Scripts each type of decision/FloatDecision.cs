@@ -13,6 +13,7 @@ public class FloatDecision : Decision {
 
     public override DecisionTreeNode GetBranch()
     {
+        targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
         switch (actualDecisionType) {
 
             case FloatDecisionTypes.HEALTH:

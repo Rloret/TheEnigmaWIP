@@ -34,9 +34,9 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
     protected override void CreateTree() {
 
-       // base.targetPersonality = targetpers; TESTING
+        // base.targetPersonality = targetpers; TESTING
 
-
+        targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
         root = createDecisionsEnum(ActionsEnum.Actions.ATTACK, myPersonality);
         iAmMonster= createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         heIsInGroup= createDecisionsBool(true, targetPersonality, DecisionBool.BoolDecisionEnum.INGROUP);

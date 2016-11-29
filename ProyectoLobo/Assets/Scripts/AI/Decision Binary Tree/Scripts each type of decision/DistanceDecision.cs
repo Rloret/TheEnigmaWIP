@@ -12,7 +12,7 @@ public class DistanceDecision : Decision {
     public override DecisionTreeNode GetBranch()
     {
 
-        if (Vector3.Distance(MySelfTransform.position, TargetTransform.position) <= mindistance)
+        if (Vector3.Distance(MySelfTransform.position, this.GetComponent<DecisionTreeCreator>().target.transform.position) <= mindistance)
         {
             Debug.Log("yo " + MySelfTransform + "target " + TargetTransform);
             Debug.Log("la distancoia es " + Vector3.Distance(MySelfTransform.position, TargetTransform.position));

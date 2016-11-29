@@ -3,8 +3,8 @@ using System.Collections;
 
 public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 {
-   // public AIPersonality targetpers; //TESTING
-
+    // public AIPersonality targetpers; //TESTING
+    DecisionTreeReactionAfterInteraction reaction;
 
     [HideInInspector] public DistanceDecision root;
 
@@ -55,10 +55,12 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
     protected override void CreateTree()
     {
 
-      //  base.targetPersonality = targetpers; //TESTING
+        //  base.targetPersonality = targetpers; //TESTING
 
-
-        root = createDistanceDecisionFloat(this.gameObject.transform, target.transform, 60);
+        targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
+        //Esto puede ser necesario en algun momento, pensamos que como se modifica desde fuera no es necesario
+        //target = targetPersonality.gameObject;
+        root = createDistanceDecisionFloat(this.gameObject.transform,target.transform, 60);
 
         iAmMonster = createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         targetIsHuman = createDecisionsBool(false, targetPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
@@ -206,9 +208,9 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
                                              createLeaves(random5, addActionAttack(), addActionNothing());
                                              createLeaves(random6, addActionOfferJoinGroup(), addActionNothing());
         DecisionCompleted = true;
-        target = this.gameObject;
+       // target = this.gameObject;
         // decisionNew = root;
-
+        reaction = this.GetComponent<DecisionTreeReactionAfterInteraction>();
         StartTheDecision();
 
     }
@@ -255,19 +257,19 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
 
             }
-            DecisionTreeReactionAfterInteraction reaction;
-            if (target.GetComponent<DecisionTreeReactionAfterInteraction>() == null)
+          //  DecisionTreeReactionAfterInteraction reaction;
+            if (reaction == null)
             {
                 reaction = target.AddComponent<DecisionTreeReactionAfterInteraction>();
             }
             else {
-                reaction = target.GetComponent<DecisionTreeReactionAfterInteraction>();
+                Destroy(reaction);
+                reaction = target.AddComponent<DecisionTreeReactionAfterInteraction>();
             }
 
             reaction.target = this.gameObject;
             target.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
-            reaction.target = this.gameObject;
            // if(reaction!=null)reaction.StartTheDecision();
         }
     }
