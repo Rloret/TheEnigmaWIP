@@ -4,7 +4,7 @@ using System.Collections;
 public class DecisionTreeCreator : DecisionTreeNode
 {
     [HideInInspector]     public GameObject target;
-    public bool TreeCompletelyCreated = false;
+    [HideInInspector]     public bool TreeCompletelyCreated = false;
 
     protected Action actionNew;
     protected Action actionOld;
@@ -15,8 +15,6 @@ public class DecisionTreeCreator : DecisionTreeNode
     protected AIPersonality myPersonality;
     protected AIPersonality targetPersonality;
 
-    protected Transform myTransform;
-    protected Transform targetTransform;
 
     protected int indexCharacterInteractedWithMe;
     protected int myTrustInOther;
@@ -26,12 +24,12 @@ public class DecisionTreeCreator : DecisionTreeNode
 
     public override void Start()
     {
-        target = this.gameObject; //just to create the decisiontree
+        Debug.Log("start dec tree creator");
+
+        //target = this.gameObject; //just to create the decisiontree
+
         myPersonality = this.gameObject.GetComponent<AIPersonality>();
         targetPersonality = target.gameObject.GetComponent<AIPersonality>();
-
-        myTransform = this.gameObject.transform;
-        targetTransform = target.gameObject.transform;
 
         indexCharacterInteractedWithMe = targetPersonality.GetMyOwnIndex();
         myTrustInOther = myPersonality.TrustInOthers[indexCharacterInteractedWithMe];
@@ -62,6 +60,7 @@ public class DecisionTreeCreator : DecisionTreeNode
     protected ActionJoinGroup addActionJoin() { return gameObject.AddComponent<ActionJoinGroup>(); }
     protected ActionNothing addActionNothing() { return gameObject.AddComponent<ActionNothing>(); }
     protected ActionOfferOtherJoinMyGroup addActionOfferJoinGroup() { return gameObject.AddComponent<ActionOfferOtherJoinMyGroup>(); }
+    protected ActionAcceptObjectOffered addActionAcceptObjectOffered() { return gameObject.AddComponent<ActionAcceptObjectOffered>(); }
 
     //private ActionComparePriorityObjectAgainstPriorityTree addActionComparePriorityTree() { return gameObject.AddComponent<ActionComparePriorityObjectAgainstPriorityTree>(); }
 
@@ -139,16 +138,26 @@ public class DecisionTreeCreator : DecisionTreeNode
 
     }
 
+    protected PriorityObjectDecision createPriorityObjectDecision(AIPersonality myPers,AIPersonality yourPers)
+    {
+        PriorityObjectDecision d = gameObject.AddComponent<PriorityObjectDecision>() as PriorityObjectDecision;
+        d.characterPersonality = myPers;
+        d.targetPersonality = yourPers;
+
+        return d;
+
+    }
+
     void Update()
     {
         if (!DecisionCompleted)
         {
-            Debug.Log("Entro en update");
+        //    Debug.Log("Entro en update");
 
             decisionNew = decisionNew.MakeDecision() as Decision;
 
-             Debug.Log("decisionNew es " + decisionNew);
-              if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);
+           // Debug.Log("decisionNew es " + decisionNew);
+         //   if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);
 
             if (decisionNew == null)
             {
@@ -159,6 +168,8 @@ public class DecisionTreeCreator : DecisionTreeNode
                 actionNew.DoAction();
 
                 DecisionCompleted = true;
+
+                CommunicateAction(actionNew);
             }
 
             if (decisionNew != null)
@@ -168,6 +179,9 @@ public class DecisionTreeCreator : DecisionTreeNode
         }
 
     }
+
+    public virtual void CommunicateAction(Action actionNew) {
+    } 
 
     public virtual void StartTheDecision()
     {

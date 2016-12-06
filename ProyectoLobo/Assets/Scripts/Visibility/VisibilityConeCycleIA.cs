@@ -23,6 +23,10 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private ObjectHandler objecthand;
     private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
 
+    public bool IDecided = false;
+
+
+
     // Use this for initialization
     void Start()
     {
@@ -37,7 +41,6 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         decisionTargetScript = this.GetComponent<DecisionTarget>();
         movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
-        whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
     }
@@ -157,23 +160,47 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             }
             else
             {
-                string[] behaviours = new string[3];
-                if (priorityGO.tag == "IA")
+                if (priorityGO.tag == "IA"  )
                 {
-                    whatToDoScript.target = priorityGO;
-                    behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
+                    if (!IDecided) { 
+                        Debug.Log("veo una Ia voy a decidir");
+                        IDecided = true;
+
+                        Debug.Log("en visibility cone: yo " + this.gameObject.transform + " target " + priorityGO);
+                        if (this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>() == null)
+                        {
+                            whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+                        }
+                        else {
+                            whatToDoScript = this.gameObject.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+
+
+                        }
+
+                        whatToDoScript.target = priorityGO;
+                        whatToDoScript.StartTheDecision();
+
+                        string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
+                        float[] weightedBehavs = { 0.7f, 1, 1 };
+                        movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+
+                    }
+						
                 }
-                else
+                else //(priorityGO.tag!="IA")
                 {
                     objecthand.setDesiredGameObject(priorityGO);
-                    behaviours = new string[3]{ "Arrive", "AvoidWall", "Face" };
 
+                    string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
+                    float[] weightedBehavs = { 0.7f, 1, 1 };
+                    movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
 
                 }
-                float[] weightedBehavs = { 0.7f, 1, 1 };
-                movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
 
             }
+
+           
+
         }
         else
         {

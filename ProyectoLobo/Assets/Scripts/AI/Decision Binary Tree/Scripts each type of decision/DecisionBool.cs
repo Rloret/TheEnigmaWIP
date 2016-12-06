@@ -7,6 +7,8 @@ public class DecisionBool : Decision
     //public bool valueTest;
 
     public AIPersonality personalityScript;
+    private GroupScript groupScript;
+
 
     public enum BoolDecisionEnum { ISMONSTER, INGROUP, IAMGROUPLEADER };
     public BoolDecisionEnum actualDecisionenum;
@@ -24,7 +26,8 @@ public class DecisionBool : Decision
                 break;
 
             case BoolDecisionEnum.INGROUP:
-                if (valueDecision == personalityScript.inGroup)
+                groupScript = personalityScript.gameObject.GetComponent<GroupScript>();
+                if (valueDecision == groupScript.inGroup)
                 {
                     return nodeTrue;
 
@@ -32,7 +35,9 @@ public class DecisionBool : Decision
                 break;
 
             case BoolDecisionEnum.IAMGROUPLEADER:
-                if (this.gameObject == personalityScript.groupLeader) //check if the group leader is me
+                groupScript = personalityScript.gameObject.GetComponent<GroupScript>();
+
+                if (groupScript.IAmTheLeader) //check if the group leader is me
                 {
                     Debug.Log(personalityScript.gameObject.name);
                     return nodeTrue;

@@ -5,10 +5,19 @@ public class ActionOffer : Action {
 
     public override void DoAction()
     {
+        base.visibiCone.IDecided = false;
 
-            //Code for attack
-            //Placeholder
-            Debug.Log("voy a ofrecer");
-        
+        //Code for attack
+        //Placeholder
+        Debug.Log("voy a ofrecer");
+        base.DestroyTrees();
+
+        Invoke("EnableCone", 10f);
+    }
+
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
+
     }
 }

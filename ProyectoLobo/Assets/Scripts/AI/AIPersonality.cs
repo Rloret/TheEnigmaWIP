@@ -13,8 +13,7 @@ public class AIPersonality: MonoBehaviour {
     public float fear=4;
 
     public bool isMonster = false; // MOCK
-    public bool inGroup = false; //MOCK
-    public GameObject groupLeader; // al inicio esto señala a si mismo para evitar problemas en una decision :)
+  
     public ObjectHandler.ObjectType myObject;
 
     public ActionsEnum.Actions interactionFromOtherCharacter;

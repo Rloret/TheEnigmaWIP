@@ -2,8 +2,11 @@
 using System.Collections;
 
 public class DecisionTreeNode : MonoBehaviour {
-    [HideInInspector]    public bool activated = false;
+    [HideInInspector]
+    public bool activated = false;
+    [HideInInspector]
     public DecisionTreeNode nodeTrue;
+    [HideInInspector]
     public DecisionTreeNode nodeFalse;
     // Use this for initialization
     public virtual void Start () {

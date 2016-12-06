@@ -7,14 +7,22 @@ public class ActionAttack : Action {
 
     public override void DoAction()
     {
-                  //Code for attack
-            //Placeholder
-            Debug.Log("voy a atacar y bajo confianza");
 
-            // atack()
-            // decrease friendship 
+        base.visibiCone.IDecided = false;
 
+        Debug.Log("voy a atacar y bajo confianza");
+        base.DestroyTrees();
+
+        // atack()
+        // decrease friendship 
+
+        Invoke("EnableCone", 10f);
     }
 
+    private void EnableCone()
+    {
+        GetComponent<VisibilityConeCycleIA>().enabled = true;
+
+    }
 
 }

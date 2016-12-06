@@ -3,7 +3,7 @@ using System.Collections;
 
 public class OnObjectClickedController : MonoBehaviour {
 
-    public float MinDistanceOpenMenu = 40f;
+    public float MinDistanceOpenMenu = 60f;
     public LayerMask mask;
     private ConversationMenuController menuController;
 

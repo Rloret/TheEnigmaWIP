@@ -32,11 +32,12 @@ public class Pursue : Arrive {
         float prediction;
 
         if (speed <= distance / maxPrediction) prediction = maxPrediction;
-        else prediction = distance / speed;
+        else prediction = distance / (speed + 0.001f);
+        Debug.Log("prediction = " + prediction);
 
         target.transform.position = targetAux.transform.position;
 
-        Vector3 posAux = new Vector3(targetAgent.linearVelocity.x, targetAgent.linearVelocity.y, 0f);
+        Vector3 posAux = new Vector3(targetAgent.linearVelocity.x, targetAgent.linearVelocity.y, 0f)+ new Vector3(0.001f,0.001f,0f);
         target.transform.position +=posAux* prediction;
 
 
