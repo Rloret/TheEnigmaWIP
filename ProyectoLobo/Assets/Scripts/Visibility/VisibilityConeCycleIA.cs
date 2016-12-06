@@ -19,7 +19,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private int CuantityOfRays = 1;
 
     private DecisionTarget decisionTargetScript;
-    private OnObjectClickedController movementController;
+    private BehaviourAdder movementController;
     private ObjectHandler objecthand;
     private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
 
@@ -36,7 +36,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         Objects = new List<GameObject>();
 
         decisionTargetScript = this.GetComponent<DecisionTarget>();
-        movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
+        movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
         whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
@@ -195,7 +195,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
-        movementController.addBehavioursOver(this.gameObject, target, behaviours, weightedBehavs);
+        movementController.addBehavioursOver(gameObject, target, behaviours, weightedBehavs);
     }
 }
 
