@@ -38,29 +38,40 @@ public class DecisionTarget : MonoBehaviour {
         GameObject currentTarget = null;
         AIPersonality personality = Ai.GetComponent<AIPersonality>();
 
-
+        string priorities = "veo un : ";
         foreach (GameObject target in viewedTargets)
         {
             priority = priorityTree.GetPriority(target, personality); // Llama al árbol de prioridad que devuelve la prioridad de ese GameObject
+            priorities += target.name + " (priority)";
             //Debug.Log("La prioridad de " + target + " es " + priority);
             if (!analyzedTargets.ContainsKey(target))
                 analyzedTargets.Add(target, priority);
         }
 
         chosenTarget = GivePriorityTarget(analyzedTargets); // Recoge el GameObject más prioritario
+        //Debug.Log("elegido es " + chosenTarget.name);
         nameCurrentTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
 
-        if ((chosenTarget.tag == "IA" || chosenTarget.tag=="Player"))
+        if (chosenTarget.tag == "IA"  )
+        {
+            analyzedTargets.Clear();
+
+            //active tree
+            if (this.GetComponent<GroupScript>().checkIAInGroup(chosenTarget))
+            {
+                return null;
+            }
+            return chosenTarget;
+        }
+        else if (chosenTarget.tag == "Player")
         {
             analyzedTargets.Clear();
 
             //active tree
 
-           
-
             return chosenTarget;
         }
-        else if( nameCurrentTarget != "NONE")
+        else if ( nameCurrentTarget != "NONE")
         {
             string aux = "Prefabs/Objects/";
             aux += nameCurrentTarget;

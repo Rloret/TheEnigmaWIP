@@ -217,7 +217,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
     public override void StartTheDecision()
     {
-        Debug.Log("Empiezo a decidir"+ this.gameObject.name);
+      //  Debug.Log("Empiezo a decidir"+ this.gameObject.name);
 
         decisionNew = root;
 
@@ -235,7 +235,9 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
             ActionOffer offer = new ActionOffer();
             ActionOfferOtherJoinMyGroup join= new ActionOfferOtherJoinMyGroup();
 
-           // Debug.Log(actionNew.GetType() + ", " + attack.GetType());
+            // Debug.Log(actionNew.GetType() + ", " + attack.GetType());
+
+            bool decision = true;
 
             if (Object.ReferenceEquals(actionNew.GetType(), attack.GetType())) // compare classes 
             {
@@ -247,6 +249,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
             else if (Object.ReferenceEquals(actionNew.GetType(), offer.GetType())) // compare classes 
             {
                 target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
+                Debug.Log("Le he dicho que le ofrezco");
 
 
             }
@@ -254,23 +257,29 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
             else if (Object.ReferenceEquals(actionNew.GetType(), join.GetType())) // compare classes 
             {
                 target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+                Debug.Log("Le he dicho que se una a mi grupo");
 
 
-            }
-          //  DecisionTreeReactionAfterInteraction reaction;
-            if (reaction == null)
-            {
-                reaction = target.AddComponent<DecisionTreeReactionAfterInteraction>();
             }
             else {
-                Destroy(reaction);
-                reaction = target.AddComponent<DecisionTreeReactionAfterInteraction>();
+                Debug.Log("Mi accion es NOTHING y NO le digo nada");
+                decision = false;
             }
+            if (decision)
+            {
+                if (reaction == null)
+                {
+                    reaction = target.AddComponent<DecisionTreeReactionAfterInteraction>();
+                }
+                else
+                {
+                    Destroy(reaction);
+                    reaction = target.AddComponent<DecisionTreeReactionAfterInteraction>();
+                }
 
-            reaction.target = this.gameObject;
-            target.GetComponent<VisibilityConeCycleIA>().enabled = false;
-
-           // if(reaction!=null)reaction.StartTheDecision();
+                reaction.target = this.gameObject;
+                target.GetComponent<VisibilityConeCycleIA>().enabled = false;
+            }
         }
     }
 

@@ -5,7 +5,6 @@ public class ActionOffer : Action {
 
     public override void DoAction()
     {
-        base.visibiCone.IDecided = false;
 
         //Code for attack
         //Placeholder
@@ -18,6 +17,7 @@ public class ActionOffer : Action {
     private void EnableCone()
     {
         GetComponent<VisibilityConeCycleIA>().enabled = true;
+        base.visibiCone.IDecided = false;
 
     }
 }

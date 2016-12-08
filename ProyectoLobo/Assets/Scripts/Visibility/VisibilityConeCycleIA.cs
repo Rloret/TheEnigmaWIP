@@ -160,14 +160,14 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             }
             else
             {
-
                 if (priorityGO.tag == "IA"  )
                 {
+                    #region deccidingReg
                     if (!IDecided) { 
-                        Debug.Log("veo una Ia voy a decidir");
+                      //  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
                         IDecided = true;
 
-                        Debug.Log("en visibility cone: yo " + this.gameObject.transform + " target " + priorityGO);
+                        Debug.Log("yo " + this.gameObject.transform + "veo a  " + priorityGO + " (target)");
                         if (whatToDoScript == null)
                         {
                             whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
@@ -180,12 +180,16 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                         }
 
                         whatToDoScript.target = priorityGO;
-                        whatToDoScript.StartTheDecision();
 
                         string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
                         float[] weightedBehavs = { 0.7f, 1, 1 };
                         movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
 
+                    }
+                    #endregion decidingReg
+                    else
+                    {
+                     //   Debug.Log("me quedo aqui");
                     }
 
                 }
@@ -198,12 +202,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                     movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
 
                 }
-
-
-            }
-
-           
-
+            }  
         }
         else
         {

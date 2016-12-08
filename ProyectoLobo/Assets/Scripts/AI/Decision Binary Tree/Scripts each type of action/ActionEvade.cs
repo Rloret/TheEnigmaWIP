@@ -7,7 +7,8 @@ public class ActionEvade : Action {
     public override void DoAction()
     {
 
-        Debug.Log("voy a huir y bajo confianza");
+        Debug.Log("voy a huir y bajo confianza. Soy "+this.gameObject.name);
+
 
         
         string[] behaviours = { "Evade", "AvoidWall", "LookWhereYouAreGoing" };

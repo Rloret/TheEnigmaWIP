@@ -14,8 +14,7 @@ public class DistanceDecision : Decision {
 
         if (Vector3.Distance(MySelfTransform.position, this.GetComponent<DecisionTreeCreator>().target.transform.position) <= mindistance)
         {
-            Debug.Log("yo " + MySelfTransform + "target " + TargetTransform);
-            Debug.Log("la distancoia es " + Vector3.Distance(MySelfTransform.position, TargetTransform.position));
+            Debug.Log("yo " + MySelfTransform + "target " + TargetTransform +"la distancoia es " + Vector3.Distance(MySelfTransform.position, TargetTransform.position));
             return nodeTrue;
         }
         return nodeFalse;

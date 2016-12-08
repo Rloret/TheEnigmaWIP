@@ -29,6 +29,9 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
                           private RandomFloatDecision randomDecision;
 
+    private DecisionActionsEnum Join;
+
+
 
     private bool treeCreated = false;
 
@@ -52,6 +55,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
         charismatic = createDecisionsFloat(3, 10,/* aiPersonality.charisma*/myPersonality, FloatDecision.FloatDecisionTypes.CHARISMA);
         agresive2 = createDecisionsFloat(2.5f, 10, /*aiPersonality.selfAssertion*/myPersonality, FloatDecision.FloatDecisionTypes.AGGRESSIVENESS);
         randomDecision = createRandomDecisionFloat(8, 10, 1, 10);
+        Join = createDecisionsEnum(ActionsEnum.Actions.JOIN, myPersonality);
 
 
         root.nodeTrue = iAmMonster;
@@ -76,8 +80,14 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
         comparePriorityTreeAction = createPriorityObjectDecision(myPersonality, targetPersonality);
 
-        givingMeObject.nodeTrue = comparePriorityTreeAction; //MOCK-ASINES SALTARINES
-        givingMeObject.nodeFalse = trustHimMore6;
+        /* givingMeObject.nodeTrue = comparePriorityTreeAction;
+         givingMeObject.nodeFalse = trustHimMore6;*/
+
+        givingMeObject.nodeTrue = comparePriorityTreeAction;
+        givingMeObject.nodeFalse = Join;
+
+        Join.nodeTrue = trustHimMore6;
+        Join.nodeFalse = addActionNothing();
 
          comparePriorityTreeAction.nodeFalse = addActionNothing();
         comparePriorityTreeAction.nodeTrue = addActionAcceptObjectOffered();

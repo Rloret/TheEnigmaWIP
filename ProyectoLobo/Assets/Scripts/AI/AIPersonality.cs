@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class AIPersonality: MonoBehaviour {
 
     public int health = 0;
-    public int attack;
+    public int attack=0;
     public int confidence;
 
     public float charisma=3;
@@ -33,10 +33,7 @@ public class AIPersonality: MonoBehaviour {
         initializeTrustInOthers();
 
     }
-    public void SetInteraction(ActionsEnum.Actions a)
-    {
-        interactionFromOtherCharacter = a;
-    }
+ 
     public void SetMyOwnIndex(int i) {
         MyOwnIndex = i;
     }

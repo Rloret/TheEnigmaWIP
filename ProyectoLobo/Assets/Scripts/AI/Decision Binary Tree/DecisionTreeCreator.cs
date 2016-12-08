@@ -24,7 +24,7 @@ public class DecisionTreeCreator : DecisionTreeNode
 
     public override void Start()
     {
-        Debug.Log("start dec tree creator");
+     //   Debug.Log("start dec tree creator");
 
         //target = this.gameObject; //just to create the decisiontree
 
@@ -156,8 +156,8 @@ public class DecisionTreeCreator : DecisionTreeNode
 
             decisionNew = decisionNew.MakeDecision() as Decision;
 
-           // Debug.Log("decisionNew es " + decisionNew);
-         //   if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);
+            /*Debug.Log("decisionNew es " + decisionNew);
+            if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);*/
 
             if (decisionNew == null)
             {

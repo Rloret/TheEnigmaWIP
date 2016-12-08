@@ -8,7 +8,6 @@ public class ActionAcceptObjectOffered : Action {
         //Code for attack
         //Placeholder
         Debug.Log("aceptar objeto y aumentar confianza");
-        base.visibiCone.IDecided = false;
 
         base.DestroyTrees();
 
@@ -22,6 +21,7 @@ public class ActionAcceptObjectOffered : Action {
     private void EnableCone()
     {
         GetComponent<VisibilityConeCycleIA>().enabled = true;
+        base.visibiCone.IDecided = false;
 
     }
 }
