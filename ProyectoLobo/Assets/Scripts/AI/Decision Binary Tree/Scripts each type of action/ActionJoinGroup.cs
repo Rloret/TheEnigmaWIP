@@ -7,7 +7,7 @@ public class ActionJoinGroup : Action
     public override void DoAction()
     {
         base.visibiCone.IDecided = false;
-
+        Reaction.spawnReaction(ResponseController.responseEnum.GROUP, ResponseController.responseEnum.OK, this.gameObject);
         Debug.Log("me uno a tu grupo");
         string[] behaviours = { "Pursue","Leave", "AvoidWall", "Face" };
         float[] weightedBehavs = { 0.8f,0.1f, 1, 1 };

@@ -8,7 +8,7 @@ public class ActionAttack : Action {
     public override void DoAction()
     {
 
-
+        Reaction.spawnReaction(ResponseController.responseEnum.ATTACK, ResponseController.responseEnum.ATTACK, this.gameObject);
         Debug.Log("voy a atacar y bajo confianza. Soy "+this.gameObject.name);
         base.DestroyTrees();
 

@@ -5,7 +5,7 @@ public class ActionOffer : Action {
 
     public override void DoAction()
     {
-
+        Reaction.spawnReaction(ResponseController.responseEnum.OFFER, ResponseController.responseEnum.QUESTIONMARK, this.gameObject);
         //Code for attack
         //Placeholder
         Debug.Log("voy a ofrecer");

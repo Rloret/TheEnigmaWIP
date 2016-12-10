@@ -4,9 +4,11 @@ using System.Collections;
 public class Action : DecisionTreeNode {
 
     public VisibilityConeCycleIA visibiCone;
+    public ResponseController Reaction;
 
     private void Awake() {
         visibiCone = this.GetComponent<VisibilityConeCycleIA>();
+        Reaction = GameObject.FindGameObjectWithTag("GameController").GetComponent<ResponseController>();
 
     }
     public override DecisionTreeNode MakeDecision()

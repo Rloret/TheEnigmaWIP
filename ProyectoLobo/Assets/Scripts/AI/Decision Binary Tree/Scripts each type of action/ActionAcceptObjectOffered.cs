@@ -8,7 +8,7 @@ public class ActionAcceptObjectOffered : Action {
         //Code for attack
         //Placeholder
         Debug.Log("aceptar objeto y aumentar confianza");
-
+        Reaction.spawnReaction(ResponseController.responseEnum.OFFER, ResponseController.responseEnum.OK, this.gameObject);
         base.DestroyTrees();
 
 

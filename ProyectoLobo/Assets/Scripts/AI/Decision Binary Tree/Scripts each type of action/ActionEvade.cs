@@ -9,8 +9,8 @@ public class ActionEvade : Action {
 
         Debug.Log("voy a huir y bajo confianza. Soy "+this.gameObject.name);
 
+        Reaction.spawnReaction(ResponseController.responseEnum.EVADE, ResponseController.responseEnum.EVADE, this.gameObject);
 
-        
         string[] behaviours = { "Evade", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
 

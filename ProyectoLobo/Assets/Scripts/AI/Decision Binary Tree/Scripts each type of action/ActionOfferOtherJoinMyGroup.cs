@@ -8,6 +8,7 @@ public class ActionOfferOtherJoinMyGroup : Action {
         //Code for attack
         //Placeholder
         Debug.Log("unete a mi grupo");
+        Reaction.spawnReaction(ResponseController.responseEnum.GROUP, ResponseController.responseEnum.QUESTIONMARK, this.gameObject);
         base.DestroyTrees();
 
         Invoke("EnableCone", 5f);

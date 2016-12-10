@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ResponseController.cs" />
     <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Decision.cs" />
@@ -127,6 +128,8 @@
     <Compile Include="Assets\Scripts\Movement\Seek.cs" />
     <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
     <Compile Include="Assets\Scripts\Movement\Wander.cs" />
+    <Compile Include="Assets\Scripts\Objects\DestroyTimed.cs" />
+    <Compile Include="Assets\Scripts\Objects\MoveUp.cs" />
     <Compile Include="Assets\Scripts\Objects\ObjectAction.cs" />
     <Compile Include="Assets\Scripts\Objects\ObjectHandler.cs" />
     <Compile Include="Assets\Scripts\OnObjectClickedController.cs" />
