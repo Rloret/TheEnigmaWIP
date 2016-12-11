@@ -151,7 +151,7 @@ public class OnObjectClickedController : MonoBehaviour {
         menuController.OpenConversationMenu(character, targetIA);
     }
 
-    public void addBehavioursOver(GameObject behaviourReceiver, Vector3 target,string[] behaviours, float[] weights)
+    /*public void addBehavioursOver(GameObject behaviourReceiver, Vector3 target,string[] behaviours, float[] weights)
     {
         if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
         WeightedBehaviours aux_behav = new WeightedBehaviours();
@@ -195,7 +195,7 @@ public class OnObjectClickedController : MonoBehaviour {
         }
         IAAction(behaviourReceiver, target);
 
-    }
+    }*/
 
     public void addBehavioursOver(GameObject behaviourReceiver, GameObject target, string[] behaviours, float[] weights)
     {
@@ -245,7 +245,7 @@ public class OnObjectClickedController : MonoBehaviour {
         IAAction(behaviourReceiver, target);
 
     }
-    void IAAction(GameObject behaviourreceiver,Vector3 target)// busca el primer gameobjeto diferente de objext
+   /* void IAAction(GameObject behaviourreceiver,Vector3 target)// busca el primer gameobjeto diferente de objext
     {
 
         Collider2D[] coli= Physics2D.OverlapCircleAll((Vector2)target, 16,mask);
@@ -263,12 +263,12 @@ public class OnObjectClickedController : MonoBehaviour {
             GameObject targetgo = selected.gameObject;
             floorAction(behaviourreceiver, targetgo);
         }
-      /*  else
+        else
         {
             Debug.LogError("En ese punto no hay absolutamente nada");
-        }*/
+        }
 
-    }
+    }*/
     void IAAction(GameObject behaviourreceiver, GameObject target)
     {
             floorAction(behaviourreceiver, target);

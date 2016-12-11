@@ -3,21 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DecisionTarget : MonoBehaviour {
-
-    //private AIPersonality personality;
+	
     private Dictionary<GameObject, int> analyzedTargets;
     private PriorityTree priorityTree;
     private Memory memory;
-
-    public GameObject AI;
 
 
     void Awake() {
 
         analyzedTargets = new Dictionary<GameObject, int>();
         priorityTree = new PriorityTree();
-        memory = AI.GetComponent<Memory>();
-
 
 	}
 
@@ -37,6 +32,8 @@ public class DecisionTarget : MonoBehaviour {
         GameObject chosenTarget = null;
         GameObject currentTarget = null;
         AIPersonality personality = Ai.GetComponent<AIPersonality>();
+		ObjectHandler objectHand = Ai.GetComponent<ObjectHandler> ();
+		memory = Ai.GetComponent<Memory>();
 
 
         foreach (GameObject target in viewedTargets)
@@ -47,17 +44,14 @@ public class DecisionTarget : MonoBehaviour {
                 analyzedTargets.Add(target, priority);
         }
 
-        chosenTarget = GivePriorityTarget(analyzedTargets); // Recoge el GameObject más prioritario
+		chosenTarget = GivePriorityTarget(analyzedTargets, memory); // Recoge el GameObject más prioritario
+		//Debug.Log("El objeto más prioritario es: " + chosenTarget);
         nameCurrentTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
+
 
         if ((chosenTarget.tag == "IA" || chosenTarget.tag=="Player"))
         {
             analyzedTargets.Clear();
-
-            //active tree
-
-           
-
             return chosenTarget;
         }
         else if( nameCurrentTarget != "NONE")
@@ -67,6 +61,8 @@ public class DecisionTarget : MonoBehaviour {
             currentTarget = Resources.Load(aux) as GameObject;
             
             currentTargetpriority = priorityTree.GetPriority(currentTarget, personality);
+			//Debug.Log ("currentTarget: " + currentTarget);
+			//Debug.Log ("prioridad del target actual: " + currentTargetpriority + " prioridad del que estoy viendo: " + analyzedTargets [chosenTarget]);
 
             if (currentTargetpriority > analyzedTargets[chosenTarget])
             {
@@ -77,8 +73,9 @@ public class DecisionTarget : MonoBehaviour {
             {
                 if (chosenTarget.name == nameCurrentTarget) // Si lleva un objeto y es el que ha visto más prioritario: ese objeto se elimina del diccionario y se recoge el siguiente con más prioridad
                 {
+					Debug.Log ("El que veo es más prioritario");
                     analyzedTargets.Remove(chosenTarget);
-                    chosenTarget = GivePriorityTarget(analyzedTargets);
+                    chosenTarget = GivePriorityTarget(analyzedTargets, memory);
                     analyzedTargets.Clear();
                 }
 
@@ -100,7 +97,7 @@ public class DecisionTarget : MonoBehaviour {
     /// </summary>
     /// <param name="analyzedTargets"></param>
     /// <returns></returns>
-    private GameObject GivePriorityTarget(Dictionary<GameObject, int> analyzedTargets)
+	private GameObject GivePriorityTarget(Dictionary<GameObject, int> analyzedTargets, Memory memory)
     {
         int maxPriority = -1;
         GameObject chosenTarget = null;
@@ -114,7 +111,7 @@ public class DecisionTarget : MonoBehaviour {
             }
             if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
             {
-                memory.objectsSeenBefore.Add(par.Key.name, par.Key);
+				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
             }
 
         }

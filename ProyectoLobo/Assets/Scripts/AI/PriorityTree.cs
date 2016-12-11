@@ -21,6 +21,7 @@ public class PriorityTree : MonoBehaviour {
             if (Personality.charisma > Personality.selfAssertion && Personality.charisma > Personality.fear) //Es carismática
             {
                 //Debug.Log("SUperCarismática");
+				Debug.Log ("carisma: " + Personality.charisma + " agresividad: " + Personality.selfAssertion + " miedo: " + Personality.fear);
                 if (target.name == "MockIA") // Es una MockIAa
                 {
                     if (Personality.confidence > 50) // Confía en ella
@@ -51,9 +52,7 @@ public class PriorityTree : MonoBehaviour {
 
             else if (Personality.fear > Personality.selfAssertion)
             {
-              /*  Debug.Log("Miedo: " + Personality.fear);
-                Debug.Log("Agresividad: " + Personality.selfAssertion);
-                Debug.Log("Miedoso");*/
+				//Debug.Log ("soy miedoso");
                 if (target.name == "MockIA")
                 {
                    if (Personality.confidence > 50)
@@ -78,23 +77,18 @@ public class PriorityTree : MonoBehaviour {
             }
             else
             {
-               /* Debug.Log("Miedo: " + Personality.fear);
-                Debug.Log("Agresividad: " + Personality.selfAssertion);
-                Debug.Log("Agresivo");*/
-                if (target.name == "MockIA")
-                {
-                   if (Personality.confidence > 50)
-                    {
-                        if (Personality.charisma > Personality.fear)
-                            priority = 3;
-                        else
-                            priority = 2;
-                    }
-                    else
-                        priority = 0;
-                }
-                else if (target.name == "Axe")
-                    priority = 3;
+				//Debug.Log ("Soy agresivo");
+				if (target.name == "MockIA") {
+					if (Personality.confidence > 50) {
+						if (Personality.charisma > Personality.fear)
+							priority = 3;
+						else
+							priority = 2;
+					} else
+						priority = 0;
+				} else if (target.name == "Axe") {
+					priority = 3;
+				}
                 else if (Personality.fear > Personality.charisma)
                 {
                     if (target.name == "Shield")
