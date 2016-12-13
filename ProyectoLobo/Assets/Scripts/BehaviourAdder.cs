@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OnObjectClickedController : MonoBehaviour {
-
+public class BehaviourAdder : MonoBehaviour {
     public float MinDistanceOpenMenu = 60f;
     public LayerMask mask;
     private ConversationMenuController menuController;
 
     [System.Serializable]
+
 
     public struct WeightedBehaviours
     {
@@ -28,9 +28,8 @@ public class OnObjectClickedController : MonoBehaviour {
             this.weight = weight;
             this.priority = 0;
         }
-
-
     }
+
     [Tooltip("Este array sirve para almacenar todos los comportamientos que se van a ejecutar a la vez y sus prioridades.")]
     public WeightedBehaviours[] WeightedBehavioursArray;
 
@@ -41,53 +40,11 @@ public class OnObjectClickedController : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         menuController = this.gameObject.GetComponent<ConversationMenuController>();
 	}
 	
-
-    public void DetermineAction(GameObject behaviorReceiber, GameObject aux) {
-
-        if (aux.tag == "IA")
-        {
-            if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu)
-            {
-                Debug.Log("estan cerca, abro menu");
-                openConversationMenu(behaviorReceiber, aux);
-
-            }
-            else
-            {
-                Debug.Log("esta lejos, me acercare");
-             
-                WeightedBehaviours pursue = new WeightedBehaviours(SteeringBehaviour.PURSUE, 0.7f, 0);
-                WeightedBehaviours avoidWall = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, 1f, 0);
-                WeightedBehaviours face = new WeightedBehaviours(SteeringBehaviour.FACE, 1f, 0);
-                WeightedBehavioursArray =new WeightedBehaviours[] {pursue,avoidWall,face };
-                floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
-            }
-        }
-
-        else if (aux.tag == "MenuButton")
-        {
-            Debug.Log("menuButton");
-            aux.GetComponent<ButtonAction>().Action();
-        }
-        else if (aux.tag == "Player") {
-            Debug.Log("Pa k clikas en el player, jaja salu2");
-        } else if (aux.layer == 8) {
-            //Esto es para que al clickar en un muro no haga nada
-        }
-        else
-        { // target is floor
-            string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
-            float[] weightedBehavs = { 0.7f, 1, 1 };
-           addBehavioursOver(behaviorReceiber, aux, behaviours, weightedBehavs);
-            //floorAction(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
-        }
-        
-    }
-
 
     public void addBehaviour(GameObject behaviorReceiber, SteeringBehaviour comportamiento, GameObject aux, float weight,int priority)
     {
@@ -132,7 +89,7 @@ public class OnObjectClickedController : MonoBehaviour {
         }
 
     }
-    void floorAction(GameObject behaviorReceiber, GameObject aux) {
+    public void ActionWhenClick(GameObject behaviorReceiber, GameObject aux) {
         //if (aux.tag != "IA") aux.GetComponent<SpriteRenderer>().color = Color.red; ESTO ES PARA PONER ROJO EL PUNTO DE DESTINO
 
         //copied from clickPosition
@@ -147,7 +104,7 @@ public class OnObjectClickedController : MonoBehaviour {
         }
     }
 
-    void openConversationMenu(GameObject character, GameObject targetIA) {
+    public void openConversationMenu(GameObject character, GameObject targetIA) {
         menuController.OpenConversationMenu(character, targetIA);
     }
 
@@ -235,7 +192,7 @@ public class OnObjectClickedController : MonoBehaviour {
                     WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.FLEE, weights[iterator], 0);
                     break;
                 default:
-                    Debug.LogError("ESE COMPORTAMIENTO NO ESTA CIONTEMPLADO ;(");
+                    Debug.LogError("ESE COMPORTAMIENTO NO ESTA CONTEMPLADO ;(");
                     WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);
                     break;
             }
@@ -261,7 +218,7 @@ public class OnObjectClickedController : MonoBehaviour {
         if (selected != null )
         {
             GameObject targetgo = selected.gameObject;
-            floorAction(behaviourreceiver, targetgo);
+            ActionWhenClick(behaviourreceiver, targetgo);
         }
         else
         {
@@ -271,7 +228,7 @@ public class OnObjectClickedController : MonoBehaviour {
     }*/
     void IAAction(GameObject behaviourreceiver, GameObject target)
     {
-            floorAction(behaviourreceiver, target);
+        ActionWhenClick(behaviourreceiver, target);
 
     }
 
