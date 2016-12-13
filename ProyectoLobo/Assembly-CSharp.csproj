@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\AI\Memory.cs" />
      <Compile Include="Assets\Scripts\AI\PriorityTree.cs" />
      <Compile Include="Assets\Scripts\ActionsEnum.cs" />
+     <Compile Include="Assets\Scripts\BehaviourAdder.cs" />
      <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\AttackButtonClick.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\ButtonAction.cs" />
@@ -98,7 +99,6 @@
      <Compile Include="Assets\Scripts\Movement\Wander.cs" />
      <Compile Include="Assets\Scripts\Objects\ObjectAction.cs" />
      <Compile Include="Assets\Scripts\Objects\ObjectHandler.cs" />
-     <Compile Include="Assets\Scripts\OnObjectClickedController.cs" />
      <Compile Include="Assets\Scripts\StateManager.cs" />
      <Compile Include="Assets\Scripts\States\BeginState.cs" />
      <Compile Include="Assets\Scripts\States\EndGameState.cs" />
