@@ -61,14 +61,15 @@ public class ResponseController : MonoBehaviour {
     {
         GameObject whichConversation = Instantiate(Reactions) as GameObject;
         Image[] reactions = whichConversation.GetComponentsInChildren<Image>();
-        Image action = reactions[0].name == "WhichAction" ? reactions[0] : reactions[1];
-        Image conditional = reactions[0].name == "WhichAction" ? reactions[1] : reactions[0];
+        Image action = reactions[0].name == "WhichAction" ? reactions[1] : reactions[2];
+        Image conditional = reactions[0].name == "WhichAction" ? reactions[2] : reactions[1];
 
         configureActions(Act, Condit, ref action, ref conditional);
 
         whichConversation.GetComponent<DestroyTimed>().lifeTime = 3f;
         whichConversation.GetComponent<MoveUp>().whoToFollow = target;
         whichConversation.transform.position = target.transform.position;
+        whichConversation.transform.parent = target.transform;
     }
 
 }

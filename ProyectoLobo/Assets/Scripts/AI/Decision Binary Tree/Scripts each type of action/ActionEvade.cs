@@ -15,6 +15,7 @@ public class ActionEvade : Action {
         float[] weightedBehavs = { 0.7f, 1, 1 };
 
         GetComponent<VisibilityConeCycleIA>().enabled = false;
+        GetComponent<GroupScript>().leaveGroup(this.gameObject);
         base.visibiCone.IDecided = false;
 
         base.DestroyTrees();

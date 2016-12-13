@@ -16,7 +16,6 @@ public class ActionOfferOtherJoinMyGroup : Action {
 
     private void EnableCone()
     {
-        Debug.Log("HAN PASADO 5!!!!!!!!!!!!");
         GetComponent<VisibilityConeCycleIA>().enabled = true;
         base.visibiCone.IDecided = false;
 

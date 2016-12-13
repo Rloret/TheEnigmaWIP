@@ -12,10 +12,22 @@ public class GroupScript : MonoBehaviour {
     public List<GameObject> groupMembers;
 
     private int numberMembersGroup = 0;
+
     void Start()
     {
         groupMembers = new List<GameObject>();
 
+    }
+    void OnDrawGizmos()
+    {
+        if (groupMembers.Count > 0)
+        {
+            Gizmos.color = Color.black;
+            for (int i = 1; i < groupMembers.Count; i++)
+            {
+                Gizmos.DrawLine(groupMembers[i - 1].transform.position+Vector3.up*3, groupMembers[i].transform.position + Vector3.up * 3);
+            }
+        }
     }
     public void FollowTheLeaderAttack()
     {
@@ -33,9 +45,30 @@ public class GroupScript : MonoBehaviour {
         }
         addSingleMember(component);
     }
+    public void leaveGroup(GameObject component)
+    {
+        foreach (var members in groupMembers)
+        {
+            members.GetComponent<GroupScript>().removeSingleMember(component);
+        }
+        if (groupMembers.Count > 0)
+        {
+            groupMembers[0].GetComponent<GroupScript>().makeLeader();
+        }
+        removeSingleMember(component);
+        groupLeader = null;
+        inGroup =IAmTheLeader= false;
+        groupMembers.Clear();
+
+    }
     public void addSingleMember(GameObject component)
     {
         groupMembers.Add(component);
+    }
+
+    public void removeSingleMember(GameObject component)
+    {
+        groupMembers.Remove(component);
     }
 
     public bool checkIAInGroup(GameObject IA)
@@ -55,6 +88,11 @@ public class GroupScript : MonoBehaviour {
         {
             IAmTheLeader = true;
             groupLeader = this.gameObject;
+        }
+        foreach (var members in groupMembers)
+        {
+            members.GetComponent<GroupScript>().groupLeader = this.gameObject;
+            members.GetComponent<GroupScript>().IAmTheLeader = false;
         }
     }
 }

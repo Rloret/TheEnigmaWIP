@@ -167,7 +167,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                       //  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
                         IDecided = true;
 
-                        Debug.Log("yo " + this.gameObject.transform + "veo a  " + priorityGO + " (target)");
+                       // Debug.Log("yo " + this.gameObject.transform + "veo a  " + priorityGO + " (target)");
                         if (whatToDoScript == null)
                         {
                             whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
