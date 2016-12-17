@@ -22,6 +22,7 @@ public class ActionJoinGroup : Action
         GroupScript myGroup = this.GetComponent<GroupScript>();
         GroupScript leadergroup = t.GetComponent<GroupScript>();
 
+
         myGroup.groupLeader = t ;
         myGroup.inGroup = true;
         myGroup.IAmTheLeader = false;
@@ -30,6 +31,7 @@ public class ActionJoinGroup : Action
         myGroup.addSingleMember(t);
         leadergroup.updateGroups(this.gameObject);
         leadergroup.makeLeader();
+
 
 		if(this.gameObject.tag!="Player") base.DestroyTrees();
 

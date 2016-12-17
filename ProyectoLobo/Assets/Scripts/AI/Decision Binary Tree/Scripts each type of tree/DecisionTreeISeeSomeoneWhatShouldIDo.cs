@@ -247,6 +247,8 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 				if (target.tag == "Player") {
 					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
 					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_ATTACKED,target);
+					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+
 				} else {
 					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
 				}
@@ -259,6 +261,8 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 				if (target.tag == "Player") {
 					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
 					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_OFFERED_OBJECT,target);
+					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+
 
 
 				} else {
@@ -275,6 +279,8 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 				if (target.tag == "Player") {
 					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
 					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_OFFERED_JOIN,target);
+					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+
 
 
 				} else {

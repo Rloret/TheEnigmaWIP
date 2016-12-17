@@ -11,7 +11,7 @@ public class YesButton : ButtonAction {
 
 	private DecisionTreeReactionAfterInteraction reactionTree;
 
-/*public override void Action()
+public override void Action()
 	{
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerPers = player.GetComponent<PlayerPersonality> ();
@@ -24,31 +24,33 @@ public class YesButton : ButtonAction {
 		if(	playerPers.interactionFromOtherCharacter== ActionsEnum.Actions.OFFER){
 			playerPers.myObject = targetIA.GetComponent<AIPersonality> ().myObject;
 			targetIA.GetComponent<AIPersonality> ().myObject = ObjectHandler.ObjectType.NONE;
+			Debug.Log ("player:he cogido tu objeto");
 		}
 
 		else if(playerPers.interactionFromOtherCharacter== ActionsEnum.Actions.JOIN){
-			playerGroup.addSingleMember (targetIA);
-			targetIA.GetComponent<GroupScript> ().updateGroups (player);
+		//	playerGroup.addSingleMember (targetIA);
+		//	targetIA.GetComponent<GroupScript> ().updateGroups (player);
+			Debug.Log ("player:me uno a tu grupo bro");
+
+		GroupScript myGroup = playerPers.gameObject.GetComponent<GroupScript>();
+		GroupScript leadergroup = targetIA.GetComponent<GroupScript>();
+			Debug.Log (targetIA);
+
+
+		myGroup.groupLeader = targetIA ;
+        myGroup.inGroup = true;
+        myGroup.IAmTheLeader = false;
+        myGroup.groupMembers.Clear();
+        myGroup.groupMembers.AddRange(leadergroup.copyGroup());
+		myGroup.addSingleMember(targetIA);
+		leadergroup.updateGroups(playerPers.gameObject);
+        leadergroup.makeLeader();
+        
 
 		}
-
-		targetIA.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
-		Debug.Log("target es " + targetIA);
-
-		reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
-		if (reactionTree == null) {
-			reactionTree=targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
-		}
-		Debug.Log("tree es " + reactionTree);
-
-		reactionTree.target = targetIA;
-		Debug.Log("target en tree es es " + reactionTree.target);
-
-
-		reactionTree.StartTheDecision();
-
+			
 
 		this.gameObject.transform.parent.gameObject.SetActive(false);
 	}
-	*/
+
 }

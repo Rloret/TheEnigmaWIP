@@ -8,7 +8,7 @@ public class ClickPosition : MonoBehaviour {
     public Vector2 clickPos;
     public BehaviourAdder clickController;
     public LayerMask avoidCollisionWith;
-    public float MinDistanceOpenMenu = 40f;
+    public float MinDistanceOpenMenu =100f;
 
 	public GameObject[] menus;
 
@@ -27,15 +27,18 @@ public class ClickPosition : MonoBehaviour {
             Vector2 mousePos = new Vector2(mouseWorldPos.x, mouseWorldPos.y); //Esto coje la posición en la pantalla
 
             Vector2 dir = Vector2.zero;
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, dir, 10000, avoidCollisionWith);
+			RaycastHit2D[] hit = Physics2D.RaycastAll(mousePos, dir, 10000, avoidCollisionWith);
 
             //int counter = 0;
 
-            if (hit.collider != null)
-            {
-                GameObject aux = hit.collider.gameObject;
-                DetermineAction(this.gameObject, aux);
-            }
+            //if (hit.collider != null)
+           // {
+				foreach (var h in hit) {
+					GameObject aux = h.collider.gameObject;
+					DetermineAction(this.gameObject, aux);
+				}
+               
+           // }
         }
     }
 

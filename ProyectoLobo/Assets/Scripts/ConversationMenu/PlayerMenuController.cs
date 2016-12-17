@@ -45,7 +45,9 @@ public class PlayerMenuController : MonoBehaviour {
 	public GameObject GetTargetIA() {
 		return targetIA;
 	}
-
+	public void SetTargetIA(GameObject t) {
+		 targetIA=t;
+	}
 	/*public void OpenAttackedMenu(GameObject targetIA){
 		this.targetIA = targetIA;
 		menuAttacked.transform.position = targetIA.transform.position;
