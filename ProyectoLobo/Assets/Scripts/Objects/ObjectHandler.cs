@@ -52,6 +52,7 @@ public class ObjectHandler : MonoBehaviour {
 
 	public GameObject desiredObject;
 	private AIPersonality personality;
+    private AgentPositionController agentPositionControllerScript;
     private Dictionary<string, Vector3?> objSeenBefore;
 
     #endregion
@@ -69,14 +70,15 @@ public class ObjectHandler : MonoBehaviour {
             cycleIA = this.GetComponent<VisibilityConeCycleIA>();
 			personality = this.GetComponent<AIPersonality> ();
             objSeenBefore = personality.myMemory.objectsSeenBefore;
+            agentPositionControllerScript = this.GetComponent<AgentPositionController>();
         }
     }
 
 	void OnTriggerEnter2D (Collider2D coll) {
         //Debug.Log("Colisionando con: " + coll.name);
 		if(coll.gameObject == desiredObject) {
-                GO2ObjectType(coll.gameObject.name);
-                currentObject = coll.gameObject;
+            GO2ObjectType(coll.gameObject.name);
+            currentObject = coll.gameObject;
             if (objSeenBefore.ContainsKey(coll.name))
             {
                 objSeenBefore.Remove(coll.name);
@@ -87,8 +89,9 @@ public class ObjectHandler : MonoBehaviour {
                 Debug.Log("El objeto que recuerdo es una linterna? " + objSeenBefore.ContainsKey("Flashlight"));*/
             }
             hasObject = true;
-                desiredObject = null;
-        }
+            Improvement();
+            desiredObject = null;
+    }
         else
         {       
             if (desiredObject && desiredObject.name == coll.gameObject.name)
@@ -96,7 +99,11 @@ public class ObjectHandler : MonoBehaviour {
                 if (coll.gameObject.name == "Medicalaid") {
                     personality.health = 50;
                 }
-                objSeenBefore.Remove(coll.name);
+                else
+                {
+                    objSeenBefore.Remove(coll.name);
+                }
+               
                 Debug.Log("Sigo recordando el botiquin? " + objSeenBefore.ContainsKey("Medicalaid"));
                 desiredObject = null;
 
@@ -109,6 +116,7 @@ public class ObjectHandler : MonoBehaviour {
         pickRadius = radius;
 		if (hasObject) {
 			pickupObject (currentObject);
+            
 		}
 
     }
@@ -116,6 +124,23 @@ public class ObjectHandler : MonoBehaviour {
 	public void pickupObject(GameObject takedObject) {
         takedObject.transform.position = this.transform.position;
 
+    }
+
+    private void Improvement()
+    {
+        switch (currentObject.name)
+        {
+            case "Axe":
+                personality.attack = 15;
+                break;
+            case "Boots":
+                agentPositionControllerScript.maxLinearVelocity = 200;
+                break;
+            case "FlashLight":
+                break;
+            case "Shield":
+                break;
+        }
     }
 
 	private void GO2ObjectType(string ob) {

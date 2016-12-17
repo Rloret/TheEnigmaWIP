@@ -6,6 +6,7 @@ public class AIPersonality: PersonalityBase {
 
 	public DecisionTreeNode[] oldNodes;
 
+
     public Memory myMemory;
 
 
