@@ -176,6 +176,8 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                       //  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
                         IDecided = true;
 
+						priorityGO.GetComponent<VisibilityConeCycleIA>().enabled = false;
+
                        // Debug.Log("yo " + this.gameObject.transform + "veo a  " + priorityGO + " (target)");
                         if (whatToDoScript == null)
                         {
@@ -220,13 +222,6 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 						}
 						else {
 							DestroyImmediate(whatToDoScript);
-
-							DecisionTreeNode[] oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
-							Debug.Log ("nodos viejos: " + oldNodes.Length);
-
-							foreach(DecisionTreeNode n in oldNodes){
-								DestroyImmediate(n);
-							}
 
 							whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
 
