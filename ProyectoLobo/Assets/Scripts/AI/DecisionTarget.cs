@@ -127,7 +127,6 @@ public class DecisionTarget : MonoBehaviour {
             {
 				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
             }
-
         }
         return chosenTarget;
 

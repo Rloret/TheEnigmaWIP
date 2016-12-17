@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Arrive : AgentBehaviour {
 
-    public float targetRadius=15;
+    public float targetRadius=32;
     public float slowRadius=64;
     public float timeToTarget = 0.1f;
 

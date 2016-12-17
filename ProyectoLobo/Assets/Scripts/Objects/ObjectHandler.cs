@@ -169,8 +169,9 @@ public class ObjectHandler : MonoBehaviour {
                 CurrentObject.image.color = Color.white;
 
             VisibleElements.visibleGameObjects.Remove(g);
-           
-            Destroy(g);
+
+            //Destroy(g);
+            g.SetActive(false);
             possibleObject = null;
             hasObject = true;
             

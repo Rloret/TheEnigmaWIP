@@ -30,6 +30,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     public bool IDecided = false;
 
+    public bool stuckedAI = false;
 
 
 
@@ -260,19 +261,25 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     }
 
-    private void moveRandomly(Vector2 A, Vector2 C)
+    public void moveRandomly(Vector2 A, Vector2 C)
     {
-		
+        int random;
+
         Vector3 AC = C - A;
-        int random = Random.Range(1, 4);
-        Vector3 percentageAC = AC / (float)random;
-        Vector3 targetPosition = A + (Vector2)percentageAC;
-		GameObject targetGO = (GameObject)Instantiate (ghostTarget, targetPosition, Quaternion.identity);
-		targetsAux.Add (targetGO);
-        string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
-        float[] weightedBehavs = { 0.7f, 1, 1 };
-        movementController.addBehavioursOver(this.gameObject, targetGO, behaviours, weightedBehavs);
-		DeleteTargetAux();
+        if (Time.frameCount % 30 == 0 && !stuckedAI)
+        {
+            random = Random.Range(1, 8);
+            Vector3 percentageAC = AC / (float)random;
+            Vector3 targetPosition = A + (Vector2)percentageAC;
+            GameObject targetGO = (GameObject)Instantiate(ghostTarget, targetPosition, Quaternion.identity);
+            targetsAux.Add(targetGO);
+
+            string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
+            float[] weightedBehavs = { 0.4f, 1, 1 };
+            movementController.addBehavioursOver(this.gameObject, targetGO, behaviours, weightedBehavs);
+
+            DeleteTargetAux();
+        }
 
     }
 
