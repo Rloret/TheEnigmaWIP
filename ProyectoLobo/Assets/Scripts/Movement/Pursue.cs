@@ -21,7 +21,8 @@ public class Pursue : Arrive {
     public override SteeringOutput GetSteering()
     {
         if (target.GetComponent<AgentPositionController>() == null)
-            targetAgent = new AgentPositionController();
+            targetAgent = target.AddComponent<AgentPositionController>();
+            //targetAgent = new AgentPositionController();
         else
             targetAgent =target.GetComponent<AgentPositionController>();
         targetAux = target;

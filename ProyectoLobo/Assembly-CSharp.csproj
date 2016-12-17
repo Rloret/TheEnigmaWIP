@@ -45,13 +45,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ResponseController.cs" />
      <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Decision.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeCreator.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeNode.cs" />
+     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAcceptObjectOffered.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAttack.cs" />
-     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionComparePriorityObjectAgainstPriorityTree.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionEvade.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionJoinGroup.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionNothing.cs" />
@@ -78,6 +79,7 @@
      <Compile Include="Assets\Scripts\ConversationMenu\ConvinceButtonClick.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\OfferButtonClick.cs" />
      <Compile Include="Assets\Scripts\GameOverScripts\ShortCutsButtons.cs" />
+     <Compile Include="Assets\Scripts\GroupScript.cs" />
      <Compile Include="Assets\Scripts\Health\HealthController.cs" />
      <Compile Include="Assets\Scripts\Interfaces\EmptyInterface.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IStateBase.cs" />
@@ -96,6 +98,8 @@
      <Compile Include="Assets\Scripts\Movement\Seek.cs" />
      <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
      <Compile Include="Assets\Scripts\Movement\Wander.cs" />
+     <Compile Include="Assets\Scripts\Objects\DestroyTimed.cs" />
+     <Compile Include="Assets\Scripts\Objects\MoveUp.cs" />
      <Compile Include="Assets\Scripts\Objects\ObjectAction.cs" />
      <Compile Include="Assets\Scripts\Objects\ObjectHandler.cs" />
      <Compile Include="Assets\Scripts\OnObjectClickedController.cs" />
