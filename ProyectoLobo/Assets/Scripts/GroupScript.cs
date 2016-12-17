@@ -16,6 +16,7 @@ public class GroupScript : MonoBehaviour {
     void Start()
     {
         groupMembers = new List<GameObject>();
+        groupLeader = this.gameObject;
 
     }
     void OnDrawGizmos()
@@ -47,7 +48,7 @@ public class GroupScript : MonoBehaviour {
     }
     public void leaveGroup(GameObject component)
     {
-        foreach (var members in groupMembers)
+      /*  foreach (var members in groupMembers)
         {
             members.GetComponent<GroupScript>().removeSingleMember(component);
         }
@@ -58,7 +59,7 @@ public class GroupScript : MonoBehaviour {
         removeSingleMember(component);
         groupLeader = null;
         inGroup =IAmTheLeader= false;
-        groupMembers.Clear();
+        groupMembers.Clear();*/
 
     }
     public void addSingleMember(GameObject component)
