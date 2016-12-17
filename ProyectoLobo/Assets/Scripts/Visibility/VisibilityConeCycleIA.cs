@@ -175,9 +175,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
             if (objectINeedRemember != "None")
             {
-                //priorityGO.transform.position = RememberedObject(objectINeedRemember);
-                //priorityGO.name = objectINeedRemember;
                 priorityGO = RememberedObject(objectINeedRemember);
+                Debug.Log("necesito el objeto: " + priorityGO);
             }
             else
             {
@@ -188,7 +187,6 @@ public class VisibilityConeCycleIA : MonoBehaviour
             //Debug.Log ("priority object= " + priorityGO.name);
             if (priorityGO == null) // no ha visto nada
             {
-                Debug.Log("no he visto nada o no recuerdo nada");
                 moveRandomly(A, C);
             }
             else
@@ -226,7 +224,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
                 else //lo más prioritario es un objeto
                 {
                     objecthand.desiredObject = priorityGO;
-
+                    Debug.Log("busco el objeto");
                     //Debug.Log ("Deseo " + objecthand.desiredObject);
                     //objecthand.setDesiredGameObject(priorityGO);
                     string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
@@ -244,10 +242,9 @@ public class VisibilityConeCycleIA : MonoBehaviour
             }
             if (objectINeedRemember != "None")
             {
-                //priorityGO.transform.position = RememberedObject(objectINeedRemember);
+                priorityGO = RememberedObject(objectINeedRemember);
                 if (priorityGO != null)
                 {
-                    priorityGO = RememberedObject(objectINeedRemember);
                     objecthand.desiredObject = priorityGO;
                     string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
                     float[] weightedBehavs = { 0.7f, 1, 1 };
@@ -297,29 +294,13 @@ public class VisibilityConeCycleIA : MonoBehaviour
     {
         if (personality.health < 20)
         {
+            Debug.Log("Necesito curarme");
             return "Medicalaid";
         }
         else
             return "None";
     }
 
-  /*  private Vector2 RememberedObject(string obj)
-    {
-        Vector2 position = new Vector2();
-        if (obj == "Medicalaid")
-        {
-
-            Vector3? rememberedObjectPosition = personality.myMemory.SearchInMemory("Medicalaid");
-            if (rememberedObjectPosition != null)
-            {
-
-                position = new Vector2(rememberedObjectPosition.Value.x, rememberedObjectPosition.Value.y);
-
-            }
-
-        }
-        return position;
-    }*/
     private GameObject RememberedObject(string obj)
     {
         

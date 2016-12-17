@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class AIPersonality: MonoBehaviour {
 
     public int health;
-    public int attack=0;
+    public int attack;
     public int confidence;
 
     public float charisma;

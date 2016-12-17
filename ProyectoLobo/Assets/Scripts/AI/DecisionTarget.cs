@@ -130,6 +130,7 @@ public class DecisionTarget : MonoBehaviour {
             if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
             {
 				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
+                Debug.Log("guardo en memoria " + par.Key.name);
 
             }
 
