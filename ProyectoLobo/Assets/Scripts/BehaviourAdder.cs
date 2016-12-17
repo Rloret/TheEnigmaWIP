@@ -91,7 +91,10 @@ public class BehaviourAdder : MonoBehaviour {
     }
     public void ActionWhenClick(GameObject behaviorReceiber, GameObject aux) {
         //if (aux.tag != "IA") aux.GetComponent<SpriteRenderer>().color = Color.red; ESTO ES PARA PONER ROJO EL PUNTO DE DESTINO
-
+		if (aux == null) {
+			
+			Debug.Log ("nuloo");
+		}
         //copied from clickPosition
         foreach (var comportamiento in behaviorReceiber.GetComponents<AgentBehaviour>())
         {

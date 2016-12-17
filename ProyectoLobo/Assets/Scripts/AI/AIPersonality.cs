@@ -15,7 +15,6 @@ public class AIPersonality: MonoBehaviour {
     public bool isMonster = false; // MOCK
   
     public ObjectHandler.ObjectType myObject;
-	//public GameObject myObject; Si quitásemos el enumerado
 
     public ActionsEnum.Actions interactionFromOtherCharacter;
     public int[] TrustInOthers;

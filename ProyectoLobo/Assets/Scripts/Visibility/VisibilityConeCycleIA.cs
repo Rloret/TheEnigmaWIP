@@ -23,9 +23,10 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private BehaviourAdder movementController;
     private ObjectHandler objecthand;
     private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
+	private List<GameObject> targetsAux;
 
 	public GameObject ghostTarget;
-	public GameObject priorityGO; //INCLUIDO PARA PODER ACCEDER AL PRIORITYGO DESDE EL ONTRIGGER
+	private GameObject priorityGO;
 
     public bool IDecided = false;
 
@@ -41,6 +42,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         VisibleConePoints = new LinkedList<Vector2>();
         visibleGameobjects = new List<GameObject>();
+		targetsAux = new List<GameObject> ();
         visibleGameobjects.Capacity = 50;
         Objects = new List<GameObject>();
         whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
@@ -158,7 +160,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         if (visibleGameobjects.Count > 0)
         {
 			
-            priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject); //SE DECLARABA AQUI
+            priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
             visibleGameobjects.Clear();
 			//Debug.Log ("priority object= " + priorityGO.name);
             if (priorityGO == null) // no ha visto nada
@@ -220,15 +222,27 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     private void moveRandomly(Vector2 A, Vector2 C)
     {
+		
         Vector3 AC = C - A;
         int random = Random.Range(1, 4);
         Vector3 percentageAC = AC / (float)random;
         Vector3 targetPosition = A + (Vector2)percentageAC;
 		GameObject targetGO = (GameObject)Instantiate (ghostTarget, targetPosition, Quaternion.identity);
+		targetsAux.Add (targetGO);
         string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
         movementController.addBehavioursOver(this.gameObject, targetGO, behaviours, weightedBehavs);
-		Destroy (targetGO, 0.2f);
+		DeleteTargetAux();
+
     }
+
+	private void DeleteTargetAux () {
+		if (targetsAux.Count > 1) {
+			GameObject t = targetsAux [0];
+			targetsAux.RemoveAt (0);
+			DestroyImmediate(t);
+		}
+		//Debug.Log ("Eliminando target aux");
+	}
 }
 
