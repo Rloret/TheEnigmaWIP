@@ -5,16 +5,15 @@ using System.Collections.Generic;
 public class AIPersonality: MonoBehaviour {
 
     public int health = 0;
-    public int attack;
+    public int attack=0;
     public int confidence;
 
-    public float charisma=9;
-    public float selfAssertion=2; // supongo que esto es agresividad para los arboles de decisiones ¿?
-    public float fear=1;
+    public float charisma;
+    public float selfAssertion; // supongo que esto es agresividad para los arboles de decisiones ¿?
+    public float fear;
 
     public bool isMonster = false; // MOCK
-    public bool inGroup = false; //MOCK
-    public GameObject groupLeader; // al inicio esto señala a si mismo para evitar problemas en una decision :)
+  
     public ObjectHandler.ObjectType myObject;
 
     public ActionsEnum.Actions interactionFromOtherCharacter;
@@ -23,7 +22,7 @@ public class AIPersonality: MonoBehaviour {
     public int MyOwnIndex;
 
     private Memory myMemory;
-    private GameObject rememberedMedicalaid;
+    private Vector3? rememberedMedicalaidPosition;
 
     void Start()
     {
@@ -34,10 +33,7 @@ public class AIPersonality: MonoBehaviour {
         initializeTrustInOthers();
 
     }
-    public void SetInteraction(ActionsEnum.Actions a)
-    {
-        interactionFromOtherCharacter = a;
-    }
+ 
     public void SetMyOwnIndex(int i) {
         MyOwnIndex = i;
     }
@@ -53,8 +49,8 @@ public class AIPersonality: MonoBehaviour {
     {
         if(health < 20)
         {
-            rememberedMedicalaid = myMemory.SearchInMemory("MEDICALAID");
-            if (rememberedMedicalaid != null)
+            rememberedMedicalaidPosition = myMemory.SearchInMemory("Medicalaid");
+            if (rememberedMedicalaidPosition != null)
             {
                 //moverse hacia alli
             }

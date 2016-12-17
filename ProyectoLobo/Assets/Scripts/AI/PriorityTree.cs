@@ -21,12 +21,19 @@ public class PriorityTree : MonoBehaviour {
             if (Personality.charisma > Personality.selfAssertion && Personality.charisma > Personality.fear) //Es carismática
             {
                 //Debug.Log("SUperCarismática");
-                if (target.name == "MockIA") // Es una MockIAa
+                if (target.tag == "IA") // Es una MockIAa
                 {
-                    if (Personality.confidence > 50) // Confía en ella
-                        priority = 3;
+                    if (Personality.confidence > 5) // Confía en ella
+                        if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
+                        {
+                            priority = 0;
+                        }
+                        else
+                        {
+                            priority = 3;
+                        }
                     else // No confía en ella
-                        priority = 0;
+                        priority = 1;
                 }
                 else // No es una MockIAa
                 {
@@ -54,10 +61,19 @@ public class PriorityTree : MonoBehaviour {
               /*  Debug.Log("Miedo: " + Personality.fear);
                 Debug.Log("Agresividad: " + Personality.selfAssertion);
                 Debug.Log("Miedoso");*/
-                if (target.name == "MockIA")
+                if (target.tag == "IA")
                 {
-                   if (Personality.confidence > 50)
-                        priority = 1;
+                    if (Personality.confidence > 5)
+                    {
+                        if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
+                        {
+                            priority =0;
+                        }
+                        else
+                        {
+                            priority = 1;
+                        }
+                    }
                     else
                         priority = 0;
                 }
@@ -81,17 +97,24 @@ public class PriorityTree : MonoBehaviour {
                /* Debug.Log("Miedo: " + Personality.fear);
                 Debug.Log("Agresividad: " + Personality.selfAssertion);
                 Debug.Log("Agresivo");*/
-                if (target.name == "MockIA")
+                if (target.tag == "IA")
                 {
-                   if (Personality.confidence > 50)
+                   if (Personality.confidence > 5)
                     {
-                        if (Personality.charisma > Personality.fear)
-                            priority = 3;
+                        if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
+                        {
+                            priority = 0;
+                        }
                         else
-                            priority = 2;
+                        {
+                            if (Personality.charisma > Personality.fear)
+                                priority = 3;
+                            else
+                                priority = 2;
+                        }
                     }
                     else
-                        priority = 0;
+                        priority = 1;
                 }
                 else if (target.name == "Axe")
                     priority = 3;

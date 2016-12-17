@@ -12,7 +12,7 @@ public class Decision : DecisionTreeNode {
     public override DecisionTreeNode MakeDecision()
     {
         DecisionTreeNode branch = GetBranch();
-       Debug.Log("branch es " + branch);
+     //  Debug.Log("branch es " + branch);
 
         return branch;
     }

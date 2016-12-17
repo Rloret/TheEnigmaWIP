@@ -41,16 +41,17 @@ public class ObjectHandler : MonoBehaviour {
             return true;
         }
     }
-    public ObjectData desiredObjectData;
+    //public ObjectData desiredObjectData;
 
     public static int pickRadius;
     public int radius;
 
-    public Button CurrentObject;
+	public GameObject currentObject = null;
 
-    public ObjectType lastObjecttype;
+    //public ObjectType lastObjecttype;
 
-
+	public GameObject desiredObject;
+	private AIPersonality personality;
 
     #endregion
 
@@ -65,14 +66,55 @@ public class ObjectHandler : MonoBehaviour {
         if(this.tag == "IA")
         {
             cycleIA = this.GetComponent<VisibilityConeCycleIA>();
+			personality = this.GetComponent<AIPersonality> ();
         }
     }
+
+	void OnTriggerEnter2D (Collider2D coll) {
+		if(coll.gameObject == desiredObject) {
+			Debug.Log ("Cojo objeto");
+			GO2ObjectType(coll.gameObject.name);
+			currentObject = coll.gameObject;
+			hasObject = true;
+			desiredObject = null;
+
+		}
+	}
+
     void Update()
     {
         pickRadius = radius;
+		if (hasObject) {
+			pickupObject (currentObject);
+		}
+
     }
 
-    public void youAreOnA(GameObject g)
+	public void pickupObject(GameObject takedObject) {
+		takedObject.transform.position = this.transform.position;
+	}
+
+	private void GO2ObjectType(string ob) {
+		switch (ob) {
+		case "Shield":
+			personality.myObject = ObjectType.SHIELD;
+			break;
+		case "Axe":
+			personality.myObject = ObjectType.AXE;
+			break;
+		case "Flashlight":
+			personality.myObject = ObjectType.FLASHLIGHT;
+			break;
+		case "Boots":
+			personality.myObject = ObjectType.BOOTS;
+			break;
+		default:
+			personality.myObject = ObjectType.NONE;
+			break;
+		}
+	}
+		
+   /* public void youAreOnA(GameObject g)
     {
         string name = g.name;
         Debug.Log(name);
@@ -204,6 +246,6 @@ public class ObjectHandler : MonoBehaviour {
                 break;
         }
 
-    }
+    }*/
 
 }

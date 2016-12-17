@@ -13,6 +13,7 @@ public class FloatDecision : Decision {
 
     public override DecisionTreeNode GetBranch()
     {
+        targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
         switch (actualDecisionType) {
 
             case FloatDecisionTypes.HEALTH:
@@ -41,7 +42,7 @@ public class FloatDecision : Decision {
 
             case FloatDecisionTypes.CONFIDENCEINOTHER:
                 int value = characterPersonality.TrustInOthers[targetPersonality.GetMyOwnIndex()];
-                Debug.Log(" i trust in him " + value);
+
                 if (maxValue >=value  && value >= minvalue)
                 {
                     return nodeTrue;

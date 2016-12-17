@@ -6,12 +6,12 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     public List<GameObject> visibleGameobjects;
     public LayerMask layers;
-    public int sentido;
 
     private Vector2 source;
     private Vector2 vi;
 
     private LinkedList<Vector2> VisibleConePoints;
+	//public Vector2 A, B, C;
 
     private List<GameObject> Objects;
 
@@ -20,9 +20,19 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private int CuantityOfRays = 1;
 
     private DecisionTarget decisionTargetScript;
-    private OnObjectClickedController movementController;
+    private BehaviourAdder movementController;
     private ObjectHandler objecthand;
     private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
+	private List<GameObject> targetsAux;
+
+	public GameObject ghostTarget;
+	private GameObject priorityGO;
+
+    public bool IDecided = false;
+
+    public bool stuckedAI = false;
+
+
 
     // Use this for initialization
     void Start()
@@ -33,15 +43,15 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         VisibleConePoints = new LinkedList<Vector2>();
         visibleGameobjects = new List<GameObject>();
+		targetsAux = new List<GameObject> ();
         visibleGameobjects.Capacity = 50;
         Objects = new List<GameObject>();
-
+        whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         decisionTargetScript = this.GetComponent<DecisionTarget>();
-        movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
+        movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
         whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
-        sentido = 1;
     }
 
     /* void OnDrawGizmos()
@@ -150,28 +160,55 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         if (visibleGameobjects.Count > 0)
         {
-
-            GameObject priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
+			
+            priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
             visibleGameobjects.Clear();
-            if (priorityGO == null)
+			//Debug.Log ("priority object= " + priorityGO.name);
+            if (priorityGO == null) // no ha visto nada
             {
                 moveRandomly(A, C);
             }
             else
             {
-                if(priorityGO.tag == "IA")
+                if (priorityGO.tag == "IA"  ) //lo más prioritario es una persona
                 {
-                    whatToDoScript.target = priorityGO;
-                }
-                else
-                {
-                    objecthand.setDesiredGameObject(priorityGO);
-                    string[] behaviours = { "Arrive", "AvoidWall", "Face" };
-                    float[] weightedBehavs = { 0.7f, 1, 1 };
-                    movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+                    #region deccidingReg
+                    if (!IDecided) { 
+                      //  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
+                        IDecided = true;
 
+                       // Debug.Log("yo " + this.gameObject.transform + "veo a  " + priorityGO + " (target)");
+                        if (whatToDoScript == null)
+                        {
+                            whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+                        }
+                        else {
+                            DestroyImmediate(whatToDoScript);
+                            whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+
+
+                        }
+
+                        whatToDoScript.target = priorityGO;
+
+                        string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
+                        float[] weightedBehavs = { 0.7f, 1, 1 };
+						movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+
+                    }
+                    #endregion decidingReg
                 }
-            }
+                else //lo más prioritario es un objeto
+                {
+					objecthand.desiredObject = priorityGO;
+
+					//Debug.Log ("Deseo " + objecthand.desiredObject);
+                    //objecthand.setDesiredGameObject(priorityGO);
+                    string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
+                    float[] weightedBehavs = { 0.7f, 1, 1 };
+					movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+                }
+            }  
         }
         else
         {
@@ -186,20 +223,33 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     public void moveRandomly(Vector2 A, Vector2 C)
     {
-        A = A * sentido;
-        C *= sentido;
+        int random;
+
         Vector3 AC = C - A;
-        int random = Random.Range(1, 4);
-        Vector3 percentageAC = AC / (float)random;
-        Vector3 target = A + (Vector2)percentageAC;
+        if (Time.frameCount % 30 == 0 && !stuckedAI)
+        {
+            random = Random.Range(1, 8);
+            Vector3 percentageAC = AC / (float)random;
+            Vector3 targetPosition = A + (Vector2)percentageAC;
+            GameObject targetGO = (GameObject)Instantiate(ghostTarget, targetPosition, Quaternion.identity);
+            targetsAux.Add(targetGO);
 
-        string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
-        float[] weightedBehavs = { 0.7f, 1, 1 };
-        movementController.addBehavioursOver(this.gameObject, target, behaviours, weightedBehavs);
+            string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
+            float[] weightedBehavs = { 0.4f, 1, 1 };
+            movementController.addBehavioursOver(this.gameObject, targetGO, behaviours, weightedBehavs);
 
-        if (sentido == -1)
-            sentido = 1;
+            DeleteTargetAux();
+        }
 
     }
+
+	private void DeleteTargetAux () {
+		if (targetsAux.Count > 1) {
+			GameObject t = targetsAux [0];
+			targetsAux.RemoveAt (0);
+			DestroyImmediate(t);
+		}
+		//Debug.Log ("Eliminando target aux");
+	}
 }
 
