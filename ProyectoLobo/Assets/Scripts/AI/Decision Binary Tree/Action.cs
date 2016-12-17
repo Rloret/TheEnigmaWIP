@@ -28,6 +28,11 @@ public class Action : DecisionTreeNode {
         if (this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>() != null)Destroy( this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>());
         if (this.GetComponent<DecisionTreeReactionAfterInteraction>() != null) Destroy(this.GetComponent<DecisionTreeReactionAfterInteraction>());
 
+		this.gameObject.GetComponent<AIPersonality>().oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
+		Debug.Log ("nodos viejos: " + this.gameObject.GetComponent<AIPersonality>().oldNodes.Length);
+
+
+
     }
 
 }

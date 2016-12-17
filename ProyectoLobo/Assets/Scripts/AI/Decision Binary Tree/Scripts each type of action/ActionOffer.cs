@@ -9,15 +9,20 @@ public class ActionOffer : Action {
         //Code for attack
         //Placeholder
         Debug.Log("voy a ofrecer");
-        base.DestroyTrees();
+		if (this.gameObject.tag != "Player") {
+			base.DestroyTrees ();
 
-        Invoke("EnableCone", 10f);
+			Invoke ("EnableCone", 10f);
+		}
     }
 
     private void EnableCone()
     {
         GetComponent<VisibilityConeCycleIA>().enabled = true;
         base.visibiCone.IDecided = false;
+		foreach (DecisionTreeNode n in this.gameObject.GetComponent<AIPersonality>().oldNodes) {
+			DestroyImmediate (n);
+		}
 
     }
 }

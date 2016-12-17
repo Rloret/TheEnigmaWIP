@@ -9,15 +9,22 @@ public class ActionOfferOtherJoinMyGroup : Action {
         //Placeholder
         Debug.Log("unete a mi grupo");
         Reaction.spawnReaction(ResponseController.responseEnum.GROUP, ResponseController.responseEnum.QUESTIONMARK, this.gameObject);
-        base.DestroyTrees();
+        
+		if (this.gameObject.tag != "Player") {
+			base.DestroyTrees ();
 
-        Invoke("EnableCone", 5f);
+			Invoke ("EnableCone", 5f);
+		}
     }
 
     private void EnableCone()
     {
         GetComponent<VisibilityConeCycleIA>().enabled = true;
         base.visibiCone.IDecided = false;
+
+		foreach (DecisionTreeNode n in this.gameObject.GetComponent<AIPersonality>().oldNodes) {
+			DestroyImmediate (n);
+		}
 
     }
 }

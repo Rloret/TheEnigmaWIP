@@ -39,8 +39,15 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
         // base.targetPersonality = targetpers; TESTING
 
-        targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
-        root = createDecisionsEnum(ActionsEnum.Actions.ATTACK, myPersonality);
+		if (target.tag == "Player") {
+			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<PlayerPersonality>();
+
+		} else {
+			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
+
+		}     
+
+		root = createDecisionsEnum(ActionsEnum.Actions.ATTACK, myPersonality);
         iAmMonster= createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         heIsInGroup= createDecisionsBool(true, targetPersonality, DecisionBool.BoolDecisionEnum.INGROUP);
         isMonster = createDecisionsBool(true, targetPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);

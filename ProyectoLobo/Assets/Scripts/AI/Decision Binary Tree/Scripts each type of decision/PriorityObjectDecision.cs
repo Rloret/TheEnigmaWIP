@@ -4,8 +4,8 @@ using System.Collections;
 public class PriorityObjectDecision : Decision
 {
 
-    public AIPersonality characterPersonality;
-    public AIPersonality targetPersonality; // who gives the object to me
+	public PersonalityBase characterPersonality;
+	public PersonalityBase targetPersonality; // who gives the object to me
 
 
     private DecisionTarget decisiontargetScript;

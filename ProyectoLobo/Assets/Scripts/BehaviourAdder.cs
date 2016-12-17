@@ -4,7 +4,7 @@ using System.Collections;
 public class BehaviourAdder : MonoBehaviour {
     public float MinDistanceOpenMenu = 60f;
     public LayerMask mask;
-    private ConversationMenuController menuController;
+	private PlayerMenuController menuController;
 
     [System.Serializable]
 
@@ -42,7 +42,8 @@ public class BehaviourAdder : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        menuController = this.gameObject.GetComponent<ConversationMenuController>();
+		menuController = this.gameObject.GetComponent<PlayerMenuController>();
+
 	}
 	
 
@@ -108,8 +109,8 @@ public class BehaviourAdder : MonoBehaviour {
     }
 
     public void openConversationMenu(GameObject character, GameObject targetIA) {
-        menuController.OpenConversationMenu(character, targetIA);
-    }
+		menuController.OpenMenu(PlayerMenuController.MenuTypes.MENU_CONVERSATION,targetIA);
+	}
 
     /*public void addBehavioursOver(GameObject behaviourReceiver, Vector3 target,string[] behaviours, float[] weights)
     {

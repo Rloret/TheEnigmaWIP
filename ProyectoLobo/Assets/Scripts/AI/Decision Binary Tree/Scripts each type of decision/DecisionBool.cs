@@ -6,7 +6,7 @@ public class DecisionBool : Decision
     public bool valueDecision;
     //public bool valueTest;
 
-    public AIPersonality personalityScript;
+	public PersonalityBase personalityScript;
     private GroupScript groupScript;
 
 

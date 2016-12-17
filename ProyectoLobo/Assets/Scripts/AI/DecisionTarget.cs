@@ -87,7 +87,7 @@ public class DecisionTarget : MonoBehaviour {
             {
                 if (chosenTarget.name == nameCurrentTarget) // Si lleva un objeto y es el que ha visto más prioritario: ese objeto se elimina del diccionario y se recoge el siguiente con más prioridad
                 {
-					Debug.Log ("El que veo es más prioritario");
+					//Debug.Log ("El que veo es más prioritario");
                     analyzedTargets.Remove(chosenTarget);
                     chosenTarget = GivePriorityTarget(analyzedTargets, memory);
                     analyzedTargets.Clear();

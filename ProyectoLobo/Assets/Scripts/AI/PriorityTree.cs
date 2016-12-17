@@ -6,7 +6,7 @@ public class PriorityTree : MonoBehaviour {
 
     private int priority;
 
-    public int GetPriority (GameObject target, AIPersonality Personality)
+	public int GetPriority (GameObject target, PersonalityBase Personality)
     {
         if (target.name == "MedicalAid") // Es botiquin
         {

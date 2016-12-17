@@ -4,7 +4,7 @@ using System.Collections;
 public class DecisionActionsEnum : Decision {
 
     public ActionsEnum.Actions valueDecision;
-    public AIPersonality personality;
+	public PersonalityBase personality;
 
     public override DecisionTreeNode GetBranch()
     {

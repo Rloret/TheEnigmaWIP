@@ -169,7 +169,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             }
             else
             {
-                if (priorityGO.tag == "IA"  ) //lo más prioritario es una persona
+				if (priorityGO.tag == "IA"  ) //lo más prioritario es una persona
                 {
                     #region deccidingReg
                     if (!IDecided) { 
@@ -183,6 +183,12 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                         }
                         else {
                             DestroyImmediate(whatToDoScript);
+
+							DecisionTreeNode[] oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
+							foreach(DecisionTreeNode n in oldNodes){
+								DestroyImmediate(n);
+							}
+
                             whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
 
 
@@ -197,6 +203,45 @@ public class VisibilityConeCycleIA : MonoBehaviour {
                     }
                     #endregion decidingReg
                 }
+				else if (priorityGO.tag == "Player"  ) //lo más prioritario es una persona
+				{
+					
+
+					#region deccidingReg
+					if (!IDecided) {
+						Debug.Log ("veo al player");
+						//  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
+						IDecided = true;
+
+						// Debug.Log("yo " + this.gameObject.transform + "veo a  " + priorityGO + " (target)");
+						if (whatToDoScript == null)
+						{
+							whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+						}
+						else {
+							DestroyImmediate(whatToDoScript);
+
+							DecisionTreeNode[] oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
+							Debug.Log ("nodos viejos: " + oldNodes.Length);
+
+							foreach(DecisionTreeNode n in oldNodes){
+								DestroyImmediate(n);
+							}
+
+							whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
+
+
+						}
+
+						whatToDoScript.target = priorityGO;
+
+						string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
+						float[] weightedBehavs = { 0.7f, 1, 1 };
+						movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+
+					}
+					#endregion decidingReg
+				}
                 else //lo más prioritario es un objeto
                 {
 					objecthand.desiredObject = priorityGO;

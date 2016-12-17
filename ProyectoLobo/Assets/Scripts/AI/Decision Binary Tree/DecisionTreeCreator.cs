@@ -12,8 +12,8 @@ public class DecisionTreeCreator : DecisionTreeNode
     protected Decision decisionNew;
     protected Decision decisionOld;
 
-    protected AIPersonality myPersonality;
-    protected AIPersonality targetPersonality;
+	protected PersonalityBase myPersonality;
+	protected PersonalityBase targetPersonality;
 
 
     protected int indexCharacterInteractedWithMe;
@@ -29,7 +29,13 @@ public class DecisionTreeCreator : DecisionTreeNode
         //target = this.gameObject; //just to create the decisiontree
 
         myPersonality = this.gameObject.GetComponent<AIPersonality>();
-        targetPersonality = target.gameObject.GetComponent<AIPersonality>();
+		if (target.tag == "Player") {
+			targetPersonality = target.gameObject.GetComponent<PlayerPersonality>();
+
+		} else {
+			targetPersonality = target.gameObject.GetComponent<AIPersonality>();
+
+		}
 
         indexCharacterInteractedWithMe = targetPersonality.GetMyOwnIndex();
         myTrustInOther = myPersonality.TrustInOthers[indexCharacterInteractedWithMe];
@@ -71,7 +77,7 @@ public class DecisionTreeCreator : DecisionTreeNode
         d.nodeFalse = nf;
     }
 
-    protected DecisionActionsEnum createDecisionsEnum(ActionsEnum.Actions vDecision/*, ActionsEnum.Actions vTest*/, AIPersonality pers)
+    protected DecisionActionsEnum createDecisionsEnum(ActionsEnum.Actions vDecision/*, ActionsEnum.Actions vTest*/, PersonalityBase pers)
     {
         DecisionActionsEnum d = gameObject.AddComponent<DecisionActionsEnum>();
         d.valueDecision = vDecision;
@@ -81,7 +87,7 @@ public class DecisionTreeCreator : DecisionTreeNode
     }
 
 
-    protected DecisionBool createDecisionsBool(bool vDecision,/* bool vTest*/ AIPersonality personality, DecisionBool.BoolDecisionEnum boolType)
+	protected DecisionBool createDecisionsBool(bool vDecision,/* bool vTest*/ PersonalityBase personality, DecisionBool.BoolDecisionEnum boolType)
     {
         DecisionBool d;
         d = gameObject.AddComponent<DecisionBool>();
@@ -94,7 +100,7 @@ public class DecisionTreeCreator : DecisionTreeNode
 
     }
 
-    protected FloatDecision createDecisionsFloat(float min, float max/*,float testValue*/,AIPersonality personality, FloatDecision.FloatDecisionTypes type)
+	protected FloatDecision createDecisionsFloat(float min, float max/*,float testValue*/,PersonalityBase personality, FloatDecision.FloatDecisionTypes type)
     {
         FloatDecision d = gameObject.AddComponent<FloatDecision>() as FloatDecision;
         d.minvalue = min;
@@ -129,7 +135,7 @@ public class DecisionTreeCreator : DecisionTreeNode
         return d;
     }
 
-    protected ObjectDecision createObjectDecision(ObjectHandler.ObjectType objecttest, AIPersonality pers) {
+	protected ObjectDecision createObjectDecision(ObjectHandler.ObjectType objecttest, PersonalityBase pers) {
         ObjectDecision d = gameObject.AddComponent<ObjectDecision>() as ObjectDecision;
         d.myPersonality = pers;
         d.objectWanted = objecttest;
@@ -138,7 +144,7 @@ public class DecisionTreeCreator : DecisionTreeNode
 
     }
 
-    protected PriorityObjectDecision createPriorityObjectDecision(AIPersonality myPers,AIPersonality yourPers)
+	protected PriorityObjectDecision createPriorityObjectDecision(PersonalityBase myPers,PersonalityBase yourPers)
     {
         PriorityObjectDecision d = gameObject.AddComponent<PriorityObjectDecision>() as PriorityObjectDecision;
         d.characterPersonality = myPers;
@@ -152,18 +158,18 @@ public class DecisionTreeCreator : DecisionTreeNode
     {
         if (!DecisionCompleted)
         {
-        //    Debug.Log("Entro en update");
+      //      Debug.Log("Entro en update");
 
             decisionNew = decisionNew.MakeDecision() as Decision;
 
-            /*Debug.Log("decisionNew es " + decisionNew);
-            if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);*/
+       //     Debug.Log("decisionNew es " + decisionNew);
+         //   if (decisionNew != null) Debug.Log("ramas " + decisionNew.nodeTrue + decisionNew.nodeFalse);
 
             if (decisionNew == null)
             {
 
                 actionNew = decisionOld.MakeDecision() as Action;
-                // Debug.Log("action es " + actionNew);
+             //    Debug.Log("action es " + actionNew);
 
                 actionNew.DoAction();
 

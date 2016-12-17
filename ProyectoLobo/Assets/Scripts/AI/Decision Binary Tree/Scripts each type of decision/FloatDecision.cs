@@ -3,17 +3,17 @@ using System.Collections;
 
 public class FloatDecision : Decision {
 
-    public AIPersonality targetPersonality;
+	public PersonalityBase targetPersonality;
     public float maxValue=10000;
     public float minvalue=0;
-    public AIPersonality characterPersonality;
+	public PersonalityBase characterPersonality;
 
     public enum FloatDecisionTypes { HEALTH, FEAR, AGGRESSIVENESS,CHARISMA, CONFIDENCEINOTHER  };
     public FloatDecisionTypes actualDecisionType;
 
     public override DecisionTreeNode GetBranch()
     {
-        targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
+       // targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
         switch (actualDecisionType) {
 
             case FloatDecisionTypes.HEALTH:

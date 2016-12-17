@@ -10,27 +10,47 @@ public class ActionAttack : Action {
 
         Reaction.spawnReaction(ResponseController.responseEnum.ATTACK, ResponseController.responseEnum.ATTACK, this.gameObject);
         Debug.Log("voy a atacar y bajo confianza. Soy "+this.gameObject.name);
-        base.DestroyTrees();
 
-        // atack()
-        // decrease friendship 
-        GroupScript myGroup = this.GetComponent<GroupScript>();
-        int totalAttack = this.GetComponent<AIPersonality>().attack;
+		//ATTACK
 
-        foreach (var member in myGroup.groupMembers) {
+		// decrease friendship 
+		GroupScript myGroup = this.GetComponent<GroupScript>();
+		int totalAttack = 0;
 
-            totalAttack += member.GetComponent<AIPersonality>().attack;
-            //animacion numeritos
-        }
+		if (this.gameObject.tag == "Player") {
+			totalAttack = this.GetComponent<PlayerPersonality>().attack;
 
-        Attack(totalAttack);
-        Invoke("EnableCone", 10f);
+			
+		} else {
+			totalAttack = this.GetComponent<AIPersonality>().attack;
+
+		}
+
+
+		foreach (var member in myGroup.groupMembers) {
+
+			totalAttack += member.GetComponent<AIPersonality>().attack;
+			//animacion numeritos
+		}
+
+		Attack(totalAttack);
+		//END ATTACK
+
+		if (this.gameObject.tag != "Player") {
+			base.DestroyTrees ();
+
+        
+			Invoke ("EnableCone", 10f);
+		}
     }
 
     private void EnableCone()
     {
         GetComponent<VisibilityConeCycleIA>().enabled = true;
         base.visibiCone.IDecided = false;
+		foreach (DecisionTreeNode n in this.gameObject.GetComponent<AIPersonality>().oldNodes) {
+			DestroyImmediate (n);
+		}
 
     }
 
