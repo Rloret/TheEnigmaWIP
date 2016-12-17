@@ -30,6 +30,16 @@ public class PlayerMenuController : MonoBehaviour {
 
 	public void CloseConversationMenu() {
 		menuConversation.SetActive(false);
+		targetIA.GetComponent<VisibilityConeCycleIA> ().enabled = true;
+	}
+	public void CloseAttackMenu() {
+		menuAttacked.SetActive(false);
+	}
+	public void CloseObjectMenu() {
+		menuObjectOffered.SetActive(false);
+	}
+	public void CloseJoinMenu() {
+		menuOfferedJoinGroup.SetActive(false);
 	}
 
 	public GameObject GetTargetIA() {
@@ -49,7 +59,7 @@ public class PlayerMenuController : MonoBehaviour {
 		Debug.Log ("target IA es " + target);
 
 		this.targetIA = target;
-		targetIA.GetComponent<VisibilityConeCycleIA>().enabled = false;
+
 
 		switch (menu) {
 		case MenuTypes.MENU_ATTACKED:

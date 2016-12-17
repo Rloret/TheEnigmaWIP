@@ -195,6 +195,10 @@ public class BehaviourAdder : MonoBehaviour {
                 case "Flee":
                     WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.FLEE, weights[iterator], 0);
                     break;
+			case "Nothing":
+				//	Debug.LogError("ESE COMPORTAMIENTO NO ESTA CONTEMPLADO ;(");
+					WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);
+					break;
                 default:
                     Debug.LogError("ESE COMPORTAMIENTO NO ESTA CONTEMPLADO ;(");
                     WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);

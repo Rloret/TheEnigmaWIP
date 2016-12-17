@@ -12,12 +12,14 @@ public class ActionOffer : Action {
 		if (this.gameObject.tag != "Player") {
 			base.DestroyTrees ();
 
-			Invoke ("EnableCone", 10f);
+			Invoke ("EnableCone", 5f);
 		}
     }
 
     private void EnableCone()
     {
+		this.GetComponent<AgentPositionController> ().orientation += 180;
+
         GetComponent<VisibilityConeCycleIA>().enabled = true;
         base.visibiCone.IDecided = false;
 		foreach (DecisionTreeNode n in this.gameObject.GetComponent<AIPersonality>().oldNodes) {

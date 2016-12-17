@@ -4,7 +4,6 @@ using System.Collections;
 public class ActionAttack : Action {
 
 
-
     public override void DoAction()
     {
 
@@ -40,14 +39,18 @@ public class ActionAttack : Action {
 			base.DestroyTrees ();
 
         
-			Invoke ("EnableCone", 10f);
+			Invoke ("EnableCone", 3f);
 		}
     }
 
     private void EnableCone()
     {
+		this.GetComponent<AgentPositionController> ().orientation += 180;
+		GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().CloseAttackMenu ();
+
         GetComponent<VisibilityConeCycleIA>().enabled = true;
         base.visibiCone.IDecided = false;
+
 		foreach (DecisionTreeNode n in this.gameObject.GetComponent<AIPersonality>().oldNodes) {
 			DestroyImmediate (n);
 		}

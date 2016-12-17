@@ -15,15 +15,20 @@ public class ConvinceButtonClick : ButtonAction {
 
         targetIA.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
 
-        reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
+		reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
 
-        if (reactionTree == null)
-        {
-            reactionTree = targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
-        }
+		if (reactionTree != null) {
+			DestroyImmediate (reactionTree);
+		}
+
+		targetIA.gameObject.GetComponent<AIPersonality> ().oldNodes = targetIA.gameObject.GetComponents<DecisionTreeNode> ();
+		foreach (DecisionTreeNode n in targetIA.gameObject.GetComponent<AIPersonality>().oldNodes) {
+			DestroyImmediate (n);
+		}
+
+		reactionTree=targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
 
         reactionTree.target = targetIA;
-        reactionTree.StartTheDecision();
 
         this.gameObject.transform.parent.gameObject.SetActive(false);
     }

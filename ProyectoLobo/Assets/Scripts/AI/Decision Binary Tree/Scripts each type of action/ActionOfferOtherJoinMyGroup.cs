@@ -19,6 +19,10 @@ public class ActionOfferOtherJoinMyGroup : Action {
 
     private void EnableCone()
     {
+		this.GetComponent<AgentPositionController> ().orientation += 180;
+
+		GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().CloseJoinMenu ();
+
         GetComponent<VisibilityConeCycleIA>().enabled = true;
         base.visibiCone.IDecided = false;
 

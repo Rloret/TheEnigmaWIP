@@ -11,20 +11,22 @@ public class AttackButtonClick : ButtonAction {
         Debug.Log("attackAction");
 
         targetIA = menuController.GetTargetIA();
-        Debug.Log("target es " + targetIA);
-
         targetIA.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
 
-        reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
-        if (reactionTree == null)
-        {
-            reactionTree = targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
-        }
+		reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
 
-        Debug.Log("tree es " + reactionTree);
+		if (reactionTree != null) {
+			DestroyImmediate (reactionTree);
+		}
 
+		targetIA.gameObject.GetComponent<AIPersonality> ().oldNodes = targetIA.gameObject.GetComponents<DecisionTreeNode> ();
+
+		foreach (DecisionTreeNode n in targetIA.gameObject.GetComponent<AIPersonality>().oldNodes) {
+			DestroyImmediate (n);
+		}
+
+		reactionTree=targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
         reactionTree.target = targetIA;
-        reactionTree.StartTheDecision();
 
         this.gameObject.transform.parent.gameObject.SetActive(false);
     }

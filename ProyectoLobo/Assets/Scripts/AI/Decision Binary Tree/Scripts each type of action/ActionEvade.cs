@@ -29,5 +29,8 @@ public class ActionEvade : Action {
     {
         GetComponent<VisibilityConeCycleIA>().enabled = true;
 
+		foreach (DecisionTreeNode n in this.gameObject.GetComponent<AIPersonality>().oldNodes) {
+			DestroyImmediate (n);
+		}
     }
 }

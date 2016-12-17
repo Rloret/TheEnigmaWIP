@@ -37,6 +37,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
     protected override void CreateTree() {
 
+		Debug.Log ("creando arbol reaction");
         // base.targetPersonality = targetpers; TESTING
 
 		if (target.tag == "Player") {
@@ -87,10 +88,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
         comparePriorityTreeAction = createPriorityObjectDecision(myPersonality, targetPersonality);
 
-        /* givingMeObject.nodeTrue = comparePriorityTreeAction;
-         givingMeObject.nodeFalse = trustHimMore6;*/
-
-        givingMeObject.nodeTrue = comparePriorityTreeAction;
+		givingMeObject.nodeTrue = comparePriorityTreeAction;
         givingMeObject.nodeFalse = Join;
 
         Join.nodeTrue = trustHimMore6;
@@ -118,7 +116,9 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
         DecisionCompleted = true;
         treeCreated = true;
 
-        StartTheDecision(); //TESTING
+		Debug.Log ("fin de creando arbol reaction");
+
+		StartTheDecision ();
     }
 
 
@@ -132,9 +132,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
     public override void StartTheDecision()
     {
        
-        Debug.Log(this.gameObject.name+ " empiezxo a decidir. mi accion recibida es "+ this.GetComponent<AIPersonality>().interactionFromOtherCharacter);
-
-        if (!treeCreated) CreateTree();
+		Debug.Log(this.gameObject.name+ " Reaction Tree: empiezxo a decidir. mi accion recibida es "+ this.GetComponent<AIPersonality>().interactionFromOtherCharacter);
 
         decisionNew = root;
 

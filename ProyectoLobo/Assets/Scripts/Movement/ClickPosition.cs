@@ -10,6 +10,8 @@ public class ClickPosition : MonoBehaviour {
     public LayerMask avoidCollisionWith;
     public float MinDistanceOpenMenu = 40f;
 
+	public GameObject[] menus;
+
     private BehaviourAdder.WeightedBehaviours[] WeightedPlayerBehavioursArray;
     private BehaviourAdder behaviourController;
 
@@ -42,6 +44,8 @@ public class ClickPosition : MonoBehaviour {
     {
         if (aux.tag == "IA")
         {
+			aux.GetComponent<VisibilityConeCycleIA>().enabled = false;
+
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu)
             {
                 Debug.Log("estan cerca, abro menu");
@@ -75,6 +79,10 @@ public class ClickPosition : MonoBehaviour {
         }
         else
         { // target is floor
+			foreach(var m in menus){
+				if (m.activeSelf)
+					m.SetActive (false);
+			}
             string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
             float[] weightedBehavs = { 0.7f, 1, 1 };
             behaviourController.addBehavioursOver(behaviorReceiber, aux, behaviours, weightedBehavs);
