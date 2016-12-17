@@ -6,30 +6,17 @@ public class AIPersonality: PersonalityBase {
 
 	public DecisionTreeNode[] oldNodes;
 
-    private Memory myMemory;
-    private Vector3? rememberedMedicalaidPosition;
+    public Memory myMemory;
 
 
     void Start()
     {
         TrustInOthers= new int[5]; // 5 characters
         myMemory = GetComponent<Memory>();
-        
-       // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers();
 
     }
- 
-  
-    void update()
-    {
-        if(health < 20)
-        {
-            rememberedMedicalaidPosition = myMemory.SearchInMemory("Medicalaid");
-            if (rememberedMedicalaidPosition != null)
-            {
-                //moverse hacia alli
-            }
-        }
-    }
+
+
 }

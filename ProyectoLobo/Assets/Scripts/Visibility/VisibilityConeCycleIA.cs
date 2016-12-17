@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class VisibilityConeCycleIA : MonoBehaviour {
+public class VisibilityConeCycleIA : MonoBehaviour
+{
 
     public List<GameObject> visibleGameobjects;
     public LayerMask layers;
@@ -11,11 +12,11 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private Vector2 vi;
 
     private LinkedList<Vector2> VisibleConePoints;
-	//public Vector2 A, B, C;
+    //public Vector2 A, B, C;
 
     private List<GameObject> Objects;
 
-    private float AngleRads,Angle=70;
+    private float AngleRads, Angle = 90;
     private int Radius;
     private int CuantityOfRays = 1;
 
@@ -23,10 +24,12 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private BehaviourAdder movementController;
     private ObjectHandler objecthand;
     private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
-	private List<GameObject> targetsAux;
+    private List<GameObject> targetsAux;
+    private AIPersonality personality;
 
-	public GameObject ghostTarget;
-	private GameObject priorityGO;
+    public GameObject ghostTarget;
+    private GameObject priorityGO;
+    private GameObject rememberedObject;
 
     public bool IDecided = false;
 
@@ -39,11 +42,11 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     {
         AngleRads = Mathf.Deg2Rad * Angle;
 
-        Radius =200;
+        Radius = 200;
 
         VisibleConePoints = new LinkedList<Vector2>();
         visibleGameobjects = new List<GameObject>();
-		targetsAux = new List<GameObject> ();
+        targetsAux = new List<GameObject>();
         visibleGameobjects.Capacity = 50;
         Objects = new List<GameObject>();
         whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
@@ -52,6 +55,10 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
+        personality = this.GetComponent<AIPersonality>();
+        rememberedObject = new GameObject();
+        rememberedObject.name = "rememberedObjectPosition";
+
     }
 
     /* void OnDrawGizmos()
@@ -64,7 +71,12 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+       /* if (priorityGO)
+        {
+            Debug.Log("priorityGo existe");
+        }
+        else
+            Debug.Log("no existe");*/
         vi = this.transform.up;
         source = this.transform.position;
         AngleRads = Mathf.Deg2Rad * Angle;
@@ -92,10 +104,10 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             scaler = i / Angle;
             vi = rotateVectorTowards(beta, AngleRads, (scaler * Angle) * Mathf.Deg2Rad, Radius) + source;
             viS = (vi - source);
-            VisibleConePoints.AddLast( ThrowRayCast(source, viS.normalized, viS.magnitude, vi));
-                
+            VisibleConePoints.AddLast(ThrowRayCast(source, viS.normalized, viS.magnitude, vi));
+
         }
-        
+
 
 
     }
@@ -103,7 +115,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     {
 
         RaycastHit2D hit = Physics2D.Raycast(from, direction, distance, layers);
-       
+
 
         if (hit)
         {
@@ -113,7 +125,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         }
         return raycastvector;
     }
-    
+
 
 
     private Vector2 rotateVectorTowards(float beta, float alpha, float i, float radi)
@@ -141,6 +153,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     private void checkObjectsWithinCone()
     {
+        string objectINeedRemember = ObjectINeedRemember();
         Vector2 A, B, C;
         A = VisibleConePoints.First.Value;
         B = source;
@@ -152,20 +165,31 @@ public class VisibilityConeCycleIA : MonoBehaviour {
             Debug.DrawLine(C, A);
             if (isInTriangleABC(singleObject.transform.position, A, B, C))
             {
-                if (singleObject!=this.gameObject)
-                visibleGameobjects.Add(singleObject);
+                if (singleObject != this.gameObject)
+                    visibleGameobjects.Add(singleObject);
                 //singleObject.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, Random.Range(0f, 1f));
             }
         }
 
         if (visibleGameobjects.Count > 0)
         {
-			
-            priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
+
+            if (objectINeedRemember != "None")
+            {
+                //priorityGO.transform.position = RememberedObject(objectINeedRemember);
+                //priorityGO.name = objectINeedRemember;
+                priorityGO = RememberedObject(objectINeedRemember);
+            }
+            else
+            {
+                priorityGO = decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
+            }
+
             visibleGameobjects.Clear();
-			//Debug.Log ("priority object= " + priorityGO.name);
+            //Debug.Log ("priority object= " + priorityGO.name);
             if (priorityGO == null) // no ha visto nada
             {
+                //Debug.Log("no he visto nada o no recuerdo nada");
                 moveRandomly(A, C);
             }
             else
@@ -173,18 +197,19 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 				if (priorityGO.tag == "IA"  ) //lo más prioritario es una persona
                 {
                     #region deccidingReg
-                    if (!IDecided) { 
-                      //  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
+                    if (!IDecided)
+                    {
+                        //  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
                         IDecided = true;
 
 						priorityGO.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
-                       // Debug.Log("yo " + this.gameObject.transform + "veo a  " + priorityGO + " (target)");
                         if (whatToDoScript == null)
                         {
                             whatToDoScript = this.gameObject.AddComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
                         }
-                        else {
+                        else
+                        {
                             DestroyImmediate(whatToDoScript);
 
 							DecisionTreeNode[] oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
@@ -201,7 +226,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
                         string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
                         float[] weightedBehavs = { 0.7f, 1, 1 };
-						movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+                        movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
 
                     }
                     #endregion decidingReg
@@ -240,23 +265,44 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 				}
                 else //lo más prioritario es un objeto
                 {
-					objecthand.desiredObject = priorityGO;
+                    objecthand.desiredObject = priorityGO;
 
-					//Debug.Log ("Deseo " + objecthand.desiredObject);
+                    //Debug.Log ("Deseo " + objecthand.desiredObject);
                     //objecthand.setDesiredGameObject(priorityGO);
                     string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
                     float[] weightedBehavs = { 0.7f, 1, 1 };
-					movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+                    movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
                 }
-            }  
+            }
         }
         else
         {
-            if (this.GetComponent<AgentPositionController>() == null) {
+            if (this.GetComponent<AgentPositionController>() == null)
+            {
                 Debug.Log("no tengo control de movimiento y lo añado");
                 this.gameObject.AddComponent<AgentPositionController>();
             }
-            moveRandomly(A, C);
+            if (objectINeedRemember != "None")
+            {
+                //priorityGO.transform.position = RememberedObject(objectINeedRemember);
+                if (priorityGO != null)
+                {
+                    priorityGO = RememberedObject(objectINeedRemember);
+                    objecthand.desiredObject = priorityGO;
+                    string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
+                    float[] weightedBehavs = { 0.7f, 1, 1 };
+                    movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+
+                }
+                else
+                    moveRandomly(A, C);
+
+            }
+            else
+            {
+                moveRandomly(A, C);
+            }
+
         }
 
     }
@@ -283,13 +329,62 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
     }
 
-	private void DeleteTargetAux () {
-		if (targetsAux.Count > 1) {
-			GameObject t = targetsAux [0];
-			targetsAux.RemoveAt (0);
-			DestroyImmediate(t);
-		}
-		//Debug.Log ("Eliminando target aux");
-	}
+    private void DeleteTargetAux()
+    {
+        if (targetsAux.Count > 1)
+        {
+            GameObject t = targetsAux[0];
+            targetsAux.RemoveAt(0);
+            DestroyImmediate(t);
+        }
+        //Debug.Log ("Eliminando target aux");
+    }
+
+    private string ObjectINeedRemember() //completar
+    {
+        if (personality.health < 20)
+        {
+            return "Medicalaid";
+        }
+        else
+            return "None";
+    }
+
+  /*  private Vector2 RememberedObject(string obj)
+    {
+        Vector2 position = new Vector2();
+        if (obj == "Medicalaid")
+        {
+
+            Vector3? rememberedObjectPosition = personality.myMemory.SearchInMemory("Medicalaid");
+            if (rememberedObjectPosition != null)
+            {
+
+                position = new Vector2(rememberedObjectPosition.Value.x, rememberedObjectPosition.Value.y);
+
+            }
+
+        }
+        return position;
+    }*/
+    private GameObject RememberedObject(string obj)
+    {
+        
+        if (obj == "Medicalaid")
+        {
+            Vector3? rememberedObjectPosition = personality.myMemory.SearchInMemory("Medicalaid");
+            if (rememberedObjectPosition != null)
+            {
+
+                rememberedObject.transform.position = new Vector2(rememberedObjectPosition.Value.x, rememberedObjectPosition.Value.y);
+                rememberedObject.name = obj;
+
+            }
+            else
+                rememberedObject = null;
+
+        }
+        return rememberedObject;
+    }
 }
 

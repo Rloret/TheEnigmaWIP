@@ -102,6 +102,7 @@
      <Compile Include="Assets\Scripts\Movement\Seek.cs" />
      <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
      <Compile Include="Assets\Scripts\Movement\Wander.cs" />
+     <Compile Include="Assets\Scripts\Objects\DestroyMedicalaid.cs" />
      <Compile Include="Assets\Scripts\Objects\DestroyTimed.cs" />
      <Compile Include="Assets\Scripts\Objects\MoveUp.cs" />
      <Compile Include="Assets\Scripts\Objects\ObjectAction.cs" />

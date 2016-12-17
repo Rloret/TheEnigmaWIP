@@ -8,9 +8,9 @@ public class PriorityTree : MonoBehaviour {
 
 	public int GetPriority (GameObject target, PersonalityBase Personality)
     {
-        if (target.name == "MedicalAid") // Es botiquin
+        if (target.name == "Medicalaid") // Es botiquin
         {
-            if (Personality.health < 50)
+            if (Personality.health < 20)
                 priority = 4;
 
             else
