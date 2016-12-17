@@ -25,8 +25,8 @@ public class PersonalityBase : MonoBehaviour {
 	public int GetMyOwnIndex() { return MyOwnIndex; }
 
 
-	protected void initializeTrustInOthers() {
-		for (int i = 0; i < 5; i++) TrustInOthers[i] =7;
+	protected void initializeTrustInOthers(int numOfAIs) {
+		for (int i = 0; i < numOfAIs; i++) TrustInOthers[i] =7;
 	}
 	public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
 

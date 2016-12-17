@@ -5,9 +5,9 @@ public class PlayerPersonality : PersonalityBase {
 
 	void Start()
 	{
-		TrustInOthers= new int[5]; // 5 characters
+		TrustInOthers= new int[GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs]; // 5 characters
 
-		initializeTrustInOthers();
+		initializeTrustInOthers(GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs);
 
 	}
 }

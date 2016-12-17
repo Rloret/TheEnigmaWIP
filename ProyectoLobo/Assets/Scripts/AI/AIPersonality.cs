@@ -37,7 +37,7 @@ public class AIPersonality: PersonalityBase {
         myMemory = GetComponent<Memory>();
         
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
-        initializeTrustInOthers();
+        initializeTrustInOthers(numberOfIAs);
 
     }
  
@@ -91,7 +91,7 @@ public class AIPersonality: PersonalityBase {
                 break;
         }
 
-        initializeTrustInOthers();
+        initializeTrustInOthers(numberOfIAs);
     }
 
     public void takeDamage(int damage)
