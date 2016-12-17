@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class AIPersonality: MonoBehaviour {
 
-    public int health = 0;
+    public int health;
     public int attack=0;
     public int confidence;
 
@@ -21,15 +21,13 @@ public class AIPersonality: MonoBehaviour {
 
     public int MyOwnIndex;
 
-    private Memory myMemory;
-    private Vector3? rememberedMedicalaidPosition;
+    public Memory myMemory;
 
     void Start()
     {
         TrustInOthers= new int[5]; // 5 characters
         myMemory = GetComponent<Memory>();
-        
-       // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers();
 
     }
@@ -45,15 +43,4 @@ public class AIPersonality: MonoBehaviour {
     }
     public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
 
-    void update()
-    {
-        if(health < 20)
-        {
-            rememberedMedicalaidPosition = myMemory.SearchInMemory("Medicalaid");
-            if (rememberedMedicalaidPosition != null)
-            {
-                //moverse hacia alli
-            }
-        }
-    }
 }

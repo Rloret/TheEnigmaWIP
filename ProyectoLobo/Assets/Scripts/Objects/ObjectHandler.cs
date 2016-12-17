@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class ObjectHandler : MonoBehaviour {
@@ -52,6 +52,7 @@ public class ObjectHandler : MonoBehaviour {
 
 	public GameObject desiredObject;
 	private AIPersonality personality;
+    private Dictionary<string, Vector3?> objSeenBefore;
 
     #endregion
 
@@ -67,18 +68,40 @@ public class ObjectHandler : MonoBehaviour {
         {
             cycleIA = this.GetComponent<VisibilityConeCycleIA>();
 			personality = this.GetComponent<AIPersonality> ();
+            objSeenBefore = personality.myMemory.objectsSeenBefore;
         }
     }
 
 	void OnTriggerEnter2D (Collider2D coll) {
+        //Debug.Log("Colisionando con: " + coll.name);
 		if(coll.gameObject == desiredObject) {
-			Debug.Log ("Cojo objeto");
-			GO2ObjectType(coll.gameObject.name);
-			currentObject = coll.gameObject;
-			hasObject = true;
-			desiredObject = null;
+                GO2ObjectType(coll.gameObject.name);
+                currentObject = coll.gameObject;
+            if (objSeenBefore.ContainsKey(coll.name))
+            {
+                objSeenBefore.Remove(coll.name);
+                /*Debug.Log("Eliminando de la memoria el objeto: " + coll.name);
+                Debug.Log("Recuerdo: " + objSeenBefore.Count + " objetos");
+                Debug.Log("El objeto que recuerdo son unas botas? " + objSeenBefore.ContainsKey("Boots"));
+                Debug.Log("El objeto que recuerdo es un hacha? " + objSeenBefore.ContainsKey("Axe"));
+                Debug.Log("El objeto que recuerdo es una linterna? " + objSeenBefore.ContainsKey("Flashlight"));*/
+            }
+            hasObject = true;
+                desiredObject = null;
+        }
+        else
+        {       
+            if (desiredObject && desiredObject.name == coll.gameObject.name)
+            {
+                if (coll.gameObject.name == "Medicalaid") {
+                    personality.health = 50;
+                }
+                objSeenBefore.Remove(coll.name);
+                Debug.Log("Sigo recordando el botiquin? " + objSeenBefore.ContainsKey("Medicalaid"));
+                desiredObject = null;
 
-		}
+            }
+        }
 	}
 
     void Update()
@@ -91,8 +114,9 @@ public class ObjectHandler : MonoBehaviour {
     }
 
 	public void pickupObject(GameObject takedObject) {
-		takedObject.transform.position = this.transform.position;
-	}
+        takedObject.transform.position = this.transform.position;
+
+    }
 
 	private void GO2ObjectType(string ob) {
 		switch (ob) {

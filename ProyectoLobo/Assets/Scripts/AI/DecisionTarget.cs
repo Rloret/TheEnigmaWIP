@@ -68,6 +68,10 @@ public class DecisionTarget : MonoBehaviour {
 
             return chosenTarget;
         }
+        else if (chosenTarget.name == "Medicalaid" && analyzedTargets[chosenTarget] != 4) //Si el objeto más prioritario que ha visto es un botiquín pero no lo necesita, no lo coge
+        {
+            return null;
+        }
         else if ( nameCurrentTarget != "NONE")
         {
             string aux = "Prefabs/Objects/";
@@ -87,14 +91,13 @@ public class DecisionTarget : MonoBehaviour {
             {
                 if (chosenTarget.name == nameCurrentTarget) // Si lleva un objeto y es el que ha visto más prioritario: ese objeto se elimina del diccionario y se recoge el siguiente con más prioridad
                 {
-					Debug.Log ("El que veo es más prioritario");
+					//Debug.Log ("El que veo es más prioritario");
                     analyzedTargets.Remove(chosenTarget);
                     chosenTarget = GivePriorityTarget(analyzedTargets, memory);
                     analyzedTargets.Clear();
                 }
 
             }
-
             return chosenTarget;
 
         }
@@ -123,12 +126,16 @@ public class DecisionTarget : MonoBehaviour {
                 chosenTarget = par.Key;
                 
             }
+           // Debug.Log("El objeto: " + chosenTarget.name + " está ya en la memoria? " + memory.objectsSeenBefore.ContainsKey(par.Key.name));
             if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
             {
 				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
+
             }
 
         }
+
+        
         return chosenTarget;
 
     }
@@ -150,7 +157,7 @@ public class DecisionTarget : MonoBehaviour {
         else if (personality.myObject == ObjectHandler.ObjectType.JUMPSUIT)
             return "Jumpsuit";
         else if (personality.myObject == ObjectHandler.ObjectType.MEDICALAID)
-            return "MedicalAid";
+            return "Medicalaid";
         else if (personality.myObject == ObjectHandler.ObjectType.SHIELD)
             return "Shield";
         else
