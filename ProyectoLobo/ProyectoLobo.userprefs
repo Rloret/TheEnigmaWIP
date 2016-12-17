@@ -1,0 +1,17 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\OnObjectClickedController.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" Line="234" Column="37" />
+      <File FileName="Assets\Scripts\Objects\ObjectHandler.cs" Line="76" Column="4" />
+      <File FileName="Assets\Scripts\AI\AIPersonality.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\DecisionTarget.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\PriorityTree.cs" Line="29" Column="46" />
+      <File FileName="Assets\Scripts\OnObjectClickedController.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

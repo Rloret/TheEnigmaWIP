@@ -11,6 +11,7 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private Vector2 vi;
 
     private LinkedList<Vector2> VisibleConePoints;
+	//public Vector2 A, B, C;
 
     private List<GameObject> Objects;
 
@@ -19,11 +20,15 @@ public class VisibilityConeCycleIA : MonoBehaviour {
     private int CuantityOfRays = 1;
 
     private DecisionTarget decisionTargetScript;
-    private OnObjectClickedController movementController;
+    private BehaviourAdder movementController;
     private ObjectHandler objecthand;
     private DecisionTreeISeeSomeoneWhatShouldIDo whatToDoScript;
 
+	public GameObject ghostTarget;
+	public GameObject priorityGO; //INCLUIDO PARA PODER ACCEDER AL PRIORITYGO DESDE EL ONTRIGGER
+
     public bool IDecided = false;
+
 
 
 
@@ -40,7 +45,8 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         Objects = new List<GameObject>();
         whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         decisionTargetScript = this.GetComponent<DecisionTarget>();
-        movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<OnObjectClickedController>();
+        movementController = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
+        whatToDoScript = this.GetComponent<DecisionTreeISeeSomeoneWhatShouldIDo>();
         Objects = VisibleElements.visibleGameObjects;
         objecthand = this.GetComponent<ObjectHandler>();
     }
@@ -151,16 +157,17 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
         if (visibleGameobjects.Count > 0)
         {
-
-            GameObject priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
+			
+            priorityGO =  decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject); //SE DECLARABA AQUI
             visibleGameobjects.Clear();
-            if (priorityGO == null)
+			//Debug.Log ("priority object= " + priorityGO.name);
+            if (priorityGO == null) // no ha visto nada
             {
                 moveRandomly(A, C);
             }
             else
             {
-                if (priorityGO.tag == "IA"  )
+                if (priorityGO.tag == "IA"  ) //lo más prioritario es una persona
                 {
                     #region deccidingReg
                     if (!IDecided) { 
@@ -183,24 +190,20 @@ public class VisibilityConeCycleIA : MonoBehaviour {
 
                         string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
                         float[] weightedBehavs = { 0.7f, 1, 1 };
-                        movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
+						movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
 
                     }
                     #endregion decidingReg
-                    else
-                    {
-                     //   Debug.Log("me quedo aqui");
-                    }
-
                 }
-                else //(priorityGO.tag!="IA")
+                else //lo más prioritario es un objeto
                 {
-                    objecthand.setDesiredGameObject(priorityGO);
+					objecthand.desiredObject = priorityGO;
 
+					//Debug.Log ("Deseo " + objecthand.desiredObject);
+                    //objecthand.setDesiredGameObject(priorityGO);
                     string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
                     float[] weightedBehavs = { 0.7f, 1, 1 };
-                    movementController.addBehavioursOver(this.gameObject, priorityGO.transform.position, behaviours, weightedBehavs);
-
+					movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
                 }
             }  
         }
@@ -220,11 +223,12 @@ public class VisibilityConeCycleIA : MonoBehaviour {
         Vector3 AC = C - A;
         int random = Random.Range(1, 4);
         Vector3 percentageAC = AC / (float)random;
-        Vector3 target = A + (Vector2)percentageAC;
-
+        Vector3 targetPosition = A + (Vector2)percentageAC;
+		GameObject targetGO = (GameObject)Instantiate (ghostTarget, targetPosition, Quaternion.identity);
         string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
-        movementController.addBehavioursOver(this.gameObject, target, behaviours, weightedBehavs);
+        movementController.addBehavioursOver(this.gameObject, targetGO, behaviours, weightedBehavs);
+		Destroy (targetGO, 0.2f);
     }
 }
 
