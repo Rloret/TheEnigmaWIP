@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class ObjectAction : MonoBehaviour {
+    public bool handler = false;
 
 	/*void OnTriggerEnter2D(Collider2D c)
     {

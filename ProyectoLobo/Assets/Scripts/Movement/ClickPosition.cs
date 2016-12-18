@@ -14,12 +14,14 @@ public class ClickPosition : MonoBehaviour {
 
     private BehaviourAdder.WeightedBehaviours[] WeightedPlayerBehavioursArray;
     private BehaviourAdder behaviourController;
+    private ObjectHandler objectHandlerPlayer;
 
     private bool menuOpened = false;
 
     void Start()
     {
 		behaviourController = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
+        objectHandlerPlayer = this.GetComponent<ObjectHandler>();
     }
     void Update()
     {
@@ -38,14 +40,23 @@ public class ClickPosition : MonoBehaviour {
             string hitinfo = "";
             foreach (var h in hit)
             {
+                //Debug.Log("Estoy pinchando en: " + h.collider);
                 if (h.collider.gameObject.tag == "IA") menuOpened = true;
-                else menuOpened = false;
+                else
+                {
+                    menuOpened = false;
+                    if (h.collider.gameObject.tag == "Object")
+                    {
+                        objectHandlerPlayer.desiredObject = h.collider.gameObject;
+                        Debug.Log("Deseo: " + objectHandlerPlayer.desiredObject);
+                    }
+                }
 
                 hitinfo+=h.collider.gameObject.name;
                 GameObject aux = h.collider.gameObject;
                 DetermineAction(this.gameObject, aux);
             }
-               Debug.Log(hitinfo);
+              // Debug.Log(hitinfo);
            // }
         }
     }
@@ -59,13 +70,13 @@ public class ClickPosition : MonoBehaviour {
 
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu)
             {
-                Debug.Log("estan cerca, abro menu");
+                //Debug.Log("estan cerca, abro menu");
                 behaviourController.openConversationMenu(behaviorReceiber, aux);
 
             }
             else
             {
-                Debug.Log("esta lejos, me acercare");
+                //Debug.Log("esta lejos, me acercare");
 
                 BehaviourAdder.WeightedBehaviours pursue = new BehaviourAdder.WeightedBehaviours(BehaviourAdder.SteeringBehaviour.PURSUE, 0.7f, 0);
                 BehaviourAdder.WeightedBehaviours avoidWall = new BehaviourAdder.WeightedBehaviours(BehaviourAdder.SteeringBehaviour.AVOIDWALL, 1f, 0);
@@ -77,7 +88,7 @@ public class ClickPosition : MonoBehaviour {
 
         else if (aux.tag == "MenuButton")
         {
-            Debug.Log("menuButton");
+            //Debug.Log("menuButton");
             aux.GetComponent<ButtonAction>().Action();
         }
         else if (aux.tag == "Player")

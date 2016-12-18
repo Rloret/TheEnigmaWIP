@@ -8,7 +8,7 @@ public class ActionJoinGroup : Action
     {
         base.visibiCone.IDecided = false;
         Reaction.spawnReaction(ResponseController.responseEnum.GROUP, ResponseController.responseEnum.OK, this.gameObject);
-        Debug.Log("me uno a tu grupo");
+       // Debug.Log("me uno a tu grupo");
 
 		if (this.gameObject.tag != "Player") {
 			
@@ -17,7 +17,7 @@ public class ActionJoinGroup : Action
 			GameObject.FindGameObjectWithTag ("GameController").GetComponent<BehaviourAdder> ().addBehavioursOver (this.gameObject, this.GetComponent<DecisionTreeCreator> ().target, behaviours, weightedBehavs);
 		}
 
-        Debug.Log("mytarget es " + this.GetComponent<DecisionTreeCreator>().target);
+       // Debug.Log("mytarget es " + this.GetComponent<DecisionTreeCreator>().target);
         GameObject t = this.GetComponent<DecisionTreeCreator>().target;
         GroupScript myGroup = this.GetComponent<GroupScript>();
         GroupScript leadergroup = t.GetComponent<GroupScript>();

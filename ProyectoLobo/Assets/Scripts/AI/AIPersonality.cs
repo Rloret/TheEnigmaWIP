@@ -12,7 +12,7 @@ public class AIPersonality: PersonalityBase {
     public int numberOfIAs;
     public GameObject HealthImage;
     public GameObject panel;
-    public float defense=1f;
+ 
 
     /// <summary>
     /// Personalities contains the 6 possible personalities beeing:
@@ -40,18 +40,6 @@ public class AIPersonality: PersonalityBase {
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers(numberOfIAs);
 
-    }
- 
-    void update()
-    {
-        if(health < 20)
-        {
-            rememberedMedicalaidPosition = myMemory.SearchInMemory("Medicalaid");
-            if (rememberedMedicalaidPosition != null)
-            {
-                //moverse hacia alli
-            }
-        }
     }
 
     public void configurePersonality(Personalities type)
