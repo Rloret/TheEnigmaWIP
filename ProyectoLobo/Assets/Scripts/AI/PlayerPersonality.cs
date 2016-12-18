@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PlayerPersonality : PersonalityBase {
-	public float defense=1f;
 	public GameObject HealthImage;
 	public GameObject panel;
 
