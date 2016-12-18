@@ -46,12 +46,13 @@ public class ClickPosition : MonoBehaviour {
                 if (h.collider.gameObject.tag == "IA")
                 {
                     PersonalityBase personality = this.GetComponent<PersonalityBase>();
-                    Debug.Log("estoy convertido? " + personality.isMonster);
 
                     if (personality.isMonster)
                     {
                         //attack
                         personality.interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+                        ActionAttack a = gameObject.AddComponent<ActionAttack>();
+                        
                         Debug.Log("POS TE PEGO");
                     }
                     else
