@@ -29,7 +29,7 @@ public class AIPersonality: PersonalityBase {
     }
 
     private Vector3? rememberedMedicalaidPosition;
-    private BehaviourAdder behaviourManager;
+
 
 
     void Start()
@@ -37,7 +37,7 @@ public class AIPersonality: PersonalityBase {
         numberOfIAs = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs;
         TrustInOthers = new int[numberOfIAs]; 
         myMemory = GetComponent<Memory>();
-        behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
+        base.behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers(numberOfIAs);
 

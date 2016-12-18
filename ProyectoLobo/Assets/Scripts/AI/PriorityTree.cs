@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PriorityTree : MonoBehaviour {
+public class PriorityTree : MonoBehaviour
+{
 
     private int priority;
 
-	public int GetPriority (GameObject target, PersonalityBase Personality)
+    public int GetPriority(GameObject target, PersonalityBase Personality)
     {
         if (target.name == "Medicalaid") // Es botiquin
         {
@@ -18,23 +19,29 @@ public class PriorityTree : MonoBehaviour {
         }
         else // No es botiquin
         {
-           
-           
             if (Personality.charisma > Personality.selfAssertion && Personality.charisma > Personality.fear) //Es carismática
             {
                 //Debug.Log("SUperCarismática");
-                if (target.tag == "IA") // Es una MockIAa
+                if (target.tag == "IA" || target.tag == "player") // Es una MockIAa
                 {
-					int confidence = Personality.TrustInOthers[target.GetComponent<AIPersonality>().GetMyOwnIndex()];
+                    GroupScript iagroup = target.GetComponent<GroupScript>();
+                    int confidence = Personality.TrustInOthers[target.GetComponent<PersonalityBase>().GetMyOwnIndex()];
                     Debug.Log("T : " + target + " groupScript : " + target.GetComponent<GroupScript>());
                     if (confidence > 5) // Confía en ella
-                        if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
+                        if (iagroup.checkIAInGroup(this.gameObject))
                         {
                             priority = 0;
                         }
                         else
                         {
-                            priority = 3;
+                            if (iagroup.groupLeader == target && iagroup.inGroup)
+                                priority = 3;
+                            else if (!iagroup.inGroup)
+                            {
+                                priority = 0;
+                            }
+                            else
+                                priority = -1;
                         }
                     else // No confía en ella
                         priority = 1;
@@ -52,7 +59,7 @@ public class PriorityTree : MonoBehaviour {
                     {
                         if (Personality.selfAssertion > Personality.fear) // es agresivo más que miedoso
                             priority = 1;
-                        else 
+                        else
                             priority = 2;
                     }
                     else // es otro objeto
@@ -62,21 +69,29 @@ public class PriorityTree : MonoBehaviour {
 
             else if (Personality.fear > Personality.selfAssertion)
             {
-              /*  Debug.Log("Miedo: " + Personality.fear);
-                Debug.Log("Agresividad: " + Personality.selfAssertion);
-                Debug.Log("Miedoso");*/
-                if (target.tag == "IA")
+                /*  Debug.Log("Miedo: " + Personality.fear);
+                  Debug.Log("Agresividad: " + Personality.selfAssertion);
+                  Debug.Log("Miedoso");*/
+                if (target.tag == "IA" || target.tag == "player")
                 {
-					int confidence = Personality.TrustInOthers[target.GetComponent<AIPersonality>().GetMyOwnIndex()];
+                    GroupScript iagroup = target.GetComponent<GroupScript>();
+                    int confidence = Personality.TrustInOthers[target.GetComponent<PersonalityBase>().GetMyOwnIndex()];
                     if (confidence > 5)
                     {
                         if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
                         {
-                            priority =0;
+                            priority = 0;
                         }
                         else
                         {
-                            priority = 1;
+                            if (iagroup.groupLeader == target && iagroup.inGroup)
+                                priority = 1;
+                            else if (!iagroup.inGroup)
+                            {
+                                priority = 0;
+                            }
+                            else
+                                priority = -1;
                         }
                     }
                     else
@@ -99,12 +114,13 @@ public class PriorityTree : MonoBehaviour {
             }
             else
             {
-               /* Debug.Log("Miedo: " + Personality.fear);
-                Debug.Log("Agresividad: " + Personality.selfAssertion);
-                Debug.Log("Agresivo");*/
-                if (target.tag == "IA")
+                /* Debug.Log("Miedo: " + Personality.fear);
+                 Debug.Log("Agresividad: " + Personality.selfAssertion);
+                 Debug.Log("Agresivo");*/
+                if (target.tag == "IA" || target.tag == "player")
                 {
-					int confidence = Personality.TrustInOthers[target.GetComponent<AIPersonality>().GetMyOwnIndex()];
+                    GroupScript iagroup = target.GetComponent<GroupScript>();
+                    int confidence = Personality.TrustInOthers[target.GetComponent<PersonalityBase>().GetMyOwnIndex()];
                     if (confidence > 5)
                     {
                         if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
@@ -113,10 +129,20 @@ public class PriorityTree : MonoBehaviour {
                         }
                         else
                         {
-                            if (Personality.charisma > Personality.fear)
-                                priority = 3;
+                            if (iagroup.groupLeader == target && iagroup.inGroup)
+                            {
+                                if (Personality.charisma > Personality.fear)
+                                    priority = 3;
+                                else
+                                    priority = 2;
+                            }
+                            else if (!iagroup.inGroup)
+                            {
+                                priority = 0;
+                            }
                             else
-                                priority = 2;
+                                priority = -1;
+
                         }
                     }
                     else
@@ -141,7 +167,7 @@ public class PriorityTree : MonoBehaviour {
             }
 
         }
-//        Debug.Log("La prioridad es: " + priority);
+        //        Debug.Log("La prioridad es: " + priority);
 
         return priority;
     }

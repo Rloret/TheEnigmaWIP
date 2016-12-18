@@ -43,14 +43,14 @@ public override void Action()
 			Debug.Log (targetIA);
 
 
-		myGroup.groupLeader = targetIA ;
+		/*myGroup.groupLeader = targetIA ;
         myGroup.inGroup = true;
         myGroup.IAmTheLeader = false;
         myGroup.groupMembers.Clear();
         myGroup.groupMembers.AddRange(leadergroup.copyGroup());
 		myGroup.addSingleMember(targetIA);
 		leadergroup.updateGroups(playerPers.gameObject);
-        leadergroup.makeLeader();
+        leadergroup.makeLeader();*/
         
 
 		}

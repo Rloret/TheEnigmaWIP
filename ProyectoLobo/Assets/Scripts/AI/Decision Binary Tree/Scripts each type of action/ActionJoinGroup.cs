@@ -14,32 +14,34 @@ public class ActionJoinGroup : Action
         GameObject t = this.GetComponent<DecisionTreeCreator>().target;
         GroupScript myGroup = this.GetComponent<GroupScript>();
         GroupScript leadergroup = t.GetComponent<GroupScript>();
+        t = leadergroup.groupLeader;
 
-         myGroup.groupLeader = t ;
-         myGroup.inGroup = true;
-         myGroup.IAmTheLeader = false;
-         myGroup.groupMembers.Clear();
-         myGroup.groupMembers.AddRange(leadergroup.copyGroup());
-         myGroup.addSingleMember(t);
-         leadergroup.updateGroups(this.gameObject);
-         leadergroup.makeLeader();
+        myGroup.groupLeader = t;
+        myGroup.inGroup = true;
+        myGroup.IAmTheLeader = false;
+        leadergroup.updateGroups(this.gameObject, myGroup.groupMembers);
+        myGroup.addSingleMember(t);
+       
+        leadergroup.resetMembersOfGroups(t.GetComponent<SpriteRenderer>());
+
 
         if (this.gameObject.tag != "Player")
         {
-          
-             string[] behaviours = { "Pursue", "Leave", "AvoidWall", "Face" };
-             float[] weightedBehavs = { 0.8f, 0.1f, 1, 1 };
-             GameObject target = this.GetComponent<DecisionTreeCreator>().target;
-             GameObject[] targets = { target, target, target, target, target };
-             GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
+
+            string[] behaviours = { "Pursue", "Leave", "AvoidWall", "Face" };
+            float[] weightedBehavs = { 0.8f, 0.1f, 1, 1 };
+            GameObject target = this.GetComponent<DecisionTreeCreator>().target;
+            GameObject[] targets = { target, target, target, target, target };
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
         }
-        t.GetComponent<AIPersonality>().formacionGrupo(t, leadergroup);
+        t.GetComponent<PersonalityBase>().formacionGrupo(t, leadergroup);
         if (this.gameObject.tag != "Player") base.DestroyTrees();
 
-		DecisionTreeNode[] oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
-		foreach(DecisionTreeNode n in oldNodes){
-			DestroyImmediate(n);
-		}
+        DecisionTreeNode[] oldNodes = this.gameObject.GetComponents<DecisionTreeNode>();
+        foreach (DecisionTreeNode n in oldNodes)
+        {
+            DestroyImmediate(n);
+        }
 
     }
         

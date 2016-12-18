@@ -26,7 +26,7 @@ public class ActionAttack : Action {
 
 		foreach (var member in myGroup.groupMembers) {
 
-			totalAttack += member.GetComponent<AIPersonality>().attack;
+			totalAttack += member.GetComponent<PersonalityBase>().attack;
 			//animacion numeritos
 		}
 

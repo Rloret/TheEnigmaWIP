@@ -10,8 +10,6 @@ public class ActionNothing : Action {
         //Placeholder
         Debug.Log("nada: paso de todo, no me interesa");
 		if (this.gameObject.tag != "Player") {
-			
-			Reaction.spawnReaction (ResponseController.responseEnum.NOTOK, ResponseController.responseEnum.NOTOK, this.gameObject);
 			string[] behaviours = { "Wander", "LookWhereYouAreGoing", "AvoidWall" };
 			float[] weightedBehavs = { 0.8f, 0.1f, 1 };
             GameObject target = this.GetComponent<DecisionTreeCreator>().target;
