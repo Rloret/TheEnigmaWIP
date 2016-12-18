@@ -9,6 +9,9 @@ public class ActionOfferOtherJoinMyGroup : Action {
         //Placeholder
         Debug.Log("unete a mi grupo");
         Reaction.spawnReaction(ResponseController.responseEnum.GROUP, ResponseController.responseEnum.QUESTIONMARK, this.gameObject);
+
+		updateTrust (true, this.GetComponent<DecisionTreeCreator> ().target.GetComponent<PersonalityBase> (),this.gameObject.GetComponent<PersonalityBase>().GetMyOwnIndex ());
+
         
 		if (this.gameObject.tag != "Player") {
 			base.DestroyTrees ();

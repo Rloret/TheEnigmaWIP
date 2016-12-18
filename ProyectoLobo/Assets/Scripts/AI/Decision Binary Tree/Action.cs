@@ -20,7 +20,7 @@ public class Action : DecisionTreeNode {
 
 
     public virtual void DoAction() {
-        Debug.Log("doAction de padre action");
+        Debug.LogError("doAction de padre action");
         return;
     }
 
@@ -29,10 +29,17 @@ public class Action : DecisionTreeNode {
         if (this.GetComponent<DecisionTreeReactionAfterInteraction>() != null) Destroy(this.GetComponent<DecisionTreeReactionAfterInteraction>());
 
 		this.gameObject.GetComponent<AIPersonality>().oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
-		Debug.Log ("nodos viejos: " + this.gameObject.GetComponent<AIPersonality>().oldNodes.Length);
-
-
 
     }
+
+	protected void updateTrust(bool increase, PersonalityBase pers, int index){
+		Debug.Log ("se esta actualizand la confianza de : " + pers.gameObject.name + " indice: " + index);
+
+		if (increase) {
+			pers.TrustInOthers [index] += 1;
+		} else {
+			pers.TrustInOthers [index] -= 1;
+		}
+	}
 
 }

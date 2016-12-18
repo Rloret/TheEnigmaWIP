@@ -39,15 +39,13 @@ public class ClickPosition : MonoBehaviour {
             string hitinfo = "";
             foreach (var h in hit)
             {
-                if (h.collider.gameObject.tag == "IA") menuOpened = true;
-                else menuOpened = false;
+/*if (h.collider.gameObject.tag == "IA") menuOpened = true;
+                else menuOpened = false;*/
 
                 hitinfo+=h.collider.gameObject.name;
                 GameObject aux = h.collider.gameObject;
                 DetermineAction(this.gameObject, aux);
             }
-              // Debug.Log(hitinfo);
-         
         }
     }
 
@@ -88,7 +86,7 @@ public class ClickPosition : MonoBehaviour {
 
         else if (aux.tag == "MenuButton")
         {
-            Debug.Log("menuButton");
+//            Debug.Log("menuButton");
             aux.GetComponent<ButtonAction>().Action();
         }
         else if (aux.tag == "Player")
@@ -102,15 +100,6 @@ public class ClickPosition : MonoBehaviour {
         else
         { // target is floor
 
-          /*  if (!menuOpened)
-            {
-                Debug.Log("cierro puto menu");
-                foreach (var m in menus)
-                {
-                    if (m.activeSelf)
-                        m.SetActive(false);
-                }
-            }*/
 
             string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
             float[] weightedBehavs = { 0.7f, 1, 1 };

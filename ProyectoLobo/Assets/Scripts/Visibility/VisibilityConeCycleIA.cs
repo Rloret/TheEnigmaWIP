@@ -83,7 +83,6 @@ public class VisibilityConeCycleIA : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // Debug.Log("Radio = " + Radius);
         vi = this.transform.up;
         source = this.transform.position;
         AngleRads = Mathf.Deg2Rad * Angle;

@@ -37,9 +37,6 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
     protected override void CreateTree() {
 
-		Debug.Log ("creando arbol reaction");
-        // base.targetPersonality = targetpers; TESTING
-
 		if (target.tag == "Player") {
 			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<PlayerPersonality>();
 
@@ -115,8 +112,6 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
                 createLeaves(randomDecision,  addActionJoin(),addActionNothing());
         DecisionCompleted = true;
         treeCreated = true;
-
-		Debug.Log ("fin de creando arbol reaction");
 
 		StartTheDecision ();
     }

@@ -8,11 +8,9 @@ public class ActionAttack : Action {
     {
 
         Reaction.spawnReaction(ResponseController.responseEnum.ATTACK, ResponseController.responseEnum.ATTACK, this.gameObject);
-        Debug.Log("voy a atacar y bajo confianza. Soy "+this.gameObject.name);
+       // Debug.Log("voy a atacar . Soy "+this.gameObject.name);
 
-		//ATTACK
 
-		// decrease friendship 
 		GroupScript myGroup = this.GetComponent<GroupScript>();
 		int totalAttack = 0;
 
@@ -57,8 +55,29 @@ public class ActionAttack : Action {
     }
 
     void Attack(int a) {
-        this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>().takeDamage(a);
-        Debug.Log("atacamos un total de " + a);
+		//Debug.Log ("ataco y hago : " + a );
+
+		PersonalityBase targetPers = this.GetComponent<DecisionTreeCreator> ().target.GetComponent<PersonalityBase> ();
+        targetPers.takeDamage(a);
+
+		/*if (this.gameObject.tag == "Player") {
+			
+			targetPers.TrustInOthers[this.gameObject.GetComponent<PlayerPersonality>().GetMyOwnIndex()]-=1;
+			Debug.Log("Soy player, reduzco mi confi y me atacan un total de " + a);
+
+
+		} else {
+			
+			targetPers.TrustInOthers[this.gameObject.GetComponent<AIPersonality>().GetMyOwnIndex()]-=1;
+			Debug.Log("Soy IA, reduzco mi confi y me atacan un total de " + a);
+
+		}*/
+
+		updateTrust (false, targetPers, this.GetComponent<PersonalityBase> ().GetMyOwnIndex ());
+
+
+
+		//HAY QUE RECORRER EL GRUPO DEL TARGET Y REDUCIR LA CONFIANZA DE TODOS 
         
     }
 
