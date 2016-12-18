@@ -38,8 +38,6 @@ public class AvoidWall : Seek {
         Vector2 directionIzq = rayVector + (Vector2)(Quaternion.Euler(0, 0, -30) * rayVector);
         Vector2 directionDer = rayVector + (Vector2)(Quaternion.Euler(0, 0, 30) * rayVector);  
         LayerMask wallMask = 1 << 8 | 1 << 10; // sólo se revisarán las colisiones con los objetos en la capa 8
-        //int furnitureMask = 1 << 10; // sólo se revisarán las colisiones con los objetos en la capa 8
-
 
         Vector2 rayOrigin1 = position + PerpendicularClockWise(rayVector) * agentRadius;
         Vector2 rayOrigin2 = position + PerpendicularCounterClockWise(rayVector) * agentRadius;
@@ -108,6 +106,7 @@ public class AvoidWall : Seek {
             if (agent.gameObject.tag == "IA" && !this.GetComponent<VisibilityConeCycleIA>().stuckedAI)
             {
                // Debug.Log("Soy IA y estoy ATASCADISIMA");
+
                 agent.linearVelocity = Vector2.zero;
                 agent.orientation *= -1;
 

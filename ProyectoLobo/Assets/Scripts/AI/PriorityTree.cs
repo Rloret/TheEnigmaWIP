@@ -26,7 +26,8 @@ public class PriorityTree : MonoBehaviour
                 {
                     GroupScript iagroup = target.GetComponent<GroupScript>();
                     int confidence = Personality.TrustInOthers[target.GetComponent<PersonalityBase>().GetMyOwnIndex()];
-                    Debug.Log("T : " + target + " groupScript : " + target.GetComponent<GroupScript>());
+                    //Debug.Log("T : " + target + " groupScript : " + target.GetComponent<GroupScript>());
+
                     if (confidence > 5) // Confía en ella
                         if (iagroup.checkIAInGroup(this.gameObject))
                         {

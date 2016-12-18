@@ -181,7 +181,6 @@ public class ObjectHandler : MonoBehaviour {
             playerPersonality.attack = 10;
             playerPersonality.defense = 1.0f;
             cyclePlayer.changeRadius(1.0f);
-            
         }
     }
 
@@ -202,7 +201,7 @@ public class ObjectHandler : MonoBehaviour {
                 if (this.tag == "IA")
                 {
                     cycleIA.changeRadius(1.25f);
-                    Debug.Log("cambio el radio");
+                    //Debug.Log("cambio el radio");
                 }
                 else if (this.tag == "Player")
                 {

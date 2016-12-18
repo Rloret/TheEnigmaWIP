@@ -38,6 +38,7 @@ public class DecisionBool : Decision
             case BoolDecisionEnum.IAMGROUPLEADER:
                 groupScript = personalityScript.gameObject.GetComponent<GroupScript>();
                // Debug.Log("target es: " + personalityScript.gameObject.name+ "yo soy" + this.gameObject.name);
+
                 if (groupScript.groupLeader == this.gameObject) //check if the group leader is me
                 {
                     Debug.Log( "soy el lider del grupo proceedo por nodo true " +personalityScript.gameObject.name);
