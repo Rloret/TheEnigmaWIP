@@ -42,8 +42,24 @@ public class ClickPosition : MonoBehaviour {
             string hitinfo = "";
             foreach (var h in hit)
             {
-               //Debug.Log("Estoy pinchando en: " + h.collider);
-                if (h.collider.gameObject.tag == "IA") menuOpened = true;
+                //Debug.Log("Estoy pinchando en: " + h.collider);
+                if (h.collider.gameObject.tag == "IA")
+                {
+                    PersonalityBase personality = this.GetComponent<PersonalityBase>();
+                    Debug.Log("estoy convertido? " + personality.isMonster);
+
+                    if (personality.isMonster)
+                    {
+                        //attack
+                        personality.interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+                        Debug.Log("POS TE PEGO");
+                    }
+                    else
+                    {
+                        menuOpened = true;
+                    }
+                   
+                }
                 else
                 {
                     menuOpened = false;
@@ -76,7 +92,7 @@ public class ClickPosition : MonoBehaviour {
         {
 			aux.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
-            if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu)
+            if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu && menuOpened)
             {
                 //Debug.Log("estan cerca, abro menu");
                 behaviourController.openConversationMenu(behaviorReceiber, aux);

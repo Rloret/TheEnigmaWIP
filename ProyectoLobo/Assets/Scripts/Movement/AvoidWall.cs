@@ -75,7 +75,7 @@ public class AvoidWall : Seek {
 
             if (agent.gameObject.tag == "IA")
             {
-                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader || this.GetComponent<Evade>()) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
                 {
                     //Debug.Log("No tengo arrive: " + this);
                     this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
@@ -93,7 +93,7 @@ public class AvoidWall : Seek {
             target = auxTarget;
             base.target = auxTarget;
             if (agent.gameObject.tag == "IA") {
-                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader || this.GetComponent<Evade>()) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
                 {
                     //Debug.Log("No tengo arrive: " + this);
                     this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
@@ -116,7 +116,7 @@ public class AvoidWall : Seek {
                 auxTarget.transform.position = position;
                 target = auxTarget;
                 base.target = auxTarget;
-                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader || this.GetComponent<Evade>()) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
                 {
                     //Debug.Log("No tengo arrive: " + this);
                     this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
