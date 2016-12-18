@@ -4,6 +4,9 @@ using System.Collections;
 public class ActionAttack : Action {
 
 
+	public GameObject targetAttack;
+	public bool triggered = false; //Para saber cuando se fuerza la accion
+
     public override void DoAction()
     {
 
@@ -56,8 +59,9 @@ public class ActionAttack : Action {
 
     void Attack(int a) {
 		//Debug.Log ("ataco y hago : " + a );
+		if(!triggered)targetAttack=this.GetComponent<DecisionTreeCreator> ().target;
 
-		PersonalityBase targetPers = this.GetComponent<DecisionTreeCreator> ().target.GetComponent<PersonalityBase> ();
+		PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase> ();
         targetPers.takeDamage(a);
 
 		/*if (this.gameObject.tag == "Player") {

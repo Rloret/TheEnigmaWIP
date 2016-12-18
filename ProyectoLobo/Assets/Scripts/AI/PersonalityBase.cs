@@ -6,6 +6,9 @@ public class PersonalityBase : MonoBehaviour {
 	public int health = 0;
 	public int attack=0;
 	public int confidence;
+
+	public int lastAttackValue=0;
+
     public float defense = 1f;
 
 	public float charisma;

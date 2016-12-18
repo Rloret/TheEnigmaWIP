@@ -9,8 +9,14 @@ public class AIPersonality: PersonalityBase {
 	public GameObject HealthImage;
 	public GameObject panel;
 
+	private Sprite playerNormalStateImage;
+	public Sprite playerMonsterStateImage;
+
     public Memory myMemory;
     public int numberOfIAs;
+
+	GroupScript aiGroup;
+	VisibilityConeCycleIA cone;
 
     /// <summary>
     /// Personalities contains the 6 possible personalities beeing:
@@ -38,8 +44,51 @@ public class AIPersonality: PersonalityBase {
         base.behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers(numberOfIAs);
-
+		aiGroup = GetComponent<GroupScript> ();
+		cone = GetComponent<VisibilityConeCycleIA> ();
+		playerNormalStateImage = gameObject.GetComponent<SpriteRenderer> ().sprite;
     }
+
+	void Update(){
+	
+		if (theThing && !isMonster) {
+			if (aiGroup.inGroup && aiGroup.groupMembers.Count==1) {
+				if (cone.visibleGameobjects.Count <= 1) {
+					convertToMonster ();
+				}
+
+			}
+		} else if (theThing) {
+			if (cone.visibleGameobjects.Count > 1) {
+				returnToHuman ();
+			}
+		
+		}
+	}
+
+
+	void convertToMonster(){
+		lastAttackValue = attack;
+		Debug.Log ("convirtiendome");
+		attack = 20;
+		GetComponent<AgentPositionController>().maxLinearVelocity = 150;
+		GetComponent<SpriteRenderer>().sprite = playerMonsterStateImage;
+		isMonster = true;
+
+		ActionAttack a= gameObject.AddComponent<ActionAttack> ();
+		a.targetAttack = aiGroup.groupMembers [0];
+		a.triggered = true;
+		a.DoAction ();
+
+	}
+
+
+	void returnToHuman(){
+		attack = lastAttackValue;
+		GetComponent<AgentPositionController>().maxLinearVelocity = 150;
+		GetComponent<SpriteRenderer>().sprite= playerNormalStateImage;
+		isMonster = false;
+	}
 
 
     public void configurePersonality(Personalities type)

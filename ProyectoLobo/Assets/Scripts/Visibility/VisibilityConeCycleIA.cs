@@ -275,8 +275,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
                         movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
 
                     }
-                   // else
-                       // moveRandomly(A, C);
+                    else
+                        moveRandomly(A, C);
                 }
             }
         }
