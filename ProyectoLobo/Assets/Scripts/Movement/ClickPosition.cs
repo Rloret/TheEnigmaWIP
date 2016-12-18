@@ -40,7 +40,7 @@ public class ClickPosition : MonoBehaviour {
             string hitinfo = "";
             foreach (var h in hit)
             {
-                //Debug.Log("Estoy pinchando en: " + h.collider);
+                Debug.Log("Estoy pinchando en: " + h.collider);
                 if (h.collider.gameObject.tag == "IA") menuOpened = true;
                 else
                 {
