@@ -17,6 +17,9 @@ public class ActionJoinGroup : Action
 			GameObject.FindGameObjectWithTag ("GameController").GetComponent<BehaviourAdder> ().addBehavioursOver (this.gameObject, this.GetComponent<DecisionTreeCreator> ().target, behaviours, weightedBehavs);
 		}
 
+
+
+
         Debug.Log("mytarget es " + this.GetComponent<DecisionTreeCreator>().target);
         GameObject t = this.GetComponent<DecisionTreeCreator>().target;
         GroupScript myGroup = this.GetComponent<GroupScript>();
@@ -32,6 +35,11 @@ public class ActionJoinGroup : Action
          leadergroup.makeLeader();
       
 		if(this.gameObject.tag!="Player") base.DestroyTrees();
+
+		DecisionTreeNode[] oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
+		foreach(DecisionTreeNode n in oldNodes){
+			DestroyImmediate(n);
+		}
 
     }
         

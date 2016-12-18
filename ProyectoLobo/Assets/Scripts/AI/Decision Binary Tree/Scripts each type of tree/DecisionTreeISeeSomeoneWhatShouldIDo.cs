@@ -55,7 +55,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
     {
 
         //  base.targetPersonality = targetpers; //TESTING
-		Debug.Log("creando arbol what to do ");
+		//Debug.Log("creando arbol what to do ");
 		if (target.tag == "Player") {
 			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<PlayerPersonality>();
 
