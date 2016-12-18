@@ -73,9 +73,9 @@ public class ClickPosition : MonoBehaviour {
         {
             Debug.Log("Pa k clikas en el player, jaja salu2");
         }
-        else if (aux.layer == 8)
+        else if (aux.layer == 8 || aux.layer == 10)
         {
-            //Esto es para que al clickar en un muro no haga nada
+            //Esto es para que al clickar en un muro o en los muebles no haga nada
         }
         else
         { // target is floor

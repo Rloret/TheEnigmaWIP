@@ -6,6 +6,7 @@ public class AvoidWall : Seek {
     public float avoidDistance =  100; // distancia de la pared a la que se posicionará el nuevo target
     public float lookAhead = 80; // distancia de RayCast
     public bool stuck = false;
+    public LayerMask layerMask;
 
     private GameObject auxTarget;
     private Sprite sp;
@@ -36,7 +37,9 @@ public class AvoidWall : Seek {
         Vector2 rayVector = agent.linearVelocity.normalized * lookAhead;
         Vector2 directionIzq = rayVector + (Vector2)(Quaternion.Euler(0, 0, -30) * rayVector);
         Vector2 directionDer = rayVector + (Vector2)(Quaternion.Euler(0, 0, 30) * rayVector);  
-        int wallMask = 1 << 8; // sólo se revisarán las colisiones con los objetos en la capa 8
+        LayerMask wallMask = 1 << 8 | 1 << 10; // sólo se revisarán las colisiones con los objetos en la capa 8
+        //int furnitureMask = 1 << 10; // sólo se revisarán las colisiones con los objetos en la capa 8
+
 
         Vector2 rayOrigin1 = position + PerpendicularClockWise(rayVector) * agentRadius;
         Vector2 rayOrigin2 = position + PerpendicularCounterClockWise(rayVector) * agentRadius;
