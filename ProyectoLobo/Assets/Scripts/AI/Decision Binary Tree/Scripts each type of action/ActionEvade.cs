@@ -10,17 +10,17 @@ public class ActionEvade : Action {
         Debug.Log("voy a huir y bajo confianza. Soy "+this.gameObject.name);
 
         Reaction.spawnReaction(ResponseController.responseEnum.EVADE, ResponseController.responseEnum.EVADE, this.gameObject);
-
+        GameObject target = this.GetComponent<DecisionTreeCreator>().target;
         string[] behaviours = { "Evade", "AvoidWall", "LookWhereYouAreGoing" };
         float[] weightedBehavs = { 0.7f, 1, 1 };
-
+        GameObject[] targets = { target, target, target };
         GetComponent<VisibilityConeCycleIA>().enabled = false;
         GetComponent<GroupScript>().leaveGroup(this.gameObject);
         base.visibiCone.IDecided = false;
 
         base.DestroyTrees();
-
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject, this.GetComponent<DecisionTreeCreator>().target, behaviours, weightedBehavs);
+      
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject,targets , behaviours, weightedBehavs);
 
         Invoke("EnableCone", 10f);
     }

@@ -7,7 +7,6 @@ public class YesButton : ButtonAction {
 	private GameObject player;
 
 	private PlayerPersonality playerPers;
-	private GroupScript playerGroup;
 
 	private DecisionTreeReactionAfterInteraction reactionTree;
 
@@ -22,8 +21,15 @@ public override void Action()
 		targetIA = menuController.GetTargetIA();
 
 		if(	playerPers.interactionFromOtherCharacter== ActionsEnum.Actions.OFFER){
+			
 			playerPers.myObject = targetIA.GetComponent<AIPersonality> ().myObject;
+
+			player.GetComponent<ObjectHandler> ().currentObject = targetIA.GetComponent<ObjectHandler> ().currentObject;
+
 			targetIA.GetComponent<AIPersonality> ().myObject = ObjectHandler.ObjectType.NONE;
+
+			targetIA.GetComponent<ObjectHandler> ().currentObject = null;
+
 			Debug.Log ("player:he cogido tu objeto");
 		}
 
@@ -37,14 +43,14 @@ public override void Action()
 			Debug.Log (targetIA);
 
 
-		myGroup.groupLeader = targetIA ;
+		/*myGroup.groupLeader = targetIA ;
         myGroup.inGroup = true;
         myGroup.IAmTheLeader = false;
         myGroup.groupMembers.Clear();
         myGroup.groupMembers.AddRange(leadergroup.copyGroup());
 		myGroup.addSingleMember(targetIA);
 		leadergroup.updateGroups(playerPers.gameObject);
-        leadergroup.makeLeader();
+        leadergroup.makeLeader();*/
         
 
 		}

@@ -41,14 +41,18 @@ public class DecisionTarget : MonoBehaviour {
             priority = priorityTree.GetPriority(target, personality); // Llama al árbol de prioridad que devuelve la prioridad de ese GameObject
             priorities += target.name + " (priority)";
             //Debug.Log("La prioridad de " + target + " es " + priority);
-            if (!analyzedTargets.ContainsKey(target))
+
+            if (!analyzedTargets.ContainsKey(target) && priority!=-1)
                 analyzedTargets.Add(target, priority);
         }
 
         chosenTarget = GivePriorityTarget(analyzedTargets, memory); // Recoge el GameObject más prioritario
         //Debug.Log("elegido es " + chosenTarget.name);
         nameCurrentTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
-
+        if(chosenTarget == null)
+        {
+            return chosenTarget;
+        }
         if (chosenTarget.tag == "IA"  )
         {
             analyzedTargets.Clear();
@@ -130,7 +134,7 @@ public class DecisionTarget : MonoBehaviour {
             if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
             {
 				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
-                Debug.Log("meto en la memoria " + par.Key.name);
+//                Debug.Log("meto en la memoria " + par.Key.name);
 
             }
         }

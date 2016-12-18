@@ -90,7 +90,7 @@ public class BehaviourAdder : MonoBehaviour {
         }
 
     }
-    public void ActionWhenClick(GameObject behaviorReceiber, GameObject aux) {
+    public void ActionWhenClick(GameObject behaviorReceiber, GameObject[] aux) {
         //if (aux.tag != "IA") aux.GetComponent<SpriteRenderer>().color = Color.red; ESTO ES PARA PONER ROJO EL PUNTO DE DESTINO
 		if (aux == null) {
 			
@@ -101,10 +101,11 @@ public class BehaviourAdder : MonoBehaviour {
         {
             DestroyImmediate(comportamiento);
         }
-
+        int i = 0;
         foreach (var comportamiento in WeightedBehavioursArray)
         {
-            addBehaviour(behaviorReceiber, comportamiento.Behaviour, aux, comportamiento.weight,comportamiento.priority);
+            addBehaviour(behaviorReceiber, comportamiento.Behaviour, aux[i], comportamiento.weight,comportamiento.priority);
+            i++;
         }
     }
 
@@ -158,7 +159,7 @@ public class BehaviourAdder : MonoBehaviour {
 
     }*/
 
-    public void addBehavioursOver(GameObject behaviourReceiver, GameObject target, string[] behaviours, float[] weights)
+    public void addBehavioursOver(GameObject behaviourReceiver, GameObject[] target, string[] behaviours, float[] weights)
     {
         if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
         WeightedBehaviours aux_behav = new WeightedBehaviours();
@@ -234,7 +235,7 @@ public class BehaviourAdder : MonoBehaviour {
         }
 
     }*/
-    void IAAction(GameObject behaviourreceiver, GameObject target)
+    void IAAction(GameObject behaviourreceiver, GameObject[] target)
     {
         ActionWhenClick(behaviourreceiver, target);
 

@@ -11,9 +11,16 @@ public class ConvinceButtonClick : ButtonAction {
     {
         Debug.Log("convinceAction");
 
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+
         targetIA = menuController.GetTargetIA();
 
-        targetIA.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+		PersonalityBase targetPers = targetIA.GetComponent<AIPersonality> ();
+
+		targetPers.interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+
+		updateTrust (true, targetPers, player.GetComponent<PersonalityBase> ().GetMyOwnIndex ());
+
 
 		reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
 
@@ -32,4 +39,15 @@ public class ConvinceButtonClick : ButtonAction {
 
         this.gameObject.transform.parent.gameObject.SetActive(false);
     }
+
+	protected void updateTrust(bool increase, PersonalityBase pers, int index){
+		//	Debug.Log ("se esta actualizand la confianza de : " + pers.gameObject.name + " indice: " + index);
+
+		if (increase) {
+			pers.TrustInOthers [index] += 1;
+		} else {
+			pers.TrustInOthers [index] -= 1;
+		}
+	}
+
 }

@@ -13,6 +13,8 @@ public class gameController : MonoBehaviour {
     public GameObject mockIA;
     public GameObject LifeImage;
 
+	public bool allCharisma=false;
+
     private GameObject currentIA;
 	// Use this for initialization
 	void Start () {
@@ -24,38 +26,56 @@ public class gameController : MonoBehaviour {
         }
         numberOfIAs += 1;
 
-        int i = 3;
-        AIPersonality.Personalities type = (AIPersonality.Personalities)Random.Range(0,1);
-        int spawnPos = Random.Range(0, spawnersLeft.Count - 1);
-        int colorSprite = Random.Range(0, Colors.Length-1);
-        instantiateIA(type, spawnersLeft[spawnPos].transform.position,0,Colors[colorSprite]);
-        spawnersLeft.Remove(spawnersLeft[spawnPos]);
+		AIPersonality.Personalities type = (AIPersonality.Personalities)Random.Range (0, 1);
+		int spawnPos = Random.Range (0, spawnersLeft.Count - 1);
+		int colorSprite = Random.Range (0, Colors.Length - 1);
 
-        type = (AIPersonality.Personalities)Random.Range(2,3);
-        spawnPos = Random.Range(0, spawnersLeft.Count - 1);
-        colorSprite = Random.Range(0, Colors.Length - 1);
-        instantiateIA(type, spawnersLeft[spawnPos].transform.position, 1, Colors[colorSprite]);
-        spawnersLeft.Remove(spawnersLeft[spawnPos]);
+		if (!allCharisma) {
+			int i = 3;
 
-        type = (AIPersonality.Personalities)Random.Range(4, 5);
-        spawnPos = Random.Range(0, spawnersLeft.Count - 1);
-        colorSprite = Random.Range(0, Colors.Length - 1);
-        instantiateIA(type, spawnersLeft[spawnPos].transform.position, 2, Colors[colorSprite]);
-        spawnersLeft.Remove(spawnersLeft[spawnPos]);
 
-        while (i < numberOfIAs-1)
-        {
-            spawnPos = Random.Range(0, spawnersLeft.Count - 1);
-            type = (AIPersonality.Personalities)Random.Range(0, 5);
-            colorSprite = Random.Range(0, Colors.Length - 1);
-            instantiateIA(type, spawnersLeft[spawnPos].transform.position, i, Colors[colorSprite]);
-            spawnersLeft.Remove(spawnersLeft[spawnPos]);
-            i++;
-        }
+			instantiateIA (type, spawnersLeft [spawnPos].transform.position, 0, Colors [colorSprite]);
+			spawnersLeft.Remove (spawnersLeft [spawnPos]);
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        PlayerPersonality personality = player.GetComponent<PlayerPersonality>();
-        personality.configurePlayer();
+			type = (AIPersonality.Personalities)Random.Range (2, 3);
+			spawnPos = Random.Range (0, spawnersLeft.Count - 1);
+			colorSprite = Random.Range (0, Colors.Length - 1);
+			instantiateIA (type, spawnersLeft [spawnPos].transform.position, 1, Colors [colorSprite]);
+			spawnersLeft.Remove (spawnersLeft [spawnPos]);
+
+			type = (AIPersonality.Personalities)Random.Range (4, 5);
+			spawnPos = Random.Range (0, spawnersLeft.Count - 1);
+			colorSprite = Random.Range (0, Colors.Length - 1);
+			instantiateIA (type, spawnersLeft [spawnPos].transform.position, 2, Colors [colorSprite]);
+			spawnersLeft.Remove (spawnersLeft [spawnPos]);
+
+			while (i < numberOfIAs - 1) {
+				spawnPos = Random.Range (0, spawnersLeft.Count - 1);
+				type = (AIPersonality.Personalities)Random.Range (0, 5);
+				colorSprite = Random.Range (0, Colors.Length - 1);
+				instantiateIA (type, spawnersLeft [spawnPos].transform.position, i, Colors [colorSprite]);
+				spawnersLeft.Remove (spawnersLeft [spawnPos]);
+				i++;
+			}
+
+			GameObject player = GameObject.FindGameObjectWithTag ("Player");
+			PlayerPersonality personality = player.GetComponent<PlayerPersonality> ();
+			personality.configurePlayer ();
+		} else {
+			int i = 0;
+
+			while (i < numberOfIAs - 1) {
+				
+				spawnPos = Random.Range (0, spawnersLeft.Count - 1);
+				type = AIPersonality.Personalities.SFA;
+				colorSprite = Random.Range (0, Colors.Length - 1);
+				instantiateIA (type, spawnersLeft [spawnPos].transform.position, i, Colors [colorSprite]);
+				spawnersLeft.Remove (spawnersLeft [spawnPos]);
+				i++;
+			}
+
+		}
+
         /*personality.health = 100;
         personality.attack = 10;
 
@@ -71,7 +91,7 @@ public class gameController : MonoBehaviour {
         currentIA.GetComponent<SpriteRenderer>().sprite = color;
         currentIA.transform.position = pos; 
         AIPersonality Aipers = currentIA.GetComponent<AIPersonality>();
-        Aipers.MyOwnIndex = number;
+		Aipers.SetMyOwnIndex( number);
         Aipers.health = 100;
         Aipers.attack = 10;
         Aipers.configurePersonality(type);
