@@ -30,6 +30,8 @@ public class Action : DecisionTreeNode {
 
 		this.gameObject.GetComponent<AIPersonality>().oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
 
+		//Debug.Log ("nodos viejos: " + this.gameObject.GetComponent<AIPersonality>().oldNodes.Length);
+
     }
 
 	protected void updateTrust(bool increase, PersonalityBase pers, int index){

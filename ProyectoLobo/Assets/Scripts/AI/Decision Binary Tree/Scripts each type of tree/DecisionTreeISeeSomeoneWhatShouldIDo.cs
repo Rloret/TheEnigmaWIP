@@ -220,7 +220,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
     public override void StartTheDecision()
     {
-       Debug.Log("Empiezo a decidir"+ this.gameObject.name);
+       //Debug.Log("Empiezo a decidir"+ this.gameObject.name);
 
         decisionNew = root;
 
@@ -230,7 +230,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
  
     public override void CommunicateAction(Action actionNew)
     {
-        Debug.Log("He acabado y comunico accion");
+       // Debug.Log("He acabado y comunico accion");
 
 		if (target.gameObject.tag == "IA" ||target.tag == "Player")
         {  //avisar de que vamos a interactuar con él
@@ -287,7 +287,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
 
 				}
-                Debug.Log("Le he dicho que se una a mi grupo");
+                //Debug.Log("Le he dicho que se una a mi grupo");
 
 
             }

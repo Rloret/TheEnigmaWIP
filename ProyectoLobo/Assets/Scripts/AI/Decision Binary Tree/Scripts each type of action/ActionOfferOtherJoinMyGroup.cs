@@ -7,7 +7,7 @@ public class ActionOfferOtherJoinMyGroup : Action {
     {
         //Code for attack
         //Placeholder
-        Debug.Log("unete a mi grupo");
+        //Debug.Log("unete a mi grupo");
         Reaction.spawnReaction(ResponseController.responseEnum.GROUP, ResponseController.responseEnum.QUESTIONMARK, this.gameObject);
 
 		updateTrust (true, this.GetComponent<DecisionTreeCreator> ().target.GetComponent<PersonalityBase> (),this.gameObject.GetComponent<PersonalityBase>().GetMyOwnIndex ());

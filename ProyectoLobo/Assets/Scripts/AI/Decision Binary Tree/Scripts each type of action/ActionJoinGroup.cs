@@ -8,9 +8,10 @@ public class ActionJoinGroup : Action
     {
         base.visibiCone.IDecided = false;
         Reaction.spawnReaction(ResponseController.responseEnum.GROUP, ResponseController.responseEnum.OK, this.gameObject);
-        Debug.Log("me uno a tu grupo");
+       // Debug.Log("me uno a tu grupo");
 
-        Debug.Log("mytarget es " + this.GetComponent<DecisionTreeCreator>().target);
+        //Debug.Log("mytarget es " + this.GetComponent<DecisionTreeCreator>().target);
+
         GameObject t = this.GetComponent<DecisionTreeCreator>().target;
         GroupScript myGroup = this.GetComponent<GroupScript>();
         GroupScript leadergroup = t.GetComponent<GroupScript>();

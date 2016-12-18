@@ -6,13 +6,14 @@ public class PersonalityBase : MonoBehaviour {
 	public int health = 0;
 	public int attack=0;
 	public int confidence;
-
+    public float defense = 1f;
 
 	public float charisma;
 	public float selfAssertion; // supongo que esto es agresividad para los arboles de decisiones ¿?
 	public float fear;
 
-	public bool isMonster = false; // MOCK
+	public bool isMonster = false; // INDICA SI ESTÁ CONVERTIDO EN EL MONSTRUO
+    public bool theThing = true; //INDICA QUE ES EL MONSTRUO
 
 	public ObjectHandler.ObjectType myObject;
 

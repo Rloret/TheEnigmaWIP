@@ -113,6 +113,8 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
         DecisionCompleted = true;
         treeCreated = true;
 
+
+		//Debug.Log ("fin de creando arbol reaction");
 		StartTheDecision ();
     }
 

@@ -64,13 +64,10 @@ public class VisibilityConeCycleIA : MonoBehaviour
     }
     public void changeRadius(float newR)
     {
-        Debug.Log("Me llega: " + newR);
+        //Debug.Log("Me llega: " + newR);
         lastRadius = Radius;
         Radius *= newR;
-        Debug.Log("He cambiado el radio = " + Radius);
-
-
-
+        //Debug.Log("He cambiado el radio = " + Radius);
     }
 
     /* void OnDrawGizmos()
@@ -83,6 +80,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //Debug.Log("Radio = " + Radius);
         vi = this.transform.up;
         source = this.transform.position;
         AngleRads = Mathf.Deg2Rad * Angle;
@@ -235,7 +234,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
 					#region deccidingReg
 					if (!IDecided) {
-						Debug.Log ("veo al player");
+						//Debug.Log ("veo al player");
 						//  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
 						IDecided = true;
 
@@ -264,14 +263,21 @@ public class VisibilityConeCycleIA : MonoBehaviour
 				}
                 else //lo más prioritario es un objeto
                 {
-                    objecthand.desiredObject = priorityGO;
-                   // Debug.Log("busco el objeto");
-                    //Debug.Log ("Deseo " + objecthand.desiredObject);
-                    //objecthand.setDesiredGameObject(priorityGO);
-                    string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
-                    float[] weightedBehavs = { 0.7f, 1, 1 };
-                    GameObject[] targets = { priorityGO, priorityGO, priorityGO };
-                    movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
+                    
+                    if (!priorityGO.GetComponent<ObjectAction>().handler)
+                    {
+                        objecthand.desiredObject = priorityGO;
+                        // Debug.Log("busco el objeto");
+                        //Debug.Log ("Deseo " + objecthand.desiredObject);
+                        //objecthand.setDesiredGameObject(priorityGO);
+                        string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
+                        float[] weightedBehavs = { 0.7f, 1, 1 };
+                        GameObject[] targets = { priorityGO, priorityGO, priorityGO };
+                        movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
+
+                    }
+                   // else
+                       // moveRandomly(A, C);
                 }
             }
         }

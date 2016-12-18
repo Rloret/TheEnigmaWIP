@@ -134,8 +134,7 @@ public class DecisionTarget : MonoBehaviour {
             if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
             {
 				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
-//                Debug.Log("meto en la memoria " + par.Key.name);
-
+                //Debug.Log("meto en la memoria " + par.Key.name);
             }
         }
 
