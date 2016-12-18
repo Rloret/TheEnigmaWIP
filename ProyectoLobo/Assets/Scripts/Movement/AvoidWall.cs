@@ -77,7 +77,10 @@ public class AvoidWall : Seek {
 
             if (agent.gameObject.tag == "IA")
             {
-                this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
                 this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
             }
             steering = base.GetSteering();
@@ -91,7 +94,10 @@ public class AvoidWall : Seek {
             target = auxTarget;
             base.target = auxTarget;
             if (agent.gameObject.tag == "IA") {
-                this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
                 this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
             }
             steering = base.GetSteering();
@@ -109,7 +115,10 @@ public class AvoidWall : Seek {
                 auxTarget.transform.position = position;
                 target = auxTarget;
                 base.target = auxTarget;
-                this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
                 this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
                 steering = base.GetSteering();
 
@@ -130,7 +139,10 @@ public class AvoidWall : Seek {
                 auxTarget.transform.position = position;
                 target = auxTarget;
                 base.target = auxTarget;
-                this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
                 this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
                 steering = base.GetSteering();
             }
