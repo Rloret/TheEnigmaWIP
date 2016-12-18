@@ -29,7 +29,7 @@ public class Action : DecisionTreeNode {
         if (this.GetComponent<DecisionTreeReactionAfterInteraction>() != null) Destroy(this.GetComponent<DecisionTreeReactionAfterInteraction>());
 
 		this.gameObject.GetComponent<AIPersonality>().oldNodes= this.gameObject.GetComponents<DecisionTreeNode>();
-		Debug.Log ("nodos viejos: " + this.gameObject.GetComponent<AIPersonality>().oldNodes.Length);
+		//Debug.Log ("nodos viejos: " + this.gameObject.GetComponent<AIPersonality>().oldNodes.Length);
 
 
 

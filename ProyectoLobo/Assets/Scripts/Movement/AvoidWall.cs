@@ -107,7 +107,7 @@ public class AvoidWall : Seek {
         {
             if (agent.gameObject.tag == "IA" && !this.GetComponent<VisibilityConeCycleIA>().stuckedAI)
             {
-                Debug.Log("Soy IA y estoy ATASCADISIMA");
+               // Debug.Log("Soy IA y estoy ATASCADISIMA");
                 agent.linearVelocity = Vector2.zero;
                 agent.orientation *= -1;
 
@@ -132,7 +132,7 @@ public class AvoidWall : Seek {
         {
             if (agent.gameObject.tag == "IA" && !this.GetComponent<VisibilityConeCycleIA>().stuckedAI)
             {
-                Debug.Log("Soy IA y estoy atascada");
+                //Debug.Log("Soy IA y estoy atascada");
                 agent.linearVelocity *= -1 / 2;
 
                 position = hitCentral.point * -avoidDistance;
