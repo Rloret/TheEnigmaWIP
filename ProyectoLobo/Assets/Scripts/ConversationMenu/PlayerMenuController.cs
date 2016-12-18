@@ -62,7 +62,7 @@ public class PlayerMenuController : MonoBehaviour {
         Debug.Log("OnClick");
         if (playerPersonality.isMonster)
         {
-            playerPersonality.attack = 10;
+			playerPersonality.attack = playerPersonality.lastAttackValue ;
             playerPersonality.GetComponent<AgentPositionController>().maxLinearVelocity = 150;
             playerSprite.sprite = playerNormalStateImage;
             playerPersonality.isMonster = false;
@@ -71,6 +71,8 @@ public class PlayerMenuController : MonoBehaviour {
         else //si NO estás convertido
         {
             Debug.Log("Convirtiendose en monstruo");
+			playerPersonality.lastAttackValue =playerPersonality.attack;
+
             playerPersonality.attack = 20;
             playerPersonality.GetComponent<AgentPositionController>().maxLinearVelocity = 150;
             playerSprite.sprite = playerMonsterStateImage;
