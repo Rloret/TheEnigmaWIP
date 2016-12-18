@@ -60,6 +60,7 @@ public class ObjectHandler : MonoBehaviour {
     #region private domain
     private bool hasObject = false;
     private VisibilityConeCycleIA cycleIA;
+    private VisibilityCone cyclePlayer;
 
     #endregion
 
@@ -72,6 +73,10 @@ public class ObjectHandler : MonoBehaviour {
             objSeenBefore = personality.myMemory.objectsSeenBefore;
             agentPositionControllerScript = this.GetComponent<AgentPositionController>();
         }
+        else if (this.tag == "Player")
+        {
+            cyclePlayer = this.GetComponent<VisibilityCone>();
+        }
     }
 
 	void OnTriggerEnter2D (Collider2D coll) {
@@ -82,13 +87,14 @@ public class ObjectHandler : MonoBehaviour {
             if (objSeenBefore.ContainsKey(coll.name))
             {
                 objSeenBefore.Remove(coll.name);
-                /*Debug.Log("Eliminando de la memoria el objeto: " + coll.name);
+               /* Debug.Log("Eliminando de la memoria el objeto: " + coll.name);
                 Debug.Log("Recuerdo: " + objSeenBefore.Count + " objetos");
                 Debug.Log("El objeto que recuerdo son unas botas? " + objSeenBefore.ContainsKey("Boots"));
                 Debug.Log("El objeto que recuerdo es un hacha? " + objSeenBefore.ContainsKey("Axe"));
                 Debug.Log("El objeto que recuerdo es una linterna? " + objSeenBefore.ContainsKey("Flashlight"));*/
             }
             hasObject = true;
+            ResetSkills();
             Improvement();
             desiredObject = null;
     }
@@ -126,6 +132,17 @@ public class ObjectHandler : MonoBehaviour {
 
     }
 
+    private void ResetSkills()
+    {
+        personality.attack = 10;
+        agentPositionControllerScript.maxLinearVelocity = 80;
+        if (this.tag == "IA")
+        {
+            cycleIA.changeRadius(1.0f);
+            Debug.Log("reseteo el radio");
+        }
+    }
+
     private void Improvement()
     {
         switch (currentObject.name)
@@ -136,9 +153,17 @@ public class ObjectHandler : MonoBehaviour {
             case "Boots":
                 agentPositionControllerScript.maxLinearVelocity = 200;
                 break;
-            case "FlashLight":
-                break;
-            case "Shield":
+            case "Flashlight":
+                if (this.tag == "IA")
+                {
+                    cycleIA.changeRadius(1.25f);
+                    Debug.Log("cambio el radio");
+                }
+                else if (this.tag == "Player")
+                {
+                    cyclePlayer.Radius = 1.25f;
+                }
+               
                 break;
         }
     }
