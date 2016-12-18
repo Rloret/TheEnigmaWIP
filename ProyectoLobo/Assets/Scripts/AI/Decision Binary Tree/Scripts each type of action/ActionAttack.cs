@@ -58,7 +58,9 @@ public class ActionAttack : Action {
     }
 
     void Attack(int a) {
+        this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>().takeDamage(a);
         Debug.Log("atacamos un total de " + a);
+        
     }
 
 }

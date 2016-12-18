@@ -8,12 +8,14 @@ public class ClickPosition : MonoBehaviour {
     public Vector2 clickPos;
     public BehaviourAdder clickController;
     public LayerMask avoidCollisionWith;
-    public float MinDistanceOpenMenu = 40f;
+    public float MinDistanceOpenMenu =100f;
 
 	public GameObject[] menus;
 
     private BehaviourAdder.WeightedBehaviours[] WeightedPlayerBehavioursArray;
     private BehaviourAdder behaviourController;
+
+    private bool menuOpened = false;
 
     void Start()
     {
@@ -27,15 +29,24 @@ public class ClickPosition : MonoBehaviour {
             Vector2 mousePos = new Vector2(mouseWorldPos.x, mouseWorldPos.y); //Esto coje la posición en la pantalla
 
             Vector2 dir = Vector2.zero;
-            RaycastHit2D hit = Physics2D.Raycast(mousePos, dir, 10000, avoidCollisionWith);
+			RaycastHit2D[] hit = Physics2D.RaycastAll(mousePos, dir, 10000, avoidCollisionWith);
 
             //int counter = 0;
 
-            if (hit.collider != null)
+            //if (hit.collider != null)
+            // {
+            string hitinfo = "";
+            foreach (var h in hit)
             {
-                GameObject aux = hit.collider.gameObject;
+                if (h.collider.gameObject.tag == "IA") menuOpened = true;
+                else menuOpened = false;
+
+                hitinfo+=h.collider.gameObject.name;
+                GameObject aux = h.collider.gameObject;
                 DetermineAction(this.gameObject, aux);
             }
+               Debug.Log(hitinfo);
+           // }
         }
     }
 
@@ -79,10 +90,16 @@ public class ClickPosition : MonoBehaviour {
         }
         else
         { // target is floor
-			foreach(var m in menus){
-				if (m.activeSelf)
-					m.SetActive (false);
-			}
+
+            if (!menuOpened)
+            {
+                foreach (var m in menus)
+                {
+                    if (m.activeSelf)
+                        m.SetActive(false);
+                }
+            }
+
             string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
             float[] weightedBehavs = { 0.7f, 1, 1 };
             behaviourController.addBehavioursOver(behaviorReceiber, aux, behaviours, weightedBehavs);

@@ -12,7 +12,7 @@ public class DecisionTarget : MonoBehaviour {
     void Awake() {
 
         analyzedTargets = new Dictionary<GameObject, int>();
-        priorityTree = new PriorityTree();
+        priorityTree = this.gameObject.AddComponent<PriorityTree>();
 
 	}
 

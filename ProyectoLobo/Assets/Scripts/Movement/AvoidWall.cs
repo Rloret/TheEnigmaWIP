@@ -60,9 +60,12 @@ public class AvoidWall : Seek {
         //RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, wallMask); ESTE ES SOLO UN RAYO DESDE EL CENTROº
         //Debug.DrawRay(position, direction, Color.yellow, 0.2f);
 
-        if(!hit && !hit2 && !hitCentral)
+        if (!hit && !hit2 && !hitCentral)
         {
-            this.GetComponent<VisibilityConeCycleIA>().stuckedAI = false;
+            if (agent.gameObject.tag == "IA")
+            {
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = false;
+            }
         }
         else if (hit && !hit2)
         {
@@ -71,9 +74,12 @@ public class AvoidWall : Seek {
             auxTarget.transform.position = position;
             target = auxTarget;
             base.target = auxTarget;
-            this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
 
-            this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+            if (agent.gameObject.tag == "IA")
+            {
+                this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+            }
             steering = base.GetSteering();
 
         }
@@ -84,9 +90,10 @@ public class AvoidWall : Seek {
             auxTarget.transform.position = position;
             target = auxTarget;
             base.target = auxTarget;
-            this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
-
-            this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+            if (agent.gameObject.tag == "IA") {
+                this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+            }
             steering = base.GetSteering();
 
         }

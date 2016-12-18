@@ -16,9 +16,11 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
     private List<GameObject> Objects;
 
-    private float AngleRads, Angle = 90;
-    private int Radius;
+    private float AngleRads, Angle = 70;
+    private float Radius;
+    private float lastRadius = 200;
     private int CuantityOfRays = 1;
+    public float scalingFactorofVision = 1;
 
     private DecisionTarget decisionTargetScript;
     private BehaviourAdder movementController;
@@ -60,6 +62,16 @@ public class VisibilityConeCycleIA : MonoBehaviour
         rememberedObject.name = "rememberedObjectPosition";
 
     }
+    public void changeRadius(float newR)
+    {
+        Debug.Log("Me llega: " + newR);
+        lastRadius = Radius;
+        Radius *= newR;
+        Debug.Log("He cambiado el radio = " + Radius);
+
+
+
+    }
 
     /* void OnDrawGizmos()
      {
@@ -71,12 +83,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       /* if (priorityGO)
-        {
-            Debug.Log("priorityGo existe");
-        }
-        else
-            Debug.Log("no existe");*/
+        Debug.Log("Radio = " + Radius);
         vi = this.transform.up;
         source = this.transform.position;
         AngleRads = Mathf.Deg2Rad * Angle;
@@ -88,8 +95,6 @@ public class VisibilityConeCycleIA : MonoBehaviour
         VisibleConePoints.Clear();
 
     }
-
-
 
     private void sweepRayCastAll(Vector2 From, Vector2 Up, float AngleInRads)
     {
@@ -108,9 +113,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
         }
 
-
-
     }
+
     private Vector2 ThrowRayCast(Vector2 from, Vector2 direction, float distance, Vector2 raycastvector)
     {
 
@@ -125,8 +129,6 @@ public class VisibilityConeCycleIA : MonoBehaviour
         }
         return raycastvector;
     }
-
-
 
     private Vector2 rotateVectorTowards(float beta, float alpha, float i, float radi)
     {
@@ -148,8 +150,6 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
         return true;
     }
-
-
 
     private void checkObjectsWithinCone()
     {
@@ -264,7 +264,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
                 else //lo más prioritario es un objeto
                 {
                     objecthand.desiredObject = priorityGO;
-                    Debug.Log("busco el objeto");
+                   // Debug.Log("busco el objeto");
                     //Debug.Log ("Deseo " + objecthand.desiredObject);
                     //objecthand.setDesiredGameObject(priorityGO);
                     string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
@@ -341,7 +341,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
     {
         if (personality.health < 20)
         {
-            Debug.Log("Necesito curarme");
+           // Debug.Log("Necesito curarme");
             return "Medicalaid";
         }
         else

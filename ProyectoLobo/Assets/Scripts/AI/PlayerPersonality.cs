@@ -3,11 +3,14 @@ using System.Collections;
 
 public class PlayerPersonality : PersonalityBase {
 
-	void Start()
-	{
-		TrustInOthers= new int[5]; // 5 characters
+    public void configurePlayer()
+    {
+        int numberOfAgents = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs;
+        TrustInOthers = new int[numberOfAgents];
+        initializeTrustInOthers(numberOfAgents);
+        health = 100;
+        attack = 10;
 
-		initializeTrustInOthers();
-
-	}
+        MyOwnIndex = numberOfAgents - 1;
+    }
 }

@@ -38,7 +38,7 @@ public class VisibilityConeCycle : MonoBehaviour {
 
 
     private float AngleRads;
-    private int Radius;
+    private float Radius;
 
 
     // Use this for initialization
@@ -59,6 +59,8 @@ public class VisibilityConeCycle : MonoBehaviour {
         
 
     }
+
+
 
    /* void OnDrawGizmos()
     {
