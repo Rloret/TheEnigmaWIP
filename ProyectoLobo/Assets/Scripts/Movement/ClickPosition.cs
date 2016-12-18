@@ -42,18 +42,45 @@ public class ClickPosition : MonoBehaviour {
             string hitinfo = "";
             foreach (var h in hit)
             {
+                GameObject ia = h.collider.gameObject;
+
                 //Debug.Log("Estoy pinchando en: " + h.collider);
-                if (h.collider.gameObject.tag == "IA")
+                if (ia.tag== "IA")
                 {
                     PersonalityBase personality = this.GetComponent<PersonalityBase>();
 
                     if (personality.isMonster)
                     {
                         //attack
-                        personality.interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+                        ia.GetComponent<PersonalityBase>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
                         ActionAttack a = gameObject.AddComponent<ActionAttack>();
-                        
+                        a.targetAttack = ia;
+                        a.triggered = true;
+                        a.DoAction();
                         Debug.Log("POS TE PEGO");
+
+                      DecisionTreeReactionAfterInteraction reaction = ia.GetComponent<DecisionTreeReactionAfterInteraction>();
+                        if (reaction != null)
+                        {
+                            DestroyImmediate(reaction);
+                        }
+
+                        DecisionTreeNode[] oldNodes = ia.GetComponents<DecisionTreeNode>();
+                        foreach (DecisionTreeNode n in oldNodes)
+                        {
+                            DestroyImmediate(n);
+                        }
+
+                        reaction = ia.AddComponent<DecisionTreeReactionAfterInteraction>();
+
+                        Debug.Log("h collider es :" + ia.name + " reaction es " + reaction);
+                        reaction.target = this.gameObject;
+                        Debug.Log("reaction target es :" +  reaction.target);
+
+                        // h.collider.gameObject.GetComponent<VisibilityConeCycleIA>().enabled = false;
+
+
+
                     }
                     else
                     {

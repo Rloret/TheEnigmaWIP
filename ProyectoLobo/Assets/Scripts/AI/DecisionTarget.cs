@@ -149,7 +149,7 @@ public class DecisionTarget : MonoBehaviour {
     /// <param name="personality"></param>
     /// <returns></returns>
 
-    public string objectTraduction (AIPersonality personality)
+    public string objectTraduction (PersonalityBase personality)
     {
         if (personality.myObject == ObjectHandler.ObjectType.AXE)
             return "Axe";
