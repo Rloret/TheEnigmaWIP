@@ -22,8 +22,15 @@ public override void Action()
 		targetIA = menuController.GetTargetIA();
 
 		if(	playerPers.interactionFromOtherCharacter== ActionsEnum.Actions.OFFER){
+			
 			playerPers.myObject = targetIA.GetComponent<AIPersonality> ().myObject;
+
+			player.GetComponent<ObjectHandler> ().currentObject = targetIA.GetComponent<ObjectHandler> ().currentObject;
+
 			targetIA.GetComponent<AIPersonality> ().myObject = ObjectHandler.ObjectType.NONE;
+
+			targetIA.GetComponent<ObjectHandler> ().currentObject = null;
+
 			Debug.Log ("player:he cogido tu objeto");
 		}
 

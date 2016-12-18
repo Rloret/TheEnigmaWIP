@@ -9,6 +9,14 @@ public class ActionOffer : Action {
         //Code for attack
         //Placeholder
         Debug.Log("voy a ofrecer");
+
+		if (this.gameObject.GetComponent<PersonalityBase> ().myObject != ObjectHandler.ObjectType.NONE) {
+			
+			Debug.Log("te doy un "+this.gameObject.GetComponent<ObjectHandler> ().currentObject);
+
+			updateTrust (true, this.GetComponent<DecisionTreeCreator> ().target.GetComponent<PersonalityBase> (), this.gameObject.GetComponent<PersonalityBase> ().GetMyOwnIndex ());
+		}
+
 		if (this.gameObject.tag != "Player") {
 			base.DestroyTrees ();
 

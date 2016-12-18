@@ -65,22 +65,36 @@ public class PlayerMenuController : MonoBehaviour {
 
 		switch (menu) {
 		case MenuTypes.MENU_ATTACKED:
+			Debug.Log("abro menu attack");
 
 			menuAttacked.transform.position = targetIA.transform.position;
 			menuAttacked.transform.rotation = Quaternion.Euler(Vector3.zero);
 			menuAttacked.SetActive(true);
 			break;
+
+
 		case MenuTypes.MENU_CONVERSATION:
+			Debug.Log("abro menu conver");
+
 			menuConversation.transform.position = targetIA.transform.position;
 			menuConversation.transform.rotation = Quaternion.Euler(Vector3.zero);
 			menuConversation.SetActive(true);
 			break;
+
+
 		case MenuTypes.MENU_OFFERED_JOIN:
+
+			Debug.Log("abro menu join");
+
 			menuOfferedJoinGroup.transform.position = targetIA.transform.position;
 			menuOfferedJoinGroup.transform.rotation = Quaternion.Euler(Vector3.zero);
 			menuOfferedJoinGroup.SetActive(true);
 			break;
+
+
 		case MenuTypes.MENU_OFFERED_OBJECT:
+			Debug.Log("abro menu object");
+
 			menuObjectOffered.transform.position = targetIA.transform.position;
 			menuObjectOffered.transform.rotation = Quaternion.Euler(Vector3.zero);
 			menuObjectOffered.SetActive(true);

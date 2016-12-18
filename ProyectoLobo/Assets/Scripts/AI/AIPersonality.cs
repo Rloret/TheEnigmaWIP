@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class AIPersonality: PersonalityBase {
 
 	public DecisionTreeNode[] oldNodes;
-
+	public float defense=1f;
+	public GameObject HealthImage;
+	public GameObject panel;
 
     public Memory myMemory;
     public int numberOfIAs;
-    public GameObject HealthImage;
-    public GameObject panel;
-    public float defense=1f;
+
 
     /// <summary>
     /// Personalities contains the 6 possible personalities beeing:
@@ -95,7 +95,7 @@ public class AIPersonality: PersonalityBase {
         initializeTrustInOthers(numberOfIAs);
     }
 
-    public void takeDamage(int damage)
+    public override void takeDamage(int damage)
     {
         health -= (int)(damage * defense);
         if (health <= 50)

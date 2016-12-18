@@ -6,6 +6,7 @@ public class PersonalityBase : MonoBehaviour {
 	public int attack=0;
 	public int confidence;
 
+
 	public float charisma;
 	public float selfAssertion; // supongo que esto es agresividad para los arboles de decisiones ¿?
 	public float fear;
@@ -19,6 +20,9 @@ public class PersonalityBase : MonoBehaviour {
 
 	public int MyOwnIndex;
 
+
+
+
 	public void SetMyOwnIndex(int i) {
 		MyOwnIndex = i;
 	}
@@ -29,5 +33,9 @@ public class PersonalityBase : MonoBehaviour {
 		for (int i = 0; i < numOfAIs; i++) TrustInOthers[i] =7;
 	}
 	public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
+
+	public virtual void takeDamage(int damage){
+	}
+
 
 }
