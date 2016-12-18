@@ -139,7 +139,7 @@ public class ObjectHandler : MonoBehaviour {
         if (this.tag == "IA")
         {
             cycleIA.changeRadius(1.0f);
-            Debug.Log("reseteo el radio");
+            //Debug.Log("reseteo el radio");
         }
     }
 
@@ -157,7 +157,7 @@ public class ObjectHandler : MonoBehaviour {
                 if (this.tag == "IA")
                 {
                     cycleIA.changeRadius(1.25f);
-                    Debug.Log("cambio el radio");
+                    //Debug.Log("cambio el radio");
                 }
                 else if (this.tag == "Player")
                 {

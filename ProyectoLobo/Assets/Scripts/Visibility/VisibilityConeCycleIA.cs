@@ -64,10 +64,10 @@ public class VisibilityConeCycleIA : MonoBehaviour
     }
     public void changeRadius(float newR)
     {
-        Debug.Log("Me llega: " + newR);
+        //Debug.Log("Me llega: " + newR);
         lastRadius = Radius;
         Radius *= newR;
-        Debug.Log("He cambiado el radio = " + Radius);
+        //Debug.Log("He cambiado el radio = " + Radius);
 
 
 
@@ -83,7 +83,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Radio = " + Radius);
+        //Debug.Log("Radio = " + Radius);
         vi = this.transform.up;
         source = this.transform.position;
         AngleRads = Mathf.Deg2Rad * Angle;
@@ -235,7 +235,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
 					#region deccidingReg
 					if (!IDecided) {
-						Debug.Log ("veo al player");
+						//Debug.Log ("veo al player");
 						//  Debug.Log("veo una Ia voy a decidir, soy " + this.name );
 						IDecided = true;
 

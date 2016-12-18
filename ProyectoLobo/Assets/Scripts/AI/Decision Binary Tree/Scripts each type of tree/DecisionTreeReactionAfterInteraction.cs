@@ -132,7 +132,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
     public override void StartTheDecision()
     {
        
-		Debug.Log(this.gameObject.name+ " Reaction Tree: empiezxo a decidir. mi accion recibida es "+ this.GetComponent<AIPersonality>().interactionFromOtherCharacter);
+		//Debug.Log(this.gameObject.name+ " Reaction Tree: empiezxo a decidir. mi accion recibida es "+ this.GetComponent<AIPersonality>().interactionFromOtherCharacter);
 
         decisionNew = root;
 

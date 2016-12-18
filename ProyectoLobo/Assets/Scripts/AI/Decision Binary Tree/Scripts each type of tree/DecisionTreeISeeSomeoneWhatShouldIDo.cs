@@ -55,7 +55,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
     {
 
         //  base.targetPersonality = targetpers; //TESTING
-		Debug.Log("creando arbol what to do ");
+		//Debug.Log("creando arbol what to do ");
 		if (target.tag == "Player") {
 			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<PlayerPersonality>();
 
@@ -220,7 +220,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
     public override void StartTheDecision()
     {
-       Debug.Log("Empiezo a decidir"+ this.gameObject.name);
+       //Debug.Log("Empiezo a decidir"+ this.gameObject.name);
 
         decisionNew = root;
 

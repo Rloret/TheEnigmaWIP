@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LocationDiscovery.cs" />
      <Compile Include="Assets\ResponseController.cs" />
      <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
@@ -72,6 +73,7 @@
      <Compile Include="Assets\Scripts\AI\PersonalityBase.cs" />
      <Compile Include="Assets\Scripts\AI\PlayerPersonality.cs" />
      <Compile Include="Assets\Scripts\AI\PriorityTree.cs" />
+     <Compile Include="Assets\Scripts\AI\RoomMemory.cs" />
      <Compile Include="Assets\Scripts\ActionsEnum.cs" />
      <Compile Include="Assets\Scripts\BehaviourAdder.cs" />
      <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />

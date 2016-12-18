@@ -17,7 +17,7 @@ public class ActionJoinGroup : Action
 			GameObject.FindGameObjectWithTag ("GameController").GetComponent<BehaviourAdder> ().addBehavioursOver (this.gameObject, this.GetComponent<DecisionTreeCreator> ().target, behaviours, weightedBehavs);
 		}
 
-        Debug.Log("mytarget es " + this.GetComponent<DecisionTreeCreator>().target);
+        //Debug.Log("mytarget es " + this.GetComponent<DecisionTreeCreator>().target);
         GameObject t = this.GetComponent<DecisionTreeCreator>().target;
         GroupScript myGroup = this.GetComponent<GroupScript>();
         GroupScript leadergroup = t.GetComponent<GroupScript>();

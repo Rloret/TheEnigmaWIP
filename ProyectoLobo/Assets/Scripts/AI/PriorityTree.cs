@@ -26,7 +26,7 @@ public class PriorityTree : MonoBehaviour {
                 if (target.tag == "IA") // Es una MockIAa
                 {
                     int confidence = Personality.TrustInOthers[target.GetComponent<AIPersonality>().MyOwnIndex];
-                    Debug.Log("T : " + target + " groupScript : " + target.GetComponent<GroupScript>());
+                    //Debug.Log("T : " + target + " groupScript : " + target.GetComponent<GroupScript>());
                     if (confidence > 5) // Confía en ella
                         if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
                         {

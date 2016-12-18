@@ -45,7 +45,7 @@ public class ClickPosition : MonoBehaviour {
                 GameObject aux = h.collider.gameObject;
                 DetermineAction(this.gameObject, aux);
             }
-               Debug.Log(hitinfo);
+              // Debug.Log(hitinfo);
            // }
         }
     }
