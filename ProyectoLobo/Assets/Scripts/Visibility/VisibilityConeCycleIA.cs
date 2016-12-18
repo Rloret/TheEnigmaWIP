@@ -262,6 +262,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
 				}
                 else //lo más prioritario es un objeto
                 {
+                    Debug.Log("priorityGo es: " + priorityGO);
                     
                     if (!priorityGO.GetComponent<ObjectAction>().handler)
                     {
@@ -275,8 +276,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
                         movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
 
                     }
-                   // else
-                       // moveRandomly(A, C);
+                   else
+                       moveRandomly(A, C);
                 }
             }
         }
