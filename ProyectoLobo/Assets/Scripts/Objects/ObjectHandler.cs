@@ -104,7 +104,7 @@ public class ObjectHandler : MonoBehaviour {
                 {
                     hasObject = true;
                     currentObject.layer = LayerMask.NameToLayer("ObjectsHandler");
-                    currentObject.GetComponent<ObjectAction>().handler = true;
+                    VisibleElements.visibleGameObjects.Add(currentObject);
                 }
                 if (objSeenBefore.ContainsKey(coll.name)) //sólo si es una IA recuerda el objeto
                 {
@@ -122,7 +122,7 @@ public class ObjectHandler : MonoBehaviour {
                 else {
                     hasObject = true;
                     currentObject.layer = LayerMask.NameToLayer("ObjectsHandler");
-                    currentObject.GetComponent<ObjectAction>().handler = true;
+                    VisibleElements.visibleGameObjects.Remove(currentObject);
                 }     
             }
            
