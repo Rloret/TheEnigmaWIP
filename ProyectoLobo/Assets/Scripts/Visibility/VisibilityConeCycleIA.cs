@@ -262,7 +262,6 @@ public class VisibilityConeCycleIA : MonoBehaviour
 				}
                 else //lo más prioritario es un objeto
                 {
-                    Debug.Log("priorityGo es: " + priorityGO);
 
                     if (VisibleElements.visibleGameObjects.Contains(priorityGO))
                     {
