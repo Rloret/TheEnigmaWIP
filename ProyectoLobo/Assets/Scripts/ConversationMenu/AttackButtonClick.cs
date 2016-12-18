@@ -5,6 +5,7 @@ public class AttackButtonClick : ButtonAction {
 
     private GameObject targetIA;
     private DecisionTreeReactionAfterInteraction reactionTree;
+    
 
     public override void Action()
     {
@@ -29,5 +30,6 @@ public class AttackButtonClick : ButtonAction {
         reactionTree.target = targetIA;
 
         this.gameObject.transform.parent.gameObject.SetActive(false);
+
     }
 }

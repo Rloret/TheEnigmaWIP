@@ -7,7 +7,6 @@ public class YesButton : ButtonAction {
 	private GameObject player;
 
 	private PlayerPersonality playerPers;
-	private GroupScript playerGroup;
 
 	private DecisionTreeReactionAfterInteraction reactionTree;
 

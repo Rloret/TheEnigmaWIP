@@ -38,8 +38,7 @@ public class ActionAttack : Action {
 		if (this.gameObject.tag != "Player") {
 			base.DestroyTrees ();
 
-        
-			Invoke ("EnableCone", 3f);
+			Invoke ("EnableCone", 1f);
 		}
     }
 

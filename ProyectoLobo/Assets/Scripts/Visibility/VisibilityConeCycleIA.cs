@@ -83,7 +83,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Radio = " + Radius);
+       // Debug.Log("Radio = " + Radius);
         vi = this.transform.up;
         source = this.transform.position;
         AngleRads = Mathf.Deg2Rad * Angle;
@@ -224,7 +224,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
                         string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
                         float[] weightedBehavs = { 0.7f, 1, 1 };
-                        movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+                        GameObject[] targets = { priorityGO, priorityGO, priorityGO };
+                        movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
 
                     }
                     #endregion decidingReg
@@ -256,7 +257,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
 						string[] behaviours = new string[3] { "Pursue", "AvoidWall", "Face" };
 						float[] weightedBehavs = { 0.7f, 1, 1 };
-						movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+                        GameObject[] targets = { priorityGO, priorityGO, priorityGO };
+						movementController.addBehavioursOver(this.gameObject,targets , behaviours, weightedBehavs);
 
 					}
 					#endregion decidingReg
@@ -269,7 +271,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
                     //objecthand.setDesiredGameObject(priorityGO);
                     string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
                     float[] weightedBehavs = { 0.7f, 1, 1 };
-                    movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+                    GameObject[] targets = { priorityGO, priorityGO, priorityGO };
+                    movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
                 }
             }
         }
@@ -288,7 +291,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
                     objecthand.desiredObject = priorityGO;
                     string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
                     float[] weightedBehavs = { 0.7f, 1, 1 };
-                    movementController.addBehavioursOver(this.gameObject, priorityGO, behaviours, weightedBehavs);
+                    GameObject[] targets = { priorityGO, priorityGO, priorityGO };
+                    movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
 
                 }
                 else
@@ -319,7 +323,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
             string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
             float[] weightedBehavs = { 0.4f, 1, 1 };
-            movementController.addBehavioursOver(this.gameObject, targetGO, behaviours, weightedBehavs);
+            GameObject[] targets = { targetGO, targetGO, targetGO};
+            movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
 
             DeleteTargetAux();
         }

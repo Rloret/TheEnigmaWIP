@@ -9,10 +9,12 @@ public class AIPersonality: PersonalityBase {
 
 
     public Memory myMemory;
-    public int numberOfIAs;
+
     public GameObject HealthImage;
     public GameObject panel;
     public float defense=1f;
+    public int numberOfIAs;
+
 
     /// <summary>
     /// Personalities contains the 6 possible personalities beeing:
@@ -29,6 +31,7 @@ public class AIPersonality: PersonalityBase {
     }
 
     private Vector3? rememberedMedicalaidPosition;
+    private BehaviourAdder behaviourManager;
 
 
     void Start()
@@ -36,23 +39,12 @@ public class AIPersonality: PersonalityBase {
         numberOfIAs = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs;
         TrustInOthers = new int[numberOfIAs]; 
         myMemory = GetComponent<Memory>();
-        
+        behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers(numberOfIAs);
 
     }
- 
-    void update()
-    {
-        if(health < 20)
-        {
-            rememberedMedicalaidPosition = myMemory.SearchInMemory("Medicalaid");
-            if (rememberedMedicalaidPosition != null)
-            {
-                //moverse hacia alli
-            }
-        }
-    }
+
 
     public void configurePersonality(Personalities type)
     {
@@ -106,11 +98,64 @@ public class AIPersonality: PersonalityBase {
         {
             HealthImage.GetComponent<Image>().color = new Color(0, 0,255);
         }
-        else
+        else if(health<=0)
         {
             this.GetComponent<VisibilityConeCycleIA>().enabled = false;
             VisibleElements.visibleGameObjects.Remove(this.gameObject);
             Debug.Log(this.gameObject.name + "HA MUERTO");
         }
+    }
+
+    public void formacionGrupo(GameObject WhoToFollow,GroupScript leaderGroup)
+    {
+
+        string[] baseBehaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
+        float[] weightedBehavs = { 0.7f, 1, 1 };
+        GameObject[] targetsarray = { WhoToFollow, WhoToFollow, WhoToFollow };
+
+        List<GameObject> mates;
+        List<string> baseBehavioursformates;
+        List<float> baseWeightsformates;
+
+        foreach (var mate in leaderGroup.groupMembers)
+        {
+            mates = new List<GameObject>();
+            baseBehavioursformates = new List<string>();
+            baseWeightsformates = new List<float>();
+
+            mates.AddRange(targetsarray);
+            baseBehavioursformates.AddRange(baseBehaviours);
+            baseWeightsformates.AddRange(weightedBehavs);
+
+            foreach (var othermate in leaderGroup.groupMembers)
+            {
+                if (mate != othermate)
+                {
+                    mates.Add(othermate);
+                    baseBehavioursformates.Add("Leave");
+                    baseWeightsformates.Add(0.8f);
+                }
+            }
+            mates.Add(this.gameObject);
+            baseBehavioursformates.Add("Leave");
+            baseWeightsformates.Add(0.8f);
+            behaviourManager.addBehavioursOver(mate, convertListToArray<GameObject>(mates), convertListToArray<string>(baseBehavioursformates),
+                                                convertListToArray<float>(baseWeightsformates));
+
+
+        }
+
+    }
+
+    public static T[] convertListToArray<T>(List<T> list)
+    {
+        T[] array = new T[list.Count];
+        int i = 0;
+        foreach (var value in list)
+        {
+            array[i] = value;
+            i++;
+        }
+        return array;
     }
 }

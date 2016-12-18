@@ -14,7 +14,9 @@ public class ActionNothing : Action {
 			Reaction.spawnReaction (ResponseController.responseEnum.NOTOK, ResponseController.responseEnum.NOTOK, this.gameObject);
 			string[] behaviours = { "Wander", "LookWhereYouAreGoing", "AvoidWall" };
 			float[] weightedBehavs = { 0.8f, 0.1f, 1 };
-			GameObject.FindGameObjectWithTag ("GameController").GetComponent<BehaviourAdder> ().addBehavioursOver (this.gameObject, this.GetComponent<DecisionTreeCreator> ().target, behaviours, weightedBehavs);
+            GameObject target = this.GetComponent<DecisionTreeCreator>().target;
+            GameObject[] targets = { target, target, target };
+            GameObject.FindGameObjectWithTag ("GameController").GetComponent<BehaviourAdder> ().addBehavioursOver (this.gameObject,targets , behaviours, weightedBehavs);
 
 			base.DestroyTrees ();
 
