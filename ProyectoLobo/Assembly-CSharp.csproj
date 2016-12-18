@@ -117,6 +117,8 @@
      <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycle.cs" />
      <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" />
      <Compile Include="Assets\Scripts\Visibility\VisibleElements.cs" />
+     <Compile Include="Assets\Tester.cs" />
+     <Compile Include="Assets\gameController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Programas/Unity5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

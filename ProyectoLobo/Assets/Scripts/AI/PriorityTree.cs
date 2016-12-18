@@ -18,12 +18,16 @@ public class PriorityTree : MonoBehaviour {
         }
         else // No es botiquin
         {
+           
+           
             if (Personality.charisma > Personality.selfAssertion && Personality.charisma > Personality.fear) //Es carismática
             {
                 //Debug.Log("SUperCarismática");
                 if (target.tag == "IA") // Es una MockIAa
                 {
-                    if (Personality.confidence > 5) // Confía en ella
+                    int confidence = Personality.TrustInOthers[target.GetComponent<AIPersonality>().MyOwnIndex];
+                    Debug.Log("T : " + target + " groupScript : " + target.GetComponent<GroupScript>());
+                    if (confidence > 5) // Confía en ella
                         if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
                         {
                             priority = 0;
@@ -63,7 +67,8 @@ public class PriorityTree : MonoBehaviour {
                 Debug.Log("Miedoso");*/
                 if (target.tag == "IA")
                 {
-                    if (Personality.confidence > 5)
+                    int confidence = Personality.TrustInOthers[target.GetComponent<AIPersonality>().MyOwnIndex];
+                    if (confidence > 5)
                     {
                         if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
                         {
@@ -99,7 +104,8 @@ public class PriorityTree : MonoBehaviour {
                 Debug.Log("Agresivo");*/
                 if (target.tag == "IA")
                 {
-                   if (Personality.confidence > 5)
+                    int confidence = Personality.TrustInOthers[target.GetComponent<AIPersonality>().MyOwnIndex];
+                    if (confidence > 5)
                     {
                         if (target.GetComponent<GroupScript>().checkIAInGroup(this.gameObject))
                         {
