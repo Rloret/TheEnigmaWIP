@@ -58,9 +58,9 @@ public class PlayerMenuController : MonoBehaviour {
    */
 	public void OpenMenu(MenuTypes menu, GameObject target){
 
-		Debug.Log ("target IA es " + target);
-
-		this.targetIA = target;
+        //Debug.Log ("target IA es " + target);
+        Debug.Log("abro puto menu");
+        this.targetIA = target;
 
 
 		switch (menu) {

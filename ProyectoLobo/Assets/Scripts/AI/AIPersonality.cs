@@ -107,7 +107,7 @@ public class AIPersonality: PersonalityBase {
         }
         else
         {
-            this.GetComponent<VisibilityCone>().enabled = false;
+            this.GetComponent<VisibilityConeCycleIA>().enabled = false;
             VisibleElements.visibleGameObjects.Remove(this.gameObject);
             Debug.Log(this.gameObject.name + "HA MUERTO");
         }

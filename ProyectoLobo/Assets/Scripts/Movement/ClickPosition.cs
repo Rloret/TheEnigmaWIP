@@ -15,6 +15,8 @@ public class ClickPosition : MonoBehaviour {
     private BehaviourAdder.WeightedBehaviours[] WeightedPlayerBehavioursArray;
     private BehaviourAdder behaviourController;
 
+    private bool menuOpened = false;
+
     void Start()
     {
 		behaviourController = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
@@ -32,12 +34,18 @@ public class ClickPosition : MonoBehaviour {
             //int counter = 0;
 
             //if (hit.collider != null)
-           // {
-				foreach (var h in hit) {
-					GameObject aux = h.collider.gameObject;
-					DetermineAction(this.gameObject, aux);
-				}
-               
+            // {
+            string hitinfo = "";
+            foreach (var h in hit)
+            {
+                if (h.collider.gameObject.tag == "IA") menuOpened = true;
+                else menuOpened = false;
+
+                hitinfo+=h.collider.gameObject.name;
+                GameObject aux = h.collider.gameObject;
+                DetermineAction(this.gameObject, aux);
+            }
+               Debug.Log(hitinfo);
            // }
         }
     }
@@ -82,10 +90,16 @@ public class ClickPosition : MonoBehaviour {
         }
         else
         { // target is floor
-			foreach(var m in menus){
-				if (m.activeSelf)
-					m.SetActive (false);
-			}
+
+            if (!menuOpened)
+            {
+                foreach (var m in menus)
+                {
+                    if (m.activeSelf)
+                        m.SetActive(false);
+                }
+            }
+
             string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
             float[] weightedBehavs = { 0.7f, 1, 1 };
             behaviourController.addBehavioursOver(behaviorReceiber, aux, behaviours, weightedBehavs);
