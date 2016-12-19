@@ -144,7 +144,6 @@ public class AIPersonality: PersonalityBase {
     {
         health -= (int)(damage * defense);
         HealthImage.GetComponent<Image>().fillAmount = health / 100f;
-        print(HealthImage.GetComponent<Image>().fillAmount);
         if (health <= 50 && health > 33)
         {
             HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);

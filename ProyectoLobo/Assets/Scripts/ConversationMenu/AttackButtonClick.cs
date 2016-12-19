@@ -30,7 +30,7 @@ public class AttackButtonClick : ButtonAction {
 
 		targetPers.interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
 
-		targetPers.takeDamage(totalAttack);
+		targetPers.takeDamage(totalAttack, player.GetComponent<PersonalityBase>());
 
 		updateTrust (false, targetPers, player.GetComponent<PersonalityBase> ().GetMyOwnIndex ());
 
