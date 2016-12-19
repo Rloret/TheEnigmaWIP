@@ -173,7 +173,9 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
             if (objectINeedRemember != "None")
             {
-                priorityGO = RememberedObject(objectINeedRemember);
+                // = RememberedObject(objectINeedRemember);
+                priorityGO = RememberedObjectInARoom(objectINeedRemember);
+
                 Debug.Log("necesito el objeto: " + priorityGO);
             }
             else
@@ -357,13 +359,14 @@ public class VisibilityConeCycleIA : MonoBehaviour
             return "None";
     }
 
-    private GameObject RememberedObject(string obj)
+    /*private GameObject RememberedObject(string obj)
     {
         
         if (obj == "Medicalaid")
         {
-            Vector3? rememberedObjectPosition = personality.myMemory.SearchInMemory("Medicalaid");
-            if (rememberedObjectPosition != null)
+            GameObject room = personality.myMemory.SearchRoomInMemory("Medicalaid");
+            //Vector3? rememberedObjectPosition = personality.myMemory.SearchInMemory("Medicalaid"); Antiguo!
+            if (room != null)
             {
 
                 rememberedObject.transform.position = new Vector2(rememberedObjectPosition.Value.x, rememberedObjectPosition.Value.y);
@@ -374,7 +377,20 @@ public class VisibilityConeCycleIA : MonoBehaviour
                 rememberedObject = null;
 
         }
-        return rememberedObject;
+        //return rememberedObject;
+    }*/
+
+    private GameObject RememberedObjectInARoom(string obj)
+    {
+        GameObject room;
+        if (obj == "Medicalaid")
+        {
+            room = personality.myMemory.SearchRoomInMemory("Medicalaid");
+        }
+        else
+            return null;
+
+        return room;
     }
 }
 

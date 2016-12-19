@@ -6,15 +6,21 @@ using System;
 public class LocationDiscovery : MonoBehaviour {
 
 
+    public bool BFSVisited;
+    public LocationDiscovery previousRoom;
+    public int distanceToDestiny;
+
     private List<string> nextToMeLocations;
     private bool visited = false;
+    
 
 
     // Use this for initialization
     void Start () {
         nextToMeLocations = new List<string>();
         FillNextoMeLocations();
-        
+        BFSVisited = false;
+        previousRoom = null;
 	}
 
 
@@ -26,41 +32,76 @@ public class LocationDiscovery : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D IACollider)
     {
-        if (IACollider.gameObject.tag == "IA" && IACollider.gameObject.name == "IA0") {
+        if (IACollider.gameObject.tag == "IA" ) {                            //DEBUG && IACollider.gameObject.name == "IA0") {
             //Debug.Log("Collider de: " + this.name);
             IACollider.gameObject.GetComponent<RoomMemory>().AddLocation(this.name);
         }
     }
 
 
-    internal List<string> TraceRoute(string current, string destination)
+    internal List<string> TraceRoute(string current, string destination, List<string> discoveredRooms)
     {
-        List<string> route = new List<string>();
+        
 
-        if (this.name == destination)
-        {
-            route.Add(this.name);
-        }
-        else
-        {
-            foreach (string location in nextToMeLocations)
-            {
-                TraceRoute(location, destination, current);
-            }
-        }
-
-        return route;
-
+        return BFSPathfinding(current, destination, discoveredRooms);    
     }
 
-    private void TraceRoute(string location, string destination, string previousStep)
+    private List<string> BFSPathfinding(string current, string destination, List<string> discoveredRooms)
     {
-        throw new NotImplementedException();
+
+        foreach (string r in discoveredRooms) {
+            LocationDiscovery room = GameObject.Find(r).GetComponent<LocationDiscovery>();
+            room.visited = false;
+            room.previousRoom = null;
+            room.distanceToDestiny = -1;
+        }
+
+        LocationDiscovery currentRoom = GameObject.Find(current).GetComponent<LocationDiscovery>();
+        currentRoom.visited = true;
+        currentRoom.distanceToDestiny = 0;
+        currentRoom.previousRoom = null;
+
+        Queue<LocationDiscovery> queueOfRooms = new Queue<LocationDiscovery>();
+
+        queueOfRooms.Enqueue(currentRoom);
+
+        while (queueOfRooms.Count != 0) {
+
+            LocationDiscovery E = queueOfRooms.Dequeue();
+
+            if (E.gameObject.name == destination) {
+                return BuildPath(current, E);
+            }
+
+            foreach (string neighbour in E.nextToMeLocations) {
+                LocationDiscovery neighbourLocation = GameObject.Find(neighbour).GetComponent<LocationDiscovery>();
+                neighbourLocation.visited = true;
+                neighbourLocation.distanceToDestiny = E.distanceToDestiny + 1;
+                neighbourLocation.previousRoom = E;
+                queueOfRooms.Enqueue(neighbourLocation);
+            }
+        }
+        return null;
+    }
+
+    private List<string> BuildPath(string current, LocationDiscovery e)
+    {
+        List<string> path = new List<string>();
+        LocationDiscovery routeRoom = e;
+        do
+        {
+            path.Add(routeRoom.gameObject.name);
+            routeRoom = routeRoom.previousRoom;
+
+        } while (routeRoom.gameObject.name != current);
+
+        path.Reverse();
+        return path;
     }
 
     private void FillNextoMeLocations()
     {
-        switch (this.name)
+        switch (this.gameObject.name)
         {
             case "Oficina":
                 nextToMeLocations.Add("PuertaOficina_Laboratorio");
@@ -69,6 +110,10 @@ public class LocationDiscovery : MonoBehaviour {
             case "PuertaOficina_Laboratorio":
                 nextToMeLocations.Add("Oficina");
                 nextToMeLocations.Add("Laboratorio");
+                break;
+            case "Laboratorio":
+                nextToMeLocations.Add("PuertaOficina_Laboratorio");
+                nextToMeLocations.Add("PuertaLaboratorio_Pasillo");
                 break;
             case "PuertaOficina_Pasillo":
                 nextToMeLocations.Add("Oficina");
@@ -199,6 +244,7 @@ public class LocationDiscovery : MonoBehaviour {
 
             default:
                 Debug.Log("Esto no debería de imprimirse nunca");
+                Debug.Log(this.gameObject.name);
                 break;
         }
     }
