@@ -14,6 +14,7 @@ public class AIPersonality: PersonalityBase {
 
     public Memory myMemory;
     public int numberOfIAs;
+    public Sprite ghostSprite;
 
 	GroupScript aiGroup;
 	VisibilityConeCycleIA cone;
@@ -155,19 +156,19 @@ public class AIPersonality: PersonalityBase {
             Debug.Log("Recibiendo daño: " +this.gameObject);
             this.GetComponent<VisibilityConeCycleIA>().enabled = false;
             VisibleElements.visibleGameObjects.Remove(this.gameObject);
+            string nameIAdeath = this.name+ "ghost";
+            Vector3 IADeathPosition = this.transform.position;
             Debug.Log(this.gameObject.name + "HA MUERTO");
             this.enabled = false;
             Destroy(this.gameObject);
-          /* var comportam= this.GetComponents<MonoBehaviour>();
-            foreach (var compo in comportam)
-            {
-                Destroy(compo);
-            }
-            var treenodes = this.GetComponents<DecisionTreeNode>();
-            foreach (var compo in treenodes)
-            {
-                Destroy(compo);
-            }*/
+            GameObject ghost = new GameObject();
+            ghost.AddComponent<SpriteRenderer>();
+            ghost.GetComponent<SpriteRenderer>().sprite = ghostSprite;
+            ghost.GetComponent<SpriteRenderer>().sortingLayerName = "Personajes";
+            ghost.transform.localScale = new Vector2(5f, 5f);
+            ghost.name = nameIAdeath;
+            ghost.transform.position = IADeathPosition;
+            
         }
     }
 }
