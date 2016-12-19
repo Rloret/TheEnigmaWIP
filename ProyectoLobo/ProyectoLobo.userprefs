@@ -1,41 +1,25 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BehaviourAdder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GroupScript.cs">
     <Files>
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeISeeSomeoneWhatShouldIDo.cs" Line="263" Column="123" />
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeCreator.cs" Line="163" Column="1" />
+      <File FileName="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" Line="278" Column="25" />
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionJoinGroup.cs" Line="24" Column="29" />
       <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\PlayerPersonality.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\PersonalityBase.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\PriorityTree.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\AIPersonality.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DistanceDecision.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeISeeSomeoneWhatShouldIDo.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeCreator.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeReactionAfterInteraction.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\FloatDecision.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\BehaviourAdder.cs" Line="116" Column="114" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AI\AIPersonality.cs">
-    <Files>
-      <File FileName="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" Line="208" Column="100" />
-      <File FileName="Assets\Scripts\Objects\ObjectHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\AIPersonality.cs" Line="55" Column="14" />
-      <File FileName="Assets\Scripts\BehaviourAdder.cs" Line="96" Column="1" />
-      <File FileName="Assets\Scripts\AI\Memory.cs" Line="1" Column="1" />
->>>>>>> 91cb26c71fbe0b353a6967d963c3242277fbdcac
+      <File FileName="Assets\Scripts\ConversationMenu\CloseButtonClick.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ConversationMenu\YesButton.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\AIPersonality.cs" Line="66" Column="3" />
+      <File FileName="Assets\Scripts\AI\PersonalityBase.cs" Line="79" Column="1" />
+      <File FileName="Assets\Scripts\AI\PlayerPersonality.cs" Line="9" Column="26" />
+      <File FileName="Assets\Scripts\ConversationMenu\PlayerMenuController.cs" Line="65" Column="65" />
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAttack.cs" Line="63" Column="3" />
+      <File FileName="Assets\Scripts\GroupScript.cs" Line="107" Column="17" />
+      <File FileName="Assets\Scripts\Movement\AvoidWall.cs" Line="78" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\Eli\Documents\loborepo\ProyectoLobo\Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" line="217" column="1" />
-      <Breakpoint file="C:\Users\Eli\Documents\loborepo\ProyectoLobo\Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" line="222" column="1" />
-      <Breakpoint file="C:\Users\Eli\Documents\loborepo\ProyectoLobo\Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" line="22" column="1" />
-      <Breakpoint file="C:\Users\Eli\Documents\loborepo\ProyectoLobo\Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" line="21" column="1" />
-      <Breakpoint file="C:\Users\Eli\Documents\loborepo\ProyectoLobo\Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" line="19" column="1" />
-      <Breakpoint file="C:\Users\Eli\Documents\loborepo\ProyectoLobo\Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" line="17" column="1" />
-      <Breakpoint file="C:\Users\Eli\Documents\loborepo\ProyectoLobo\Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" line="24" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

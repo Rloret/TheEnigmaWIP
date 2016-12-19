@@ -161,7 +161,8 @@ public class BehaviourAdder : MonoBehaviour {
 
     public void addBehavioursOver(GameObject behaviourReceiver, GameObject[] target, string[] behaviours, float[] weights)
     {
-        if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
+		if (behaviours.Length != weights.Length || behaviours.Length!=target.Length || target.Length!=weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
+
         WeightedBehaviours aux_behav = new WeightedBehaviours();
         WeightedBehavioursArray = new WeightedBehaviours[behaviours.Length];
         int iterator = 0;

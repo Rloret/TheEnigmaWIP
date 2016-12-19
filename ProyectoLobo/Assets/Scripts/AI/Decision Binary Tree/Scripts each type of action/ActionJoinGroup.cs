@@ -33,7 +33,7 @@ public class ActionJoinGroup : Action
             string[] behaviours = { "Pursue", "Leave", "AvoidWall", "Face" };
             float[] weightedBehavs = { 0.8f, 0.1f, 1, 1 };
             GameObject target = this.GetComponent<DecisionTreeCreator>().target;
-            GameObject[] targets = { target, target, target, target, target };
+            GameObject[] targets = { target, target, target, target };
             GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
         }
         t.GetComponent<PersonalityBase>().formacionGrupo(t, leadergroup);
