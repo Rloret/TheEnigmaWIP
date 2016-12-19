@@ -88,7 +88,6 @@ public class ObjectHandler : MonoBehaviour {
            if (currentObject) {
                 currentObject.layer = LayerMask.NameToLayer("Objects");
                 VisibleElements.visibleGameObjects.Add(currentObject);
-                Debug.Log("Nadie tiene el objeto: " + currentObject + " el valor de hanfler es: " + currentObject.GetComponent<ObjectAction>().handler);
             }
 
             currentObject = coll.gameObject;

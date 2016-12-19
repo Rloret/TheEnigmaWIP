@@ -131,12 +131,12 @@ public class ClickPosition : MonoBehaviour {
                 //Debug.Log("esta lejos, me acercare");
                 clickedOnTile = true;
                 lastLinear = movementScript.linearVelocity ;
-                BehaviourAdder.WeightedBehaviours pursue = new BehaviourAdder.WeightedBehaviours(BehaviourAdder.SteeringBehaviour.PURSUE, 0.7f, 0);
-                BehaviourAdder.WeightedBehaviours avoidWall = new BehaviourAdder.WeightedBehaviours(BehaviourAdder.SteeringBehaviour.AVOIDWALL, 1f, 0);
-                BehaviourAdder.WeightedBehaviours face = new BehaviourAdder.WeightedBehaviours(BehaviourAdder.SteeringBehaviour.FACE, 1f, 0);
-                WeightedPlayerBehavioursArray = new BehaviourAdder.WeightedBehaviours[] { pursue, avoidWall, face };
+              
+				string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
+				float[] weightedBehavs = { 0.7f, 1, 1 };
+
                 GameObject[] targets = { aux, aux, aux };
-                behaviourController.ActionWhenClick(behaviorReceiber, targets); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
+				behaviourController.addBehavioursOver(this.gameObject,targets,behaviours,weightedBehavs); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
 
             }
         }
@@ -159,7 +159,7 @@ public class ClickPosition : MonoBehaviour {
 
             string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
             float[] weightedBehavs = { 0.7f, 1, 1 };
-            GameObject[] targets = { aux, aux, aux, aux };
+            GameObject[] targets = { aux, aux, aux,};
             behaviourController.addBehavioursOver(behaviorReceiber, targets, behaviours, weightedBehavs);
             //ActionWhenClick(behaviorReceiber, aux); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
         }

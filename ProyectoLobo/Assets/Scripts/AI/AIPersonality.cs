@@ -55,10 +55,15 @@ public class AIPersonality: PersonalityBase {
 			if (aiGroup.inGroup && aiGroup.groupMembers.Count==1) {
 				if (cone.visibleGameobjects.Count <= 1) {
 					convertToMonster ();
+					attackAction ();
 				}
 
 			}
-		} else if (theThing) {
+			if (health <= 50) {
+				convertToMonster ();
+			}
+		} 
+		else if (theThing) {
 			if (cone.visibleGameobjects.Count > 1) {
 				returnToHuman ();
 			}
@@ -75,12 +80,14 @@ public class AIPersonality: PersonalityBase {
 		GetComponent<SpriteRenderer>().sprite = playerMonsterStateImage;
 		isMonster = true;
 
+
+
+	}
+	void attackAction(){
 		ActionAttack a= gameObject.AddComponent<ActionAttack> ();
 		a.targetAttack = aiGroup.groupMembers [0];
 		a.triggered = true;
-		a.DoAction ();
-
-	}
+		a.DoAction ();}
 
 
 	void returnToHuman(){
