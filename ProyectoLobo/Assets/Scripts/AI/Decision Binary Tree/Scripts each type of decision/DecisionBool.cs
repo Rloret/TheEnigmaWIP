@@ -6,13 +6,16 @@ public class DecisionBool : Decision
     public bool valueDecision;
     //public bool valueTest;
 
-    public AIPersonality personalityScript;
+	public PersonalityBase personalityScript;
+    private GroupScript groupScript;
+
 
     public enum BoolDecisionEnum { ISMONSTER, INGROUP, IAMGROUPLEADER };
     public BoolDecisionEnum actualDecisionenum;
 
     public override DecisionTreeNode GetBranch()
     {
+        
         switch (actualDecisionenum)
         {
             case BoolDecisionEnum.ISMONSTER:
@@ -24,7 +27,8 @@ public class DecisionBool : Decision
                 break;
 
             case BoolDecisionEnum.INGROUP:
-                if (valueDecision == personalityScript.inGroup)
+                groupScript = personalityScript.gameObject.GetComponent<GroupScript>();
+                if (valueDecision == groupScript.inGroup)
                 {
                     return nodeTrue;
 
@@ -32,9 +36,12 @@ public class DecisionBool : Decision
                 break;
 
             case BoolDecisionEnum.IAMGROUPLEADER:
-                if (this.gameObject == personalityScript.groupLeader) //check if the group leader is me
+                groupScript = personalityScript.gameObject.GetComponent<GroupScript>();
+               // Debug.Log("target es: " + personalityScript.gameObject.name+ "yo soy" + this.gameObject.name);
+
+                if (groupScript.groupLeader == this.gameObject) //check if the group leader is me
                 {
-                    Debug.Log(personalityScript.gameObject.name);
+                    Debug.Log( "soy el lider del grupo proceedo por nodo true " +personalityScript.gameObject.name);
                     return nodeTrue;
 
                 }

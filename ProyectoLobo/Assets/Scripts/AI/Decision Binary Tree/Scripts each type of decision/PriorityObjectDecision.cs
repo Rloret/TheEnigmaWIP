@@ -4,13 +4,35 @@ using System.Collections;
 public class PriorityObjectDecision : Decision
 {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public PersonalityBase characterPersonality;
+	public PersonalityBase targetPersonality; // who gives the object to me
+
+
+    private DecisionTarget decisiontargetScript;
+    private PriorityTree prioTree;
+
+
+
+
+
+    public override DecisionTreeNode GetBranch()
+    {
+        decisiontargetScript = GetComponent<DecisionTarget>();
+        prioTree = GetComponent<PriorityTree>();
+
+        string objectName = decisiontargetScript.objectTraduction(this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>()/*targetPersonality*/);
+
+        GameObject aux = new GameObject();
+
+        aux.name = objectName;
+
+        if (prioTree.GetPriority(aux, characterPersonality) == 3)
+        {
+            return nodeTrue;
+        }
+        else return nodeFalse;
+
+
+
+    }
 }

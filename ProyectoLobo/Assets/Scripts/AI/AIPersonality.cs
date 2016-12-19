@@ -1,63 +1,104 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class AIPersonality: MonoBehaviour {
+public class AIPersonality: PersonalityBase {
 
-    public int health = 0;
-    public int attack;
-    public int confidence;
+	public DecisionTreeNode[] oldNodes;
+	public GameObject HealthImage;
+	public GameObject panel;
 
-    public float charisma=3;
-    public float selfAssertion=2; // supongo que esto es agresividad para los arboles de decisiones ¿?
-    public float fear=4;
+    public Memory myMemory;
+    public int numberOfIAs;
 
-    public bool isMonster = false; // MOCK
-    public bool inGroup = false; //MOCK
-    public GameObject groupLeader; // al inicio esto señala a si mismo para evitar problemas en una decision :)
-    public ObjectHandler.ObjectType myObject;
+    /// <summary>
+    /// Personalities contains the 6 possible personalities beeing:
+    /// SAF: Carismatica>agresiva>miedosa
+    /// SFA: Carismatica>miedosa>Agresiva
+    /// AFS: Agresiva>Miedosa>Carismatica
+    /// ASF: Agresiva>Carismatica>Miedosa
+    /// FSA: Miedosa>Carismatica>Agresiva
+    /// FAS: Miedosa>Agresiva>Carismatica
+    /// </summary>
+    public enum Personalities
+    {
+        SAF=0,SFA=1,AFS=2,ASF=3,FSA=4,FAS=5
+    }
 
-    public ActionsEnum.Actions interactionFromOtherCharacter;
-    public int[] TrustInOthers;
+    private Vector3? rememberedMedicalaidPosition;
 
-    public int MyOwnIndex;
 
-    private Memory myMemory;
-    private GameObject rememberedMedicalaid;
 
     void Start()
     {
-        TrustInOthers= new int[5]; // 5 characters
+        numberOfIAs = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs;
+        TrustInOthers = new int[numberOfIAs]; 
         myMemory = GetComponent<Memory>();
-        
+        base.behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
-        initializeTrustInOthers();
+        initializeTrustInOthers(numberOfIAs);
 
     }
-    public void SetInteraction(ActionsEnum.Actions a)
+
+
+    public void configurePersonality(Personalities type)
     {
-        interactionFromOtherCharacter = a;
-    }
-    public void SetMyOwnIndex(int i) {
-        MyOwnIndex = i;
-    }
-    public int GetMyOwnIndex() { return MyOwnIndex; }
-
-
-    private void initializeTrustInOthers() {
-        for (int i = 0; i < 5; i++) TrustInOthers[i] =4;
-    }
-    public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
-
-    void update()
-    {
-        if(health < 20)
+        switch (type)
         {
-            rememberedMedicalaid = myMemory.SearchInMemory("MEDICALAID");
-            if (rememberedMedicalaid != null)
-            {
-                //moverse hacia alli
-            }
+            case Personalities.SAF:
+                charisma = 3;
+                selfAssertion=2;
+                fear=1;
+                break;
+            case Personalities.SFA:
+                charisma=3;
+                selfAssertion=1;
+                fear=2;
+                break;
+            case Personalities.AFS:
+                charisma=1;
+                selfAssertion=3;
+                fear=2;
+                break;
+            case Personalities.ASF:
+                charisma = 2;
+                selfAssertion = 3;
+                fear = 1;
+                break;
+            case Personalities.FSA:
+                charisma = 2;
+                selfAssertion = 1;
+                fear = 3;
+                break;
+            case Personalities.FAS:
+                charisma = 1;
+                selfAssertion = 2;
+                fear = 3;
+                break;
+            default:
+                break;
+        }
+
+        initializeTrustInOthers(numberOfIAs);
+    }
+
+    public override void takeDamage(int damage)
+    {
+        health -= (int)(damage * defense);
+        if (health <= 50)
+        {
+            HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
+        }
+        else if (health <= 33)
+        {
+            HealthImage.GetComponent<Image>().color = new Color(0, 0,255);
+        }
+        else if(health<=0)
+        {
+            this.GetComponent<VisibilityConeCycleIA>().enabled = false;
+            VisibleElements.visibleGameObjects.Remove(this.gameObject);
+            Debug.Log(this.gameObject.name + "HA MUERTO");
         }
     }
 }

@@ -3,20 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DecisionTarget : MonoBehaviour {
-
-    //private AIPersonality personality;
+	
     private Dictionary<GameObject, int> analyzedTargets;
     private PriorityTree priorityTree;
     private Memory memory;
 
-    public GameObject AI;
 
     void Awake() {
 
         analyzedTargets = new Dictionary<GameObject, int>();
-        priorityTree = new PriorityTree();
-        memory = AI.GetComponent<Memory>();
-
+        priorityTree = this.gameObject.AddComponent<PriorityTree>();
 
 	}
 
@@ -36,31 +32,59 @@ public class DecisionTarget : MonoBehaviour {
         GameObject chosenTarget = null;
         GameObject currentTarget = null;
         AIPersonality personality = Ai.GetComponent<AIPersonality>();
+		ObjectHandler objectHand = Ai.GetComponent<ObjectHandler> ();
+		memory = Ai.GetComponent<Memory>();
 
-
+        string priorities = "veo un : ";
         foreach (GameObject target in viewedTargets)
         {
             priority = priorityTree.GetPriority(target, personality); // Llama al árbol de prioridad que devuelve la prioridad de ese GameObject
+            priorities += target.name + " (priority)";
             //Debug.Log("La prioridad de " + target + " es " + priority);
-            if (!analyzedTargets.ContainsKey(target))
+
+            if (!analyzedTargets.ContainsKey(target) && priority!=-1)
                 analyzedTargets.Add(target, priority);
         }
 
-        chosenTarget = GivePriorityTarget(analyzedTargets); // Recoge el GameObject más prioritario
+        chosenTarget = GivePriorityTarget(analyzedTargets, memory); // Recoge el GameObject más prioritario
+        //Debug.Log("elegido es " + chosenTarget.name);
         nameCurrentTarget = objectTraduction(personality); // Mira qué objeto lleva en ese momento la IA
-
-        if (chosenTarget.name == "MockIA")
+        if(chosenTarget == null)
         {
-            analyzedTargets.Clear();
             return chosenTarget;
         }
-        else if( nameCurrentTarget != "NONE")
+        if (chosenTarget.tag == "IA"  )
+        {
+            analyzedTargets.Clear();
+
+            //active tree
+            if (this.GetComponent<GroupScript>().checkIAInGroup(chosenTarget))
+            {
+                return null;
+            }
+            return chosenTarget;
+        }
+        else if (chosenTarget.tag == "Player")
+        {
+            analyzedTargets.Clear();
+
+            //active tree
+
+            return chosenTarget;
+        }
+        else if (chosenTarget.name == "Medicalaid" && analyzedTargets[chosenTarget] != 4) //Si el objeto más prioritario que ha visto es un botiquín pero no lo necesita, no lo coge
+        {
+            return null;
+        }
+        else if ( nameCurrentTarget != "NONE")
         {
             string aux = "Prefabs/Objects/";
             aux += nameCurrentTarget;
             currentTarget = Resources.Load(aux) as GameObject;
             
             currentTargetpriority = priorityTree.GetPriority(currentTarget, personality);
+			//Debug.Log ("currentTarget: " + currentTarget);
+			//Debug.Log ("prioridad del target actual: " + currentTargetpriority + " prioridad del que estoy viendo: " + analyzedTargets [chosenTarget]);
 
             if (currentTargetpriority > analyzedTargets[chosenTarget])
             {
@@ -71,13 +95,13 @@ public class DecisionTarget : MonoBehaviour {
             {
                 if (chosenTarget.name == nameCurrentTarget) // Si lleva un objeto y es el que ha visto más prioritario: ese objeto se elimina del diccionario y se recoge el siguiente con más prioridad
                 {
+					//Debug.Log ("El que veo es más prioritario");
                     analyzedTargets.Remove(chosenTarget);
-                    chosenTarget = GivePriorityTarget(analyzedTargets);
+                    chosenTarget = GivePriorityTarget(analyzedTargets, memory);
                     analyzedTargets.Clear();
                 }
 
             }
-
             return chosenTarget;
 
         }
@@ -94,7 +118,7 @@ public class DecisionTarget : MonoBehaviour {
     /// </summary>
     /// <param name="analyzedTargets"></param>
     /// <returns></returns>
-    private GameObject GivePriorityTarget(Dictionary<GameObject, int> analyzedTargets)
+	private GameObject GivePriorityTarget(Dictionary<GameObject, int> analyzedTargets, Memory memory)
     {
         int maxPriority = -1;
         GameObject chosenTarget = null;
@@ -106,12 +130,15 @@ public class DecisionTarget : MonoBehaviour {
                 chosenTarget = par.Key;
                 
             }
+           // Debug.Log("El objeto: " + chosenTarget.name + " está ya en la memoria? " + memory.objectsSeenBefore.ContainsKey(par.Key.name));
             if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
             {
-                memory.objectsSeenBefore.Add(par.Key.name, par.Key);
+				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
+                //Debug.Log("meto en la memoria " + par.Key.name);
             }
-
         }
+
+        
         return chosenTarget;
 
     }
@@ -122,7 +149,7 @@ public class DecisionTarget : MonoBehaviour {
     /// <param name="personality"></param>
     /// <returns></returns>
 
-    private string objectTraduction (AIPersonality personality)
+    public string objectTraduction (AIPersonality personality)
     {
         if (personality.myObject == ObjectHandler.ObjectType.AXE)
             return "Axe";
@@ -133,7 +160,7 @@ public class DecisionTarget : MonoBehaviour {
         else if (personality.myObject == ObjectHandler.ObjectType.JUMPSUIT)
             return "Jumpsuit";
         else if (personality.myObject == ObjectHandler.ObjectType.MEDICALAID)
-            return "MedicalAid";
+            return "Medicalaid";
         else if (personality.myObject == ObjectHandler.ObjectType.SHIELD)
             return "Shield";
         else

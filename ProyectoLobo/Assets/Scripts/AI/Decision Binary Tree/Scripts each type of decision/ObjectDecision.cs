@@ -4,7 +4,7 @@ using System.Collections;
 public class ObjectDecision : Decision {
 
     public ObjectHandler.ObjectType objectWanted;
-    public AIPersonality myPersonality;
+	public PersonalityBase myPersonality;
 
 
     public override DecisionTreeNode GetBranch() {

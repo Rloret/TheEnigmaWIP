@@ -2,10 +2,9 @@
 using System.Collections;
 
 public class BehaviourAdder : MonoBehaviour {
-
-    
+    public float MinDistanceOpenMenu = 60f;
     public LayerMask mask;
-    private ConversationMenuController menuController;
+	private PlayerMenuController menuController;
 
     [System.Serializable]
 
@@ -43,7 +42,8 @@ public class BehaviourAdder : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        menuController = this.gameObject.GetComponent<ConversationMenuController>();
+		menuController = this.gameObject.GetComponent<PlayerMenuController>();
+
 	}
 	
 
@@ -90,26 +90,30 @@ public class BehaviourAdder : MonoBehaviour {
         }
 
     }
-    public void ActionWhenClick(GameObject behaviorReceiber, GameObject aux) {
+    public void ActionWhenClick(GameObject behaviorReceiber, GameObject[] aux) {
         //if (aux.tag != "IA") aux.GetComponent<SpriteRenderer>().color = Color.red; ESTO ES PARA PONER ROJO EL PUNTO DE DESTINO
-
+		if (aux == null) {
+			
+			Debug.Log ("nuloo");
+		}
         //copied from clickPosition
         foreach (var comportamiento in behaviorReceiber.GetComponents<AgentBehaviour>())
         {
             DestroyImmediate(comportamiento);
         }
-
+        int i = 0;
         foreach (var comportamiento in WeightedBehavioursArray)
         {
-            addBehaviour(behaviorReceiber, comportamiento.Behaviour, aux, comportamiento.weight,comportamiento.priority);
+            addBehaviour(behaviorReceiber, comportamiento.Behaviour, aux[i], comportamiento.weight,comportamiento.priority);
+            i++;
         }
     }
 
     public void openConversationMenu(GameObject character, GameObject targetIA) {
-        menuController.OpenConversationMenu(character, targetIA);
-    }
+		menuController.OpenMenu(PlayerMenuController.MenuTypes.MENU_CONVERSATION,targetIA);
+	}
 
-    public void addBehavioursOver(GameObject behaviourReceiver, Vector3 target,string[] behaviours, float[] weights)
+    /*public void addBehavioursOver(GameObject behaviourReceiver, Vector3 target,string[] behaviours, float[] weights)
     {
         if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
         WeightedBehaviours aux_behav = new WeightedBehaviours();
@@ -153,9 +157,9 @@ public class BehaviourAdder : MonoBehaviour {
         }
         IAAction(behaviourReceiver, target);
 
-    }
+    }*/
 
-    public void addBehavioursOver(GameObject behaviourReceiver, GameObject target, string[] behaviours, float[] weights)
+    public void addBehavioursOver(GameObject behaviourReceiver, GameObject[] target, string[] behaviours, float[] weights)
     {
         if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
         WeightedBehaviours aux_behav = new WeightedBehaviours();
@@ -192,6 +196,10 @@ public class BehaviourAdder : MonoBehaviour {
                 case "Flee":
                     WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.FLEE, weights[iterator], 0);
                     break;
+			case "Nothing":
+				//	Debug.LogError("ESE COMPORTAMIENTO NO ESTA CONTEMPLADO ;(");
+					WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);
+					break;
                 default:
                     Debug.LogError("ESE COMPORTAMIENTO NO ESTA CONTEMPLADO ;(");
                     WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);
@@ -203,7 +211,7 @@ public class BehaviourAdder : MonoBehaviour {
         IAAction(behaviourReceiver, target);
 
     }
-    void IAAction(GameObject behaviourreceiver,Vector3 target)// busca el primer gameobjeto diferente de objext
+   /* void IAAction(GameObject behaviourreceiver,Vector3 target)// busca el primer gameobjeto diferente de objext
     {
 
         Collider2D[] coli= Physics2D.OverlapCircleAll((Vector2)target, 16,mask);
@@ -221,13 +229,13 @@ public class BehaviourAdder : MonoBehaviour {
             GameObject targetgo = selected.gameObject;
             ActionWhenClick(behaviourreceiver, targetgo);
         }
-      /*  else
+        else
         {
             Debug.LogError("En ese punto no hay absolutamente nada");
-        }*/
+        }
 
-    }
-    void IAAction(GameObject behaviourreceiver, GameObject target)
+    }*/
+    void IAAction(GameObject behaviourreceiver, GameObject[] target)
     {
         ActionWhenClick(behaviourreceiver, target);
 

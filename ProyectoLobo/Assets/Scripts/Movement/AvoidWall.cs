@@ -5,6 +5,8 @@ public class AvoidWall : Seek {
 
     public float avoidDistance =  100; // distancia de la pared a la que se posicionará el nuevo target
     public float lookAhead = 80; // distancia de RayCast
+    public bool stuck = false;
+    public LayerMask layerMask;
 
     private GameObject auxTarget;
     private Sprite sp;
@@ -29,32 +31,56 @@ public class AvoidWall : Seek {
 
     public override SteeringOutput GetSteering()
     {
-        lookAhead = agent.linearVelocity.magnitude + 60;
+        lookAhead = agent.linearVelocity.magnitude + 30;
         SteeringOutput steering = new SteeringOutput();
         Vector2 position = transform.position;
-        Vector2 rayVector = agent.linearVelocity.normalized * lookAhead; 
-        Vector2 direction = rayVector;
-        int wallMask = 1 << 8; // sólo se revisarán las colisiones con los objetos en la capa 8
+        Vector2 rayVector = agent.linearVelocity.normalized * lookAhead;
+        Vector2 directionIzq = rayVector + (Vector2)(Quaternion.Euler(0, 0, -30) * rayVector);
+        Vector2 directionDer = rayVector + (Vector2)(Quaternion.Euler(0, 0, 30) * rayVector);  
+        LayerMask wallMask = 1 << 8 | 1 << 10; // sólo se revisarán las colisiones con los objetos en la capa 8
 
-        Vector2 rayOrigin1 = position + PerpendicularClockWise(direction) * agentRadius;
-        Vector2 rayOrigin2 = position + PerpendicularCounterClockWise(direction) * agentRadius;
+        Vector2 rayOrigin1 = position + PerpendicularClockWise(rayVector) * agentRadius;
+        Vector2 rayOrigin2 = position + PerpendicularCounterClockWise(rayVector) * agentRadius;
 
-        RaycastHit2D hit = Physics2D.Raycast( rayOrigin1  , direction , lookAhead , wallMask);
-        Debug.DrawRay(rayOrigin1, direction, Color.green, 0.2f);
+        RaycastHit2D hit = Physics2D.Raycast( rayOrigin1  , directionIzq , lookAhead , wallMask);
+        directionIzq.Normalize();
+        directionIzq *= lookAhead;
+        Debug.DrawRay(rayOrigin1, directionIzq, Color.green, 0.2f);
 
-        RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, direction, lookAhead, wallMask);
-        Debug.DrawRay(rayOrigin2, direction, Color.blue, 0.2f);
+        RaycastHit2D hit2 = Physics2D.Raycast(rayOrigin2, directionDer, lookAhead, wallMask);
+        directionDer.Normalize();
+        directionDer *= lookAhead;
+        Debug.DrawRay(rayOrigin2, directionDer, Color.blue, 0.2f);
+
+        RaycastHit2D hitCentral = Physics2D.Raycast(position, rayVector, lookAhead/2 , wallMask);
+        Debug.DrawRay(position, rayVector.normalized * lookAhead / 2, Color.white, 0.2f);
 
         //RaycastHit2D hit = Physics2D.Raycast(position, direction, lookAhead, wallMask); ESTE ES SOLO UN RAYO DESDE EL CENTROº
         //Debug.DrawRay(position, direction, Color.yellow, 0.2f);
 
-        if (hit && !hit2)
+        if (!hit && !hit2 && !hitCentral)
+        {
+            if (agent.gameObject.tag == "IA")
+            {
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = false;
+            }
+        }
+        else if (hit && !hit2)
         {
             //Debug.Log("Hay colision! collider = " + hit.collider.name);
             position = hit.point + hit.normal * avoidDistance;
             auxTarget.transform.position = position;
             target = auxTarget;
             base.target = auxTarget;
+
+            if (agent.gameObject.tag == "IA")
+            {
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+            }
             steering = base.GetSteering();
 
         }
@@ -65,12 +91,66 @@ public class AvoidWall : Seek {
             auxTarget.transform.position = position;
             target = auxTarget;
             base.target = auxTarget;
+            if (agent.gameObject.tag == "IA") {
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+            }
             steering = base.GetSteering();
 
         }
-        else if (hit && hit2) {
-            agent.linearVelocity = Vector2.zero;
+        else if (hitCentral)
+        {
+            if (agent.gameObject.tag == "IA" && !this.GetComponent<VisibilityConeCycleIA>().stuckedAI)
+            {
+               // Debug.Log("Soy IA y estoy ATASCADISIMA");
+
+                agent.linearVelocity = Vector2.zero;
+                agent.orientation *= -1;
+
+                position = hitCentral.point * -1 *avoidDistance;
+                auxTarget.transform.position = position;
+                target = auxTarget;
+                base.target = auxTarget;
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+                steering = base.GetSteering();
+
+            }
+            else
+            {
+                agent.linearVelocity = Vector2.zero;
+            }
         }
+        else if (hit && hit2)
+        {
+            if (agent.gameObject.tag == "IA" && !this.GetComponent<VisibilityConeCycleIA>().stuckedAI)
+            {
+                //Debug.Log("Soy IA y estoy atascada");
+                agent.linearVelocity *= -1 / 2;
+
+                position = hitCentral.point * -avoidDistance;
+                auxTarget.transform.position = position;
+                target = auxTarget;
+                base.target = auxTarget;
+                if (!this.GetComponent<GroupScript>().inGroup || this.GetComponent<GroupScript>().IAmTheLeader) // Esto es para las IAs que siguen a los lideres y no tienen Arrive
+                {
+                    this.GetComponent<Arrive>().target.transform.position = auxTarget.transform.position;
+                }
+                this.GetComponent<VisibilityConeCycleIA>().stuckedAI = true;
+                steering = base.GetSteering();
+            }
+            else
+            {
+                agent.linearVelocity = Vector2.zero;
+            }
+        }
+
 
 
         return steering;
@@ -80,7 +160,7 @@ public class AvoidWall : Seek {
     {
         Gizmos.color = Color.red;
         Gizmos.DrawCube(target.transform.position, Vector3.one * 10);
-        Gizmos.DrawWireSphere(transform.position, (sp.bounds.min.x * transform.localScale.x));
+        //Gizmos.DrawWireSphere(transform.position, (sp.bounds.min.x * transform.localScale.x));
 
         base.OnDrawGizmos();
     }

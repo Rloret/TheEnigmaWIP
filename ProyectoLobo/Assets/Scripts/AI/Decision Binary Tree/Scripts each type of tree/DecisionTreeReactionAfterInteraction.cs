@@ -3,8 +3,10 @@ using System.Collections;
 
 public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
-    
-    public DecisionActionsEnum root;
+    //   public AIPersonality targetpers; TESTING
+
+
+    [HideInInspector] public DecisionActionsEnum root;
         private DecisionBool iAmMonster;
              private DecisionBool heIsInGroup;
                 private DecisionBool isMonster; //true Branch1
@@ -16,7 +18,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
 
         private DecisionActionsEnum givingMeObject; //false Branch1
-            private ActionComparePriorityObjectAgainstPriorityTree comparePriorityTreeAction;
+            private PriorityObjectDecision comparePriorityTreeAction;
 
             private FloatDecision trustHimMore6;
                 private FloatDecision trustHimLess3;
@@ -27,11 +29,23 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
                           private RandomFloatDecision randomDecision;
 
+    private DecisionActionsEnum Join;
 
 
 
-    protected override void CreateTree() { 
-        root = createDecisionsEnum(ActionsEnum.Actions.ATTACK, myPersonality);
+    private bool treeCreated = false;
+
+    protected override void CreateTree() {
+
+		if (target.tag == "Player") {
+			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<PlayerPersonality>();
+
+		} else {
+			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
+
+		}     
+
+		root = createDecisionsEnum(ActionsEnum.Actions.ATTACK, myPersonality);
         iAmMonster= createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         heIsInGroup= createDecisionsBool(true, targetPersonality, DecisionBool.BoolDecisionEnum.INGROUP);
         isMonster = createDecisionsBool(true, targetPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
@@ -46,6 +60,7 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
         charismatic = createDecisionsFloat(3, 10,/* aiPersonality.charisma*/myPersonality, FloatDecision.FloatDecisionTypes.CHARISMA);
         agresive2 = createDecisionsFloat(2.5f, 10, /*aiPersonality.selfAssertion*/myPersonality, FloatDecision.FloatDecisionTypes.AGGRESSIVENESS);
         randomDecision = createRandomDecisionFloat(8, 10, 1, 10);
+        Join = createDecisionsEnum(ActionsEnum.Actions.JOIN, myPersonality);
 
 
         root.nodeTrue = iAmMonster;
@@ -68,15 +83,18 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
                createLeaves(healthLess40, addActionEvade(), addActionAttack());
 
+        comparePriorityTreeAction = createPriorityObjectDecision(myPersonality, targetPersonality);
 
-        givingMeObject.nodeTrue = addActionOffer(); //MOCK-ASINES SALTARINES
-        givingMeObject.nodeFalse = trustHimMore6;
+		givingMeObject.nodeTrue = comparePriorityTreeAction;
+        givingMeObject.nodeFalse = Join;
 
-        // comparePriorityTreeAction = addActionComparePriorityTree();                    DUDAS SERIAS DE COMO HACER ESTO JI
-        // comparePriorityTreeAction.nodeFalse = addActionOffer();
-        // comparePriorityTreeAction.nodeTrue = comparePriorityTreeAction.nodeFalse;
+        Join.nodeTrue = trustHimMore6;
+        Join.nodeFalse = addActionNothing();
 
-            trustHimMore6.nodeTrue = addActionJoin();
+         comparePriorityTreeAction.nodeFalse = addActionNothing();
+        comparePriorityTreeAction.nodeTrue = addActionAcceptObjectOffered();
+
+        trustHimMore6.nodeTrue = addActionJoin();
             trustHimMore6.nodeFalse = trustHimLess3;
        
 
@@ -93,9 +111,11 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
 
                 createLeaves(randomDecision,  addActionJoin(),addActionNothing());
         DecisionCompleted = true;
+        treeCreated = true;
 
-        // decisionNew = root;
 
+		//Debug.Log ("fin de creando arbol reaction");
+		StartTheDecision ();
     }
 
 
@@ -109,10 +129,11 @@ public class DecisionTreeReactionAfterInteraction : DecisionTreeCreator {
     public override void StartTheDecision()
     {
        
-        Debug.Log("empiezxo a decidir");
+		//Debug.Log(this.gameObject.name+ " Reaction Tree: empiezxo a decidir. mi accion recibida es "+ this.GetComponent<AIPersonality>().interactionFromOtherCharacter);
+
+        decisionNew = root;
 
         base.DecisionCompleted = false;
-        decisionNew = root;
 
 
     }

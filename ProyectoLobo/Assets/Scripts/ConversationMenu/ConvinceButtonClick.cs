@@ -11,20 +11,43 @@ public class ConvinceButtonClick : ButtonAction {
     {
         Debug.Log("convinceAction");
 
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+
         targetIA = menuController.GetTargetIA();
 
-        targetIA.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+		PersonalityBase targetPers = targetIA.GetComponent<AIPersonality> ();
 
-        reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
+		targetPers.interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
 
-        if (reactionTree == null)
-        {
-            reactionTree = targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
-        }
+		updateTrust (true, targetPers, player.GetComponent<PersonalityBase> ().GetMyOwnIndex ());
 
-        reactionTree.target = targetIA;
-        reactionTree.StartTheDecision();
+
+		reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
+
+		if (reactionTree != null) {
+			DestroyImmediate (reactionTree);
+		}
+
+		targetIA.gameObject.GetComponent<AIPersonality> ().oldNodes = targetIA.gameObject.GetComponents<DecisionTreeNode> ();
+		foreach (DecisionTreeNode n in targetIA.gameObject.GetComponent<AIPersonality>().oldNodes) {
+			DestroyImmediate (n);
+		}
+
+		reactionTree=targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
+
+		reactionTree.target = GameObject.FindGameObjectWithTag("Player");
 
         this.gameObject.transform.parent.gameObject.SetActive(false);
     }
+
+	protected void updateTrust(bool increase, PersonalityBase pers, int index){
+		//	Debug.Log ("se esta actualizand la confianza de : " + pers.gameObject.name + " indice: " + index);
+
+		if (increase) {
+			pers.TrustInOthers [index] += 1;
+		} else {
+			pers.TrustInOthers [index] -= 1;
+		}
+	}
+
 }

@@ -45,13 +45,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LocationDiscovery.cs" />
+     <Compile Include="Assets\ResponseController.cs" />
      <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Decision.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeCreator.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeNode.cs" />
+     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAcceptObjectOffered.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAttack.cs" />
-     <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionComparePriorityObjectAgainstPriorityTree.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionEvade.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionJoinGroup.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionNothing.cs" />
@@ -68,17 +70,22 @@
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeReactionAfterInteraction.cs" />
      <Compile Include="Assets\Scripts\AI\DecisionTarget.cs" />
      <Compile Include="Assets\Scripts\AI\Memory.cs" />
+     <Compile Include="Assets\Scripts\AI\PersonalityBase.cs" />
+     <Compile Include="Assets\Scripts\AI\PlayerPersonality.cs" />
      <Compile Include="Assets\Scripts\AI\PriorityTree.cs" />
+     <Compile Include="Assets\Scripts\AI\RoomMemory.cs" />
      <Compile Include="Assets\Scripts\ActionsEnum.cs" />
      <Compile Include="Assets\Scripts\BehaviourAdder.cs" />
      <Compile Include="Assets\Scripts\Camera\FollowPlayer.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\AttackButtonClick.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\ButtonAction.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\CloseButtonClick.cs" />
-     <Compile Include="Assets\Scripts\ConversationMenu\ConversationMenuController.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\ConvinceButtonClick.cs" />
      <Compile Include="Assets\Scripts\ConversationMenu\OfferButtonClick.cs" />
+     <Compile Include="Assets\Scripts\ConversationMenu\PlayerMenuController.cs" />
+     <Compile Include="Assets\Scripts\ConversationMenu\YesButton.cs" />
      <Compile Include="Assets\Scripts\GameOverScripts\ShortCutsButtons.cs" />
+     <Compile Include="Assets\Scripts\GroupScript.cs" />
      <Compile Include="Assets\Scripts\Health\HealthController.cs" />
      <Compile Include="Assets\Scripts\Interfaces\EmptyInterface.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IStateBase.cs" />
@@ -97,6 +104,9 @@
      <Compile Include="Assets\Scripts\Movement\Seek.cs" />
      <Compile Include="Assets\Scripts\Movement\SteeringOutput.cs" />
      <Compile Include="Assets\Scripts\Movement\Wander.cs" />
+     <Compile Include="Assets\Scripts\Objects\DestroyMedicalaid.cs" />
+     <Compile Include="Assets\Scripts\Objects\DestroyTimed.cs" />
+     <Compile Include="Assets\Scripts\Objects\MoveUp.cs" />
      <Compile Include="Assets\Scripts\Objects\ObjectAction.cs" />
      <Compile Include="Assets\Scripts\Objects\ObjectHandler.cs" />
      <Compile Include="Assets\Scripts\StateManager.cs" />
@@ -109,6 +119,8 @@
      <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycle.cs" />
      <Compile Include="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" />
      <Compile Include="Assets\Scripts\Visibility\VisibleElements.cs" />
+     <Compile Include="Assets\Tester.cs" />
+     <Compile Include="Assets\gameController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Programas/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

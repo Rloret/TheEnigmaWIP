@@ -3,16 +3,17 @@ using System.Collections;
 
 public class FloatDecision : Decision {
 
-    public AIPersonality targetPersonality;
+	public PersonalityBase targetPersonality;
     public float maxValue=10000;
     public float minvalue=0;
-    public AIPersonality characterPersonality;
+	public PersonalityBase characterPersonality;
 
     public enum FloatDecisionTypes { HEALTH, FEAR, AGGRESSIVENESS,CHARISMA, CONFIDENCEINOTHER  };
     public FloatDecisionTypes actualDecisionType;
 
     public override DecisionTreeNode GetBranch()
     {
+       // targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
         switch (actualDecisionType) {
 
             case FloatDecisionTypes.HEALTH:
@@ -41,7 +42,7 @@ public class FloatDecision : Decision {
 
             case FloatDecisionTypes.CONFIDENCEINOTHER:
                 int value = characterPersonality.TrustInOthers[targetPersonality.GetMyOwnIndex()];
-                Debug.Log(" i trust in him " + value);
+
                 if (maxValue >=value  && value >= minvalue)
                 {
                     return nodeTrue;

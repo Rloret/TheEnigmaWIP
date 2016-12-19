@@ -3,9 +3,9 @@ using System.Collections;
 
 public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 {
+    DecisionTreeReactionAfterInteraction reaction;
 
-
-     public DistanceDecision root;
+    [HideInInspector] public DistanceDecision root;
 
          private DecisionBool iAmMonster;
              private DecisionBool targetIsHuman;
@@ -48,10 +48,24 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
                               private RandomFloatDecision random5;
                         private FloatDecision CharismaBigger3_5;
                             private RandomFloatDecision random6;
+
+    
                         
     protected override void CreateTree()
     {
-        root = createDistanceDecisionFloat(myTransform, targetTransform, 25);
+
+        //  base.targetPersonality = targetpers; //TESTING
+		//Debug.Log("creando arbol what to do ");
+		if (target.tag == "Player") {
+			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<PlayerPersonality>();
+
+		} else {
+			targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
+
+		}
+        //Esto puede ser necesario en algun momento, pensamos que como se modifica desde fuera no es necesario
+        //target = targetPersonality.gameObject;
+        root = createDistanceDecisionFloat(this.gameObject.transform,target.transform, 60);
 
         iAmMonster = createDecisionsBool(true, myPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
         targetIsHuman = createDecisionsBool(false, targetPersonality, DecisionBool.BoolDecisionEnum.ISMONSTER);
@@ -199,20 +213,129 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
                                              createLeaves(random5, addActionAttack(), addActionNothing());
                                              createLeaves(random6, addActionOfferJoinGroup(), addActionNothing());
         DecisionCompleted = true;
-        target = this.gameObject;
-        // decisionNew = root;
-
+        reaction = this.GetComponent<DecisionTreeReactionAfterInteraction>();
+        StartTheDecision();
 
     }
 
     public override void StartTheDecision()
     {
+       //Debug.Log("Empiezo a decidir"+ this.gameObject.name);
 
-
-        base.DecisionCompleted = false;
         decisionNew = root;
 
+        base.DecisionCompleted = false;
 
+    }
+ 
+    public override void CommunicateAction(Action actionNew)
+    {
+       // Debug.Log("He acabado y comunico accion");
+
+		if (target.gameObject.tag == "IA" ||target.tag == "Player")
+        {  //avisar de que vamos a interactuar con él
+            ActionAttack attack = new ActionAttack();
+            ActionOffer offer = new ActionOffer();
+            ActionOfferOtherJoinMyGroup join= new ActionOfferOtherJoinMyGroup();
+
+            // Debug.Log(actionNew.GetType() + ", " + attack.GetType());
+
+            bool decision = true;
+
+            if (Object.ReferenceEquals(actionNew.GetType(), attack.GetType())) // compare classes 
+            {
+				if (target.tag == "Player") {
+					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_ATTACKED,target);
+					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+
+				} else {
+					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+				}
+
+                Debug.Log("Le he dicho que le ataco");
+
+            }
+            else if (Object.ReferenceEquals(actionNew.GetType(), offer.GetType())) // compare classes 
+            {
+				if (target.tag == "Player") {
+					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
+					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_OFFERED_OBJECT,target);
+					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+
+
+
+				} else {
+					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
+
+				}
+                Debug.Log("Le he dicho que le ofrezco");
+
+
+            }
+
+            else if (Object.ReferenceEquals(actionNew.GetType(), join.GetType())) // compare classes 
+            {
+				if (target.tag == "Player") {
+					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_OFFERED_JOIN,target);
+					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+
+
+
+				} else {
+					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+
+				}
+                //Debug.Log("Le he dicho que se una a mi grupo");
+
+
+            }
+            else {
+                Debug.Log("Mi accion es NOTHING y NO le digo nada");
+                decision = false;
+            }
+
+
+
+            if (decision)
+            {
+
+				if (target.tag != "Player") {
+					if (reaction != null) {
+						Destroy (reaction);
+					}
+					reaction = target.AddComponent<DecisionTreeReactionAfterInteraction> ();
+					reaction.target = this.gameObject;
+					target.GetComponent<VisibilityConeCycleIA>().enabled = false;
+
+
+				}
+               /* if (reaction == null)
+				{	
+					if (target.tag != "Player") {
+						reaction = target.AddComponent<DecisionTreeReactionAfterInteraction> ();
+					}
+                }
+                else
+                {
+					if (target.tag != "Player") {
+						
+						Destroy (reaction);
+						reaction = target.AddComponent<DecisionTreeReactionAfterInteraction> ();
+					}
+
+                }
+
+                reaction.target = this.gameObject;
+
+				if (target.tag == "IA") {
+					target.GetComponent<VisibilityConeCycleIA>().enabled = false;
+
+				}*/
+
+            }
+        }
     }
 
 }

@@ -3,11 +3,13 @@ using System.Collections;
 
 public class ButtonAction:MonoBehaviour  {
 
-    protected ConversationMenuController menuController;
+	protected PlayerMenuController menuController;
+    protected GroupScript playerGroup;
 
     protected void Start()
     {
-        menuController = GameObject.FindGameObjectWithTag("GameController").GetComponent<ConversationMenuController>();
+		menuController = GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>();
+        playerGroup = this.GetComponent<GroupScript>();
 
     }
 

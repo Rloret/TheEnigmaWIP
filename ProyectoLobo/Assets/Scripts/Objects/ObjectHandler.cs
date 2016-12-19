@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class ObjectHandler : MonoBehaviour {
@@ -41,22 +41,27 @@ public class ObjectHandler : MonoBehaviour {
             return true;
         }
     }
-    public ObjectData desiredObjectData;
+    //public ObjectData desiredObjectData;
 
     public static int pickRadius;
     public int radius;
 
-    public Button CurrentObject;
+	public GameObject currentObject = null;
 
-    public ObjectType lastObjecttype;
+    //public ObjectType lastObjecttype;
 
-
+	public GameObject desiredObject;
+	private AIPersonality personality;
+    private PlayerPersonality playerPersonality;
+    private AgentPositionController agentPositionControllerScript;
+    private Dictionary<string, Vector3?> objSeenBefore;
 
     #endregion
 
     #region private domain
     private bool hasObject = false;
     private VisibilityConeCycleIA cycleIA;
+    private VisibilityConeCycle cyclePlayer;
 
     #endregion
 
@@ -65,14 +70,177 @@ public class ObjectHandler : MonoBehaviour {
         if(this.tag == "IA")
         {
             cycleIA = this.GetComponent<VisibilityConeCycleIA>();
+			personality = this.GetComponent<AIPersonality> ();
+            objSeenBefore = personality.myMemory.objectsSeenBefore;     
         }
+        else if (this.tag == "Player")
+        {
+            cyclePlayer = this.GetComponent<VisibilityConeCycle>();
+            playerPersonality = this.GetComponent<PlayerPersonality>();
+        }
+        agentPositionControllerScript = this.GetComponent<AgentPositionController>();
     }
+
+	void OnTriggerEnter2D (Collider2D coll) {
+
+        if (coll.gameObject == desiredObject)
+        {
+           if (currentObject) {
+                currentObject.layer = LayerMask.NameToLayer("Objects");
+                currentObject.GetComponent<ObjectAction>().handler = false;
+                Debug.Log("Nadie tiene el objeto: " + currentObject + " el valor de hanfler es: " + currentObject.GetComponent<ObjectAction>().handler);
+            }
+
+            currentObject = coll.gameObject;
+
+            if (this.tag == "IA"){ 
+                personality.myObject = GO2ObjectType(coll.gameObject.name);
+                if (coll.gameObject.name == "Medicalaid")
+                {
+                    personality.health = 100;
+                    hasObject = false;
+                }
+                else
+                {
+                    hasObject = true;
+                    currentObject.layer = LayerMask.NameToLayer("ObjectsHandler");
+                    currentObject.GetComponent<ObjectAction>().handler = true;
+                }
+                if (objSeenBefore.ContainsKey(coll.name)) //sólo si es una IA recuerda el objeto
+                {
+                    objSeenBefore.Remove(coll.name);
+                }
+            }
+            else
+            {
+                playerPersonality.myObject = GO2ObjectType(coll.gameObject.name);
+                if (coll.gameObject.name == "Medicalaid")
+                {
+                    playerPersonality.health = 100;
+                    hasObject = false;
+                }
+                else {
+                    hasObject = true;
+                    currentObject.layer = LayerMask.NameToLayer("ObjectsHandler");
+                    currentObject.GetComponent<ObjectAction>().handler = true;
+                }     
+            }
+           
+            ResetSkills();
+            Improvement();
+            desiredObject = null;
+        }
+        else
+        {
+            if (desiredObject && desiredObject.name == coll.gameObject.name) //SI RECUERDA UN OBJETO
+            {
+                Debug.Log("Recordadndo objeto");
+                if (coll.gameObject.name == "Medicalaid")
+                {
+                    personality.health = 100;
+                }
+                else //SIEMPRE SE RECUERDA EL BOTIQUIN
+                {
+                    objSeenBefore.Remove(coll.name);
+                }
+
+                desiredObject = null;
+
+            }
+        }
+	}
+
     void Update()
     {
         pickRadius = radius;
+		if (hasObject) {
+			pickupObject (currentObject);
+            
+		}
+
     }
 
-    public void youAreOnA(GameObject g)
+	public void pickupObject(GameObject takedObject) {
+        takedObject.transform.position = this.transform.position;
+
+    }
+
+    private void ResetSkills()
+    {
+
+        agentPositionControllerScript.maxLinearVelocity = 80;
+        if (this.tag == "IA")
+        {
+            personality.attack = 10;
+            personality.defense = 1.0f;
+            cycleIA.changeRadius(1.0f);
+            //Debug.Log("reseteo el radio");
+        }
+        else
+        {
+            playerPersonality.attack = 10;
+            playerPersonality.defense = 1.0f;
+            cyclePlayer.changeRadius(1.0f);
+        }
+    }
+
+    private void Improvement()
+    {
+        switch (currentObject.name)
+        {
+            case "Axe":
+                if (this.tag == "IA")
+                    personality.attack = 15;
+                else
+                    playerPersonality.attack = 15;
+                break;
+            case "Boots":
+                agentPositionControllerScript.maxLinearVelocity = 200;
+                break;
+            case "Flashlight":
+                if (this.tag == "IA")
+                {
+                    cycleIA.changeRadius(1.25f);
+                    //Debug.Log("cambio el radio");
+                }
+                else if (this.tag == "Player")
+                {
+                    cyclePlayer.changeRadius(1.25f);
+                }
+                break;
+            case "Shield":
+                if (this.tag == "IA")
+                    personality.defense = 0.5f;
+                else
+                    playerPersonality.defense = 0.5f;
+                break;
+        }
+    }
+
+	private ObjectType GO2ObjectType(string ob) {
+        ObjectType type;
+		switch (ob) {
+		case "Shield":
+			type =  ObjectType.SHIELD;
+			break;
+		case "Axe":
+			type = ObjectType.AXE;
+			break;
+		case "Flashlight":
+			type = ObjectType.FLASHLIGHT;
+			break;
+		case "Boots":
+			type = ObjectType.BOOTS;
+			break;
+		default:
+			type = ObjectType.NONE;
+			break;
+		}
+
+        return type;
+	}
+		
+   /* public void youAreOnA(GameObject g)
     {
         string name = g.name;
         Debug.Log(name);
@@ -127,8 +295,9 @@ public class ObjectHandler : MonoBehaviour {
                 CurrentObject.image.color = Color.white;
 
             VisibleElements.visibleGameObjects.Remove(g);
-           
-            Destroy(g);
+
+            //Destroy(g);
+            g.SetActive(false);
             possibleObject = null;
             hasObject = true;
             
@@ -203,6 +372,6 @@ public class ObjectHandler : MonoBehaviour {
                 break;
         }
 
-    }
+    }*/
 
 }
