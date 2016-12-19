@@ -76,12 +76,26 @@ public class gameController : MonoBehaviour {
 
 		}
 
+		determineMonster ();
+
         /*personality.health = 100;
         personality.attack = 10;
 
         personality.MyOwnIndex = numberOfIAs - 1;*/
 
     }
+	private void determineMonster(){
+		int r = Random.Range (0, 1);
+
+		if (r == 1) {
+			Debug.Log ("el player es el monstruo");
+			GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing = true;
+
+		} else {
+			Debug.Log ("el player no es el monstruo");
+			GameObject.FindGameObjectWithTag ("IA").GetComponent<PersonalityBase> ().theThing = true;
+		}
+	}
 
     private void instantiateIA(AIPersonality.Personalities type,Vector3 pos,int number,Sprite color)
     {
