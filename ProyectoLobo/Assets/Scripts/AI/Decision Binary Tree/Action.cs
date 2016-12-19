@@ -35,7 +35,9 @@ public class Action : DecisionTreeNode {
     }
 
 	protected void updateTrust(bool increase, PersonalityBase pers, int index){
+
 	//	Debug.Log ("se esta actualizand la confianza de : " + pers.gameObject.name + " indice: " + index);
+
 
 		if (increase) {
 			pers.TrustInOthers [index] += 1;

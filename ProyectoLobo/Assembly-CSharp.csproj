@@ -45,7 +45,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\LocationDiscovery.cs" />
      <Compile Include="Assets\ResponseController.cs" />
      <Compile Include="Assets\Scripts\AI\AIPersonality.cs" />
      <Compile Include="Assets\Scripts\AI\Decision Binary Tree\Action.cs" />
@@ -89,6 +88,7 @@
      <Compile Include="Assets\Scripts\Health\HealthController.cs" />
      <Compile Include="Assets\Scripts\Interfaces\EmptyInterface.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IStateBase.cs" />
+     <Compile Include="Assets\Scripts\LocationDiscovery.cs" />
      <Compile Include="Assets\Scripts\Movement\AgentBehaviour.cs" />
      <Compile Include="Assets\Scripts\Movement\AgentPositionController.cs" />
      <Compile Include="Assets\Scripts\Movement\Align.cs" />

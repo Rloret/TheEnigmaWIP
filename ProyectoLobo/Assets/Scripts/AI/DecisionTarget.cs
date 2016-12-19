@@ -130,11 +130,13 @@ public class DecisionTarget : MonoBehaviour {
                 chosenTarget = par.Key;
                 
             }
-           // Debug.Log("El objeto: " + chosenTarget.name + " está ya en la memoria? " + memory.objectsSeenBefore.ContainsKey(par.Key.name));
-            if (!memory.objectsSeenBefore.ContainsKey(par.Key.name))
+            //Debug.Log("El objeto: " + chosenTarget.name + " está ya en la memoria? " + memory.objectsSeenBefore.ContainsKey(par.Key.name));
+            //Debug.Log("El objeto: " + chosenTarget.name + " está ya en la memoria? " + memory.objectWithinRoom.ContainsKey(par.Key.name));
+            if (!memory.objectsSeenBefore.ContainsKey(par.Key.name) && (par.Key.tag != "IA" && par.Key.tag != "Player") && !memory.objectWithinRoom.ContainsKey(par.Key.name))
             {
 				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
-                //Debug.Log("meto en la memoria " + par.Key.name);
+                memory.objectWithinRoom.Add(par.Key.name, this.gameObject.GetComponent<RoomMemory>().currentRoom);
+               // Debug.Log("meto en la memoria de habitaciones " + par.Key.name + " y " + this.gameObject.GetComponent<RoomMemory>().currentRoom);
             }
         }
 

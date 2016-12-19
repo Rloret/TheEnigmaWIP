@@ -98,6 +98,13 @@ public class gameController : MonoBehaviour {
 
         personality.MyOwnIndex = numberOfIAs - 1;*/
 
+        //Al final del start se activan los colliders de las habitaciones para que se puedan guardar las IAs las habitaciones donde spawneen
+        //List<GameObject> Rooms = new List<GameObject>();
+        //Rooms.AddRange(GameObject.FindGameObjectsWithTag("RoomsAndDoors"))
+        foreach ( GameObject room in GameObject.FindGameObjectsWithTag("RoomsAndDoors") ) {
+            room.GetComponent<LocationDiscovery>().enabled = true;
+        }
+
     }
 
     private void instantiateIA(AIPersonality.Personalities type,Vector3 pos,int number,Color color)
