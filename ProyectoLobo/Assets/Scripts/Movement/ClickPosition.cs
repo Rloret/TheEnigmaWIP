@@ -52,7 +52,6 @@ public class ClickPosition : MonoBehaviour {
 
                     if (personality.isMonster)
                     {
-                        Debug.Log(Vector3.Distance(this.transform.position, GOclicked.transform.position));
                         if (Vector3.Distance(this.transform.position, GOclicked.transform.position) < 50)
                         {
                             attack = true;
