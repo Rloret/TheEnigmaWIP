@@ -258,36 +258,46 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
             }
             else if (Object.ReferenceEquals(actionNew.GetType(), offer.GetType())) // compare classes 
             {
-				if (target.tag == "Player") {
-					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
-					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_OFFERED_OBJECT,target);
-					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+				
+					if (target.tag == "Player") {
+						
+						target.GetComponent<PlayerPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
+						GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().OpenMenu (PlayerMenuController.MenuTypes.MENU_OFFERED_OBJECT, target);
+						GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
 
+					} else {
+						target.GetComponent<AIPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
 
-
-				} else {
-					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
-
-				}
-                Debug.Log("Le he dicho que le ofrezco");
-
+					}
+					 
 
             }
 
             else if (Object.ReferenceEquals(actionNew.GetType(), join.GetType())) // compare classes 
             {
-				if (target.tag == "Player") {
-					target.GetComponent<PlayerPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
-					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_OFFERED_JOIN,target);
-					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
+				
+				if (this.gameObject.GetComponent<GroupScript> ().groupMembers.Count
+				    + target.GetComponent<GroupScript> ().groupMembers.Count
+				    < 2) {
+
+					if (target.tag == "Player") {
+						target.GetComponent<PlayerPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+						GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().OpenMenu (PlayerMenuController.MenuTypes.MENU_OFFERED_JOIN, target);
+						GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
 
 
+
+					} else {
+						target.GetComponent<AIPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+
+					}
+					Debug.Log("Le he dicho que se una a mi grupo");
 
 				} else {
-					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
+					Debug.Log ("El grupo es muy grande te jodes");
+					decision = false;
 
 				}
-                //Debug.Log("Le he dicho que se una a mi grupo");
 
 
             }
@@ -311,28 +321,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
 
 				}
-               /* if (reaction == null)
-				{	
-					if (target.tag != "Player") {
-						reaction = target.AddComponent<DecisionTreeReactionAfterInteraction> ();
-					}
-                }
-                else
-                {
-					if (target.tag != "Player") {
-						
-						Destroy (reaction);
-						reaction = target.AddComponent<DecisionTreeReactionAfterInteraction> ();
-					}
-
-                }
-
-                reaction.target = this.gameObject;
-
-				if (target.tag == "IA") {
-					target.GetComponent<VisibilityConeCycleIA>().enabled = false;
-
-				}*/
+              
 
             }
         }

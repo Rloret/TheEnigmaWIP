@@ -59,7 +59,7 @@ public class ObjectHandler : MonoBehaviour {
     #endregion
 
     #region private domain
-    private bool hasObject = false;
+    public bool hasObject = false;
     private VisibilityConeCycleIA cycleIA;
     private VisibilityConeCycle cyclePlayer;
 
