@@ -26,9 +26,15 @@ public override void Action()
 
 			player.GetComponent<ObjectHandler> ().currentObject = targetIA.GetComponent<ObjectHandler> ().currentObject;
 
+			player.GetComponent<ObjectHandler> ().hasObject = true;
+
+
 			targetIA.GetComponent<AIPersonality> ().myObject = ObjectHandler.ObjectType.NONE;
 
 			targetIA.GetComponent<ObjectHandler> ().currentObject = null;
+
+			targetIA.GetComponent<ObjectHandler> ().hasObject = false;
+
 
 			Debug.Log ("player:he cogido tu objeto");
 		}

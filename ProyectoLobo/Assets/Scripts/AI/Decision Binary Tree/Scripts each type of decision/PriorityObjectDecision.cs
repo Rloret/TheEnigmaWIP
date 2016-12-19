@@ -20,13 +20,18 @@ public class PriorityObjectDecision : Decision
         decisiontargetScript = GetComponent<DecisionTarget>();
         prioTree = GetComponent<PriorityTree>();
 
-        string objectName = decisiontargetScript.objectTraduction(this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>()/*targetPersonality*/);
+		string objectName = decisiontargetScript.objectTraduction( this.GetComponent<DecisionTreeCreator>().target.GetComponent<PersonalityBase>());
+		Debug.Log ("el target es : " + this.GetComponent<DecisionTreeCreator>().target);
 
+		Debug.Log ("el objeto es : " + objectName);
         GameObject aux = new GameObject();
 
         aux.name = objectName;
 
-        if (prioTree.GetPriority(aux, characterPersonality) == 3)
+		int priority = prioTree.GetPriority (aux, characterPersonality);
+		Debug.Log ("La prioridd del objeto es: " + priority);
+
+		if ( priority>=2)
         {
             return nodeTrue;
         }

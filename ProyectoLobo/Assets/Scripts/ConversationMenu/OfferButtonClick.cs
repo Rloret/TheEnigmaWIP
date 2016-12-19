@@ -38,7 +38,7 @@ public class OfferButtonClick : ButtonAction {
 
 		reactionTree=targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
 
-        reactionTree.target = targetIA;
+		reactionTree.target = GameObject.FindGameObjectWithTag("Player");
 
         this.gameObject.transform.parent.gameObject.SetActive(false);
     }
