@@ -17,20 +17,25 @@ public class PlayerPersonality : PersonalityBase {
         MyOwnIndex = numberOfAgents - 1;
     }
 
-	public override void takeDamage(int damage)
+	public override void takeDamage(int damage, PersonalityBase personality)
 	{
 		health -= (int)(damage * defense);
-		if (health <= 50)
+		if (health <= 50 && health > 33)
 		{
 			HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
 		}
-		else if (health <= 33)
+		else if (health <= 33 && health > 0)
 		{
 			HealthImage.GetComponent<Image>().color = new Color(0, 0,255);
 		}
 		else
 		{
 			VisibleElements.visibleGameObjects.Remove(this.gameObject);
+            //contador_humanos == 1;
+            // youLost();
+            //else
+            //si te mata el monstruo: the thing = true
+            //sino youLost()
 			youLost ();
 		}
 	}

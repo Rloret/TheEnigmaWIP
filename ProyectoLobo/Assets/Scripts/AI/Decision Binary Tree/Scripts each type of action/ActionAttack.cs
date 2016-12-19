@@ -72,7 +72,7 @@ public class ActionAttack : Action {
 		if(!triggered)targetAttack=this.GetComponent<DecisionTreeCreator> ().target;
 
 		PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase> ();
-        targetPers.takeDamage(a);
+        targetPers.takeDamage(a, this.GetComponent<PersonalityBase>());
 
 		/*if (this.gameObject.tag == "Player") {
 			

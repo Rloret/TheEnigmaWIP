@@ -140,7 +140,7 @@ public class AIPersonality: PersonalityBase {
         initializeTrustInOthers(numberOfIAs);
     }
 
-    public override void takeDamage(int damage)
+    public override void takeDamage(int damage, PersonalityBase personality)
     {
         health -= (int)(damage * defense);
         HealthImage.GetComponent<Image>().fillAmount = health / 100f;
@@ -164,14 +164,23 @@ public class AIPersonality: PersonalityBase {
             Debug.Log(this.gameObject.name + "HA MUERTO");
             this.enabled = false;
             Destroy(this.gameObject);
-            //Fantasma
-            GameObject ghost = new GameObject();
-            ghost.AddComponent<SpriteRenderer>();
-            ghost.GetComponent<SpriteRenderer>().sprite = ghostSprite;
-            ghost.GetComponent<SpriteRenderer>().sortingLayerName = "Personajes";
-            ghost.transform.localScale = new Vector2(5f, 5f);
-            ghost.name = nameIAdeath;
-            ghost.transform.position = IADeathPosition;
+
+            if (personality.isMonster)
+            {
+                this.theThing = true;
+                this.health = 100;
+            }
+            else
+            {
+                GameObject ghost = new GameObject();
+                ghost.AddComponent<SpriteRenderer>();
+                ghost.GetComponent<SpriteRenderer>().sprite = ghostSprite;
+                ghost.GetComponent<SpriteRenderer>().sortingLayerName = "Personajes";
+                ghost.transform.localScale = new Vector2(5f, 5f);
+                ghost.name = nameIAdeath;
+                ghost.transform.position = IADeathPosition;
+            }
+
             
         }
     }
