@@ -263,9 +263,8 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().OpenMenu(PlayerMenuController.MenuTypes.MENU_OFFERED_OBJECT,target);
 					GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
 
-
-
-				} else {
+				}
+                else {
 					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
 
 				}

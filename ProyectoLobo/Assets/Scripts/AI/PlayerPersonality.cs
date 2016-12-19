@@ -6,14 +6,18 @@ public class PlayerPersonality : PersonalityBase {
 	public GameObject HealthImage;
 	public GameObject panel;
 
-    public void configurePlayer()
+    void Start()
+    {
+        base.behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
+    }
+    public void configurePlayer(Color playerColor)
     {
         int numberOfAgents = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs;
         TrustInOthers = new int[numberOfAgents];
         initializeTrustInOthers(numberOfAgents);
         health = 100;
         attack = 10;
-
+        this.GetComponent<SpriteRenderer>().color = playerColor;
         MyOwnIndex = numberOfAgents - 1;
     }
 

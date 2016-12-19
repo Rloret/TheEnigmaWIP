@@ -21,6 +21,7 @@ public class ActionJoinGroup : Action
         myGroup.inGroup = true;
         myGroup.IAmTheLeader = false;
         leadergroup.updateGroups(this.gameObject, myGroup.groupMembers);
+        leadergroup.makeLeader();
         myGroup.addSingleMember(t);
        
         leadergroup.resetMembersOfGroups(t.GetComponent<SpriteRenderer>());
