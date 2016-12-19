@@ -59,7 +59,7 @@ public class PlayerMenuController : MonoBehaviour {
      
     public void Convert2Monster()
     {
-        Debug.Log("OnClick");
+
         if (playerPersonality.isMonster)
         {
 			playerPersonality.attack = playerPersonality.lastAttackValue ;
