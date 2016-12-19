@@ -257,20 +257,16 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
             }
             else if (Object.ReferenceEquals(actionNew.GetType(), offer.GetType())) // compare classes 
-            {
-				
-					if (target.tag == "Player") {
-						
+            {			
+					if (target.tag == "Player") {				
 						target.GetComponent<PlayerPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
 						GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().OpenMenu (PlayerMenuController.MenuTypes.MENU_OFFERED_OBJECT, target);
 						GameObject.FindGameObjectWithTag ("GameController").GetComponent<PlayerMenuController> ().SetTargetIA (this.gameObject);
-
 					} else {
 						target.GetComponent<AIPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.OFFER;
 
 					}
-					 
-
+					
             }
 
             else if (Object.ReferenceEquals(actionNew.GetType(), join.GetType())) // compare classes 

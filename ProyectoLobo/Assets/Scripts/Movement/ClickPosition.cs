@@ -92,8 +92,9 @@ public class ClickPosition : MonoBehaviour {
     }
     public void DetermineAction(GameObject behaviorReceiber, GameObject aux)
     {
-        if (aux.tag == "IA")
+        if (aux.tag == "IA" && aux.GetComponent<GroupScript>().IAmTheLeader && aux.GetComponent<GroupScript>().inGroup)
         {
+            
 			aux.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu && menuOpened)
