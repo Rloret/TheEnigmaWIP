@@ -30,15 +30,7 @@ public class PlayerMenuController : MonoBehaviour {
         playerSprite = player.GetComponent<SpriteRenderer>();
         CheckIfMonster();
     }
-	/*  public void OpenConversationMenu(GameObject character, GameObject targetIA)
-    {
-        this.targetIA = targetIA;
-		menuConversation.transform.position = targetIA.transform.position;
-		menuConversation.transform.rotation = Quaternion.Euler(Vector3.zero);
-		targetIA.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
-		menuConversation.SetActive(true);
-    }*/
 
     private void CheckIfMonster()
     {
@@ -102,24 +94,17 @@ public class PlayerMenuController : MonoBehaviour {
 	public void SetTargetIA(GameObject t) {
 		 targetIA=t;
 	}
-	/*public void OpenAttackedMenu(GameObject targetIA){
-		this.targetIA = targetIA;
-		menuAttacked.transform.position = targetIA.transform.position;
-		menuAttacked.transform.rotation = Quaternion.Euler(Vector3.zero);
 
-		menuAttacked.SetActive(true);
-	}
-   */
 	public void OpenMenu(MenuTypes menu, GameObject target){
 
         //Debug.Log ("target IA es " + target);
-        Debug.Log("abro puto menu");
+     //   Debug.Log("abro puto menu");
         this.targetIA = target;
 
 
 		switch (menu) {
 		case MenuTypes.MENU_ATTACKED:
-			Debug.Log("abro menu attack");
+			//Debug.Log("abro menu attack");
 
 			menuAttacked.transform.position = targetIA.transform.position;
 			menuAttacked.transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -128,7 +113,7 @@ public class PlayerMenuController : MonoBehaviour {
 
 
 		case MenuTypes.MENU_CONVERSATION:
-			Debug.Log("abro menu conver");
+			//Debug.Log("abro menu conver");
 
 			menuConversation.transform.position = targetIA.transform.position;
 			menuConversation.transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -138,7 +123,7 @@ public class PlayerMenuController : MonoBehaviour {
 
 		case MenuTypes.MENU_OFFERED_JOIN:
 
-			Debug.Log("abro menu join");
+			//Debug.Log("abro menu join");
 
 			menuOfferedJoinGroup.transform.position = targetIA.transform.position;
 			menuOfferedJoinGroup.transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -147,7 +132,7 @@ public class PlayerMenuController : MonoBehaviour {
 
 
 		case MenuTypes.MENU_OFFERED_OBJECT:
-			Debug.Log("abro menu object");
+			//Debug.Log("abro menu object");
 
 			menuObjectOffered.transform.position = targetIA.transform.position;
 			menuObjectOffered.transform.rotation = Quaternion.Euler(Vector3.zero);
