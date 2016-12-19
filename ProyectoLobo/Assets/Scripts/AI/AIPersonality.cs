@@ -143,6 +143,8 @@ public class AIPersonality: PersonalityBase {
     public override void takeDamage(int damage)
     {
         health -= (int)(damage * defense);
+        HealthImage.GetComponent<Image>().fillAmount = health / 100f;
+        print(HealthImage.GetComponent<Image>().fillAmount);
         if (health <= 50 && health > 33)
         {
             HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
@@ -150,6 +152,7 @@ public class AIPersonality: PersonalityBase {
         else if (health <= 33 && health > 0)
         {
             HealthImage.GetComponent<Image>().color = new Color(255, 0, 0);
+           
         }
         else if(health<=0)
         {
@@ -161,6 +164,7 @@ public class AIPersonality: PersonalityBase {
             Debug.Log(this.gameObject.name + "HA MUERTO");
             this.enabled = false;
             Destroy(this.gameObject);
+            //Fantasma
             GameObject ghost = new GameObject();
             ghost.AddComponent<SpriteRenderer>();
             ghost.GetComponent<SpriteRenderer>().sprite = ghostSprite;
