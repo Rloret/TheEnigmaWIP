@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerPersonality : PersonalityBase {
 	public GameObject HealthImage;
 	public GameObject panel;
 
-    public void configurePlayer()
+    void Start()
+    {
+        base.behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
+    }
+    public void configurePlayer(Color playerColor)
     {
         int numberOfAgents = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs;
         TrustInOthers = new int[numberOfAgents];
         initializeTrustInOthers(numberOfAgents);
         health = 100;
         attack = 10;
-
+        this.GetComponent<SpriteRenderer>().color = playerColor;
         MyOwnIndex = numberOfAgents - 1;
     }
 
@@ -37,5 +42,7 @@ public class PlayerPersonality : PersonalityBase {
 
 	private void youLost(){
 		Debug.Log ("HAS PERDIDO ");
+		GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController> ().textMonster.text = "YOU LOST";
+		SceneManager.LoadScene (0);
 	}
 }

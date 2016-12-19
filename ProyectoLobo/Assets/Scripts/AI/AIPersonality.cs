@@ -142,19 +142,32 @@ public class AIPersonality: PersonalityBase {
     public override void takeDamage(int damage)
     {
         health -= (int)(damage * defense);
-        if (health <= 50)
+        if (health <= 50 && health > 33)
         {
             HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
         }
-        else if (health <= 33)
+        else if (health <= 33 && health > 0)
         {
-            HealthImage.GetComponent<Image>().color = new Color(0, 0,255);
+            HealthImage.GetComponent<Image>().color = new Color(255, 0, 0);
         }
         else if(health<=0)
         {
+            Debug.Log("Recibiendo daño: " +this.gameObject);
             this.GetComponent<VisibilityConeCycleIA>().enabled = false;
             VisibleElements.visibleGameObjects.Remove(this.gameObject);
             Debug.Log(this.gameObject.name + "HA MUERTO");
+            this.enabled = false;
+            Destroy(this.gameObject);
+          /* var comportam= this.GetComponents<MonoBehaviour>();
+            foreach (var compo in comportam)
+            {
+                Destroy(compo);
+            }
+            var treenodes = this.GetComponents<DecisionTreeNode>();
+            foreach (var compo in treenodes)
+            {
+                Destroy(compo);
+            }*/
         }
     }
 }

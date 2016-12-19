@@ -1,21 +1,24 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GroupScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Movement\ClickPosition.cs">
     <Files>
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeISeeSomeoneWhatShouldIDo.cs" Line="263" Column="123" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeCreator.cs" Line="163" Column="1" />
-      <File FileName="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" Line="278" Column="25" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionJoinGroup.cs" Line="24" Column="29" />
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of tree\DecisionTreeISeeSomeoneWhatShouldIDo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\DecisionTreeCreator.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Visibility\VisibilityConeCycleIA.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionJoinGroup.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of decision\DecisionBool.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ConversationMenu\CloseButtonClick.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ConversationMenu\YesButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI\AIPersonality.cs" Line="66" Column="3" />
-      <File FileName="Assets\Scripts\AI\PersonalityBase.cs" Line="79" Column="1" />
-      <File FileName="Assets\Scripts\AI\PlayerPersonality.cs" Line="9" Column="26" />
-      <File FileName="Assets\Scripts\ConversationMenu\PlayerMenuController.cs" Line="65" Column="65" />
-      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAttack.cs" Line="63" Column="3" />
-      <File FileName="Assets\Scripts\GroupScript.cs" Line="107" Column="17" />
-      <File FileName="Assets\Scripts\Movement\AvoidWall.cs" Line="78" Column="51" />
+      <File FileName="Assets\Scripts\AI\AIPersonality.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\PersonalityBase.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\PlayerPersonality.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ConversationMenu\PlayerMenuController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI\Decision Binary Tree\Scripts each type of action\ActionAttack.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GroupScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Movement\AvoidWall.cs" Line="1" Column="1" />
+      <File FileName="Assets\gameController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Movement\ClickPosition.cs" Line="131" Column="6" />
+      <File FileName="Assets\Scripts\BehaviourAdder.cs" Line="113" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

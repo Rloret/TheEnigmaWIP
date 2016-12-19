@@ -21,6 +21,7 @@ public class ClickPosition : MonoBehaviour {
 
     private bool menuOpened = false;
     private bool clickedOnTile = false;
+    private bool attack = false;
 
     void Start()
     {
@@ -42,49 +43,24 @@ public class ClickPosition : MonoBehaviour {
             string hitinfo = "";
             foreach (var h in hit)
             {
-                GameObject ia = h.collider.gameObject;
+                GameObject GOclicked = h.collider.gameObject;
 
                 //Debug.Log("Estoy pinchando en: " + h.collider);
-                if (ia.tag== "IA")
+                if (GOclicked.tag== "IA")
                 {
                     PersonalityBase personality = this.GetComponent<PersonalityBase>();
 
                     if (personality.isMonster)
                     {
-                        //attack
-                        ia.GetComponent<PersonalityBase>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
-                        ActionAttack a = gameObject.AddComponent<ActionAttack>();
-                        a.targetAttack = ia;
-                        a.triggered = true;
-                        a.DoAction();
-                        Debug.Log("POS TE PEGO");
-
-                      DecisionTreeReactionAfterInteraction reaction = ia.GetComponent<DecisionTreeReactionAfterInteraction>();
-                        if (reaction != null)
+                        if (Vector3.Distance(this.transform.position, GOclicked.transform.position) < 50)
                         {
-                            DestroyImmediate(reaction);
+                            attack = true;
                         }
-
-                        DecisionTreeNode[] oldNodes = ia.GetComponents<DecisionTreeNode>();
-                        foreach (DecisionTreeNode n in oldNodes)
-                        {
-                            DestroyImmediate(n);
-                        }
-
-                        reaction = ia.AddComponent<DecisionTreeReactionAfterInteraction>();
-
-                        Debug.Log("h collider es :" + ia.name + " reaction es " + reaction);
-                        reaction.target = this.gameObject;
-                        Debug.Log("reaction target es :" +  reaction.target);
-
-                        // h.collider.gameObject.GetComponent<VisibilityConeCycleIA>().enabled = false;
-
-
-
                     }
                     else
                     {
                         menuOpened = true;
+                        attack = false;
                     }
                    
                 }
@@ -116,19 +92,20 @@ public class ClickPosition : MonoBehaviour {
     }
     public void DetermineAction(GameObject behaviorReceiber, GameObject aux)
     {
-        if (aux.tag == "IA")
+		if (aux.tag == "IA" /*&& aux.GetComponent<GroupScript>().groupLeader==aux */)
         {
+            
 			aux.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu && menuOpened)
             {
-                //Debug.Log("estan cerca, abro menu");
+                Debug.Log("estan cerca, abro menu");
                 behaviourController.openConversationMenu(behaviorReceiber, aux);
 
             }
             else
             {
-                //Debug.Log("esta lejos, me acercare");
+                Debug.Log("esta lejos, me acercare");
                 clickedOnTile = true;
                 lastLinear = movementScript.linearVelocity ;
               
@@ -137,6 +114,34 @@ public class ClickPosition : MonoBehaviour {
 
                 GameObject[] targets = { aux, aux, aux };
 				behaviourController.addBehavioursOver(this.gameObject,targets,behaviours,weightedBehavs); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
+
+                if (attack)
+                {
+                    aux.GetComponent<PersonalityBase>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+                    ActionAttack a = gameObject.AddComponent<ActionAttack>();
+                    a.targetAttack = aux;
+                    a.triggered = true;
+                    a.DoAction();
+
+                    DecisionTreeReactionAfterInteraction reaction = aux.GetComponent<DecisionTreeReactionAfterInteraction>();
+                    if (reaction != null)
+                    {
+                        DestroyImmediate(reaction);
+                    }
+
+                    DecisionTreeNode[] oldNodes = aux.GetComponents<DecisionTreeNode>();
+                    foreach (DecisionTreeNode n in oldNodes)
+                    {
+                        DestroyImmediate(n);
+                    }
+
+                    reaction = aux.AddComponent<DecisionTreeReactionAfterInteraction>();
+
+                   // Debug.Log("h collider es :" + aux.name + " reaction es " + reaction);
+                    reaction.target = this.gameObject;
+                    attack = false;
+                   // Debug.Log("reaction target es :" + reaction.target);
+                }
 
             }
         }

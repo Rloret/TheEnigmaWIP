@@ -4,8 +4,9 @@ using System.Collections;
 public class ActionAttack : Action {
 
 
-	public GameObject targetAttack;
+    public GameObject targetAttack;
 	public bool triggered = false; //Para saber cuando se fuerza la accion
+    private PlayerMenuController playerMenuController;
 
     public override void DoAction()
     {
@@ -34,13 +35,22 @@ public class ActionAttack : Action {
 		}
 
 		Attack(totalAttack);
-		//END ATTACK
-
-		if (this.gameObject.tag != "Player") {
-			base.DestroyTrees ();
-
-			Invoke ("EnableCone", 1f);
+        //END ATTACK
+        
+        if (this.gameObject.tag != "Player") {
+            GameObject target = this.GetComponent<DecisionTreeCreator>().target;
+            base.DestroyTrees ();
+            if (target.GetComponent<PersonalityBase>().health > 0) 
+			    Invoke ("EnableCone", 1f);
 		}
+       /* else
+        {
+            playerMenuController = GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>();
+            GameObject target = playerMenuController.GetTargetIA();
+            if (target.GetComponent<PersonalityBase>().health > 0)
+                Invoke("EnableCone", 1f);
+
+        }*/
     }
 
     private void EnableCone()
