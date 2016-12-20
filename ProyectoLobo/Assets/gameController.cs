@@ -136,6 +136,7 @@ public class gameController : MonoBehaviour
         if (r == 1)
         {
             textMonster.text = "YOU ARE THE MONSTER!";
+
             GameObject.FindGameObjectWithTag("Player").GetComponent<PersonalityBase>().theThing = true;
 
         }

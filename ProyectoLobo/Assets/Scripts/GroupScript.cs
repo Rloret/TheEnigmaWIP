@@ -156,7 +156,10 @@ public class GroupScript : MonoBehaviour {
         }
         else if(groupLeader == null)
         {
-            this.GetComponent<VisibilityConeCycleIA>().enabled = true;
+            if (this.gameObject.tag != "Player")
+            {
+                this.GetComponent<VisibilityConeCycleIA>().enabled = true;
+            }
             this.makeLeader();
         }
 
