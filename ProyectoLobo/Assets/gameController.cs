@@ -208,7 +208,7 @@ public class gameController : MonoBehaviour {
 		}
 		textMonster.enabled = true;
 
-		//Invoke ("replay", 3f);
+		Invoke ("replay", 3f);
 
 	}
 
@@ -220,13 +220,13 @@ public class gameController : MonoBehaviour {
 	public void decreaseHumans(){
 		numberOfHumans--;
 
-		Debug.Log ("humanos: " + numberOfHumans + " monstruos: " + numberOfMonsters);
+		//Debug.Log ("humanos: " + numberOfHumans + " monstruos: " + numberOfMonsters);
 
 		if (CheckPlayerWin ()) {
-			Debug.Log ("ha devuelto true en win");
+			//Debug.Log ("ha devuelto true en win");
 			youWin (true);
 		} else if (CheckPlayerLost ()) {
-			Debug.Log ("ha devuelto true en lost");
+			//Debug.Log ("ha devuelto true en lost");
 			youWin (false);
 
 		}

@@ -27,13 +27,15 @@ public class PlayerPersonality : PersonalityBase {
 	public override void takeDamage(int damage, PersonalityBase personality)
 	{
 		health -= (int)(damage * defense);
-		if (health <= 50 && health > 33)
+        HealthImage.GetComponent<Image>().fillAmount = health / 100f;
+        Debug.Log(HealthImage.GetComponent<Image>().fillAmount);
+        if (health <= 50 && health > 33)
 		{
 			HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
 		}
 		else if (health <= 33 && health > 0)
 		{
-			HealthImage.GetComponent<Image>().color = new Color(0, 0,255);
+			HealthImage.GetComponent<Image>().color = new Color(255, 0, 0);
 		}
 		else
 		{
