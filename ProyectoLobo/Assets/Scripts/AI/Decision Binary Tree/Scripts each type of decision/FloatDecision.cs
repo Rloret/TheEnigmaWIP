@@ -13,57 +13,57 @@ public class FloatDecision : Decision {
 
     public override DecisionTreeNode GetBranch()
     {
-       // targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
-        switch (actualDecisionType) {
+        // targetPersonality = this.GetComponent<DecisionTreeCreator>().target.GetComponent<AIPersonality>();
+        if (characterPersonality != null && targetPersonality!=null)
+        {
+            switch (actualDecisionType)
+            {
 
-            case FloatDecisionTypes.HEALTH:
-                if (maxValue >= characterPersonality.health && characterPersonality.health >= minvalue)
-                {
-                    return nodeTrue;
+                case FloatDecisionTypes.HEALTH:
+                    if (maxValue >= characterPersonality.health && characterPersonality.health >= minvalue)
+                    {
+                        return nodeTrue;
 
-                }
-                break;
+                    }
+                    break;
 
-            case FloatDecisionTypes.FEAR:
-                if (maxValue >= characterPersonality.fear && characterPersonality.fear >= minvalue)
-                {
-                    return nodeTrue;
+                case FloatDecisionTypes.FEAR:
+                    if (maxValue >= characterPersonality.fear && characterPersonality.fear >= minvalue)
+                    {
+                        return nodeTrue;
 
-                }
-                break;
+                    }
+                    break;
 
-            case FloatDecisionTypes.AGGRESSIVENESS:
-                if (maxValue >= characterPersonality.selfAssertion && characterPersonality.selfAssertion >= minvalue)
-                {
-                    return nodeTrue;
+                case FloatDecisionTypes.AGGRESSIVENESS:
+                    if (maxValue >= characterPersonality.selfAssertion && characterPersonality.selfAssertion >= minvalue)
+                    {
+                        return nodeTrue;
 
-                }
-                break;
+                    }
+                    break;
 
-            case FloatDecisionTypes.CONFIDENCEINOTHER:
-                int value = characterPersonality.TrustInOthers[targetPersonality.GetMyOwnIndex()];
+                case FloatDecisionTypes.CONFIDENCEINOTHER:
+                    int value = characterPersonality.TrustInOthers[targetPersonality.GetMyOwnIndex()];
 
-                if (maxValue >=value  && value >= minvalue)
-                {
-                    return nodeTrue;
+                    if (maxValue >= value && value >= minvalue)
+                    {
+                        return nodeTrue;
 
-                }
-                break;
+                    }
+                    break;
 
-            case FloatDecisionTypes.CHARISMA:
-                if (maxValue >= characterPersonality.charisma && characterPersonality.charisma >= minvalue)
-                {
-                    return nodeTrue;
+                case FloatDecisionTypes.CHARISMA:
+                    if (maxValue >= characterPersonality.charisma && characterPersonality.charisma >= minvalue)
+                    {
+                        return nodeTrue;
 
-                }
-                break;
-
-          
-
+                    }
+                    break;
+            }
+           
         }
         return nodeFalse;
-
-
 
     }
 }

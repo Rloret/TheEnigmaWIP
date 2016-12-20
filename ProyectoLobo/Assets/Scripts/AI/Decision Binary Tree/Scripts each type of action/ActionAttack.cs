@@ -125,7 +125,7 @@ public class ActionAttack : Action {
 
             PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase>();
 
-            GroupScript targetGroup = targetPers.gameObject.GetComponent<GroupScript>();
+           /* GroupScript targetGroup = targetPers.gameObject.GetComponent<GroupScript>();
             if (targetGroup.groupLeader == this.gameObject.GetComponent<GroupScript>().groupLeader)
             {
                 if (targetGroup.groupMembers.Count > 0)
@@ -145,7 +145,7 @@ public class ActionAttack : Action {
                         targetGroup.ExitGroup();
                     }
                 }
-            }
+            }*/
             updateTrust(false, targetPers, this.GetComponent<PersonalityBase>().GetMyOwnIndex());
             targetPers.takeDamage(a, this.GetComponent<PersonalityBase>());
 

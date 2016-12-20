@@ -19,7 +19,7 @@ public class DecisionBool : Decision
         switch (actualDecisionenum)
         {
             case BoolDecisionEnum.ISMONSTER:
-                if (valueDecision == personalityScript.isMonster)
+                if (personalityScript != null && valueDecision == personalityScript.isMonster )
                 {
                     return nodeTrue;
 
@@ -28,7 +28,7 @@ public class DecisionBool : Decision
 
             case BoolDecisionEnum.INGROUP:
                 groupScript = personalityScript.gameObject.GetComponent<GroupScript>();
-                if (valueDecision == groupScript.inGroup)
+                if (personalityScript != null && valueDecision == groupScript.inGroup)
                 {
                     return nodeTrue;
 

@@ -59,15 +59,7 @@ public class GroupScript : MonoBehaviour {
                 elQueseUne.GetComponent<VisibilityConeCycleIA>().enabled = false;
             }
 
-        if (groupLeader.GetComponent<PersonalityBase>().health < 30)
-        {
-            ExitGroup();
-            this.GetComponent<VisibilityConeCycleIA>().enabled = true;
-            string[] behaviours = { "Wander", "AvoidWall", "LookWhereYouAreGoing" };
-            float[] weightedBehavs = { 0.7f, 1, 1 };
-            GameObject[] targets = { this.gameObject, this.gameObject, this.gameObject };
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject,targets,behaviours,weightedBehavs);
-        }
+     
     }
 
     public void resetMembersOfGroups(SpriteRenderer renderer)
@@ -139,7 +131,7 @@ public class GroupScript : MonoBehaviour {
 
     void Update()
     {
-        if (this != null && groupLeader!=null)
+        if (this != null && groupLeader != null)
         {
             if (Vector2.Distance(this.gameObject.transform.position, groupLeader.transform.position) > maxDistGroup)
             {
@@ -153,8 +145,20 @@ public class GroupScript : MonoBehaviour {
             {
                 crown.SetActive(false);
             }
+            if (groupLeader.GetComponent<PersonalityBase>().health < 30)
+            {
+                ExitGroup();
+                if (this.tag != "Player")
+                {
+                    this.GetComponent<VisibilityConeCycleIA>().enabled = true;
+                    string[] behaviours = { "Wander", "AvoidWall", "LookWhereYouAreGoing" };
+                    float[] weightedBehavs = { 0.7f, 1, 1 };
+                    GameObject[] targets = { this.gameObject, this.gameObject, this.gameObject };
+                    GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
+                }
+            }
         }
-        else if(groupLeader == null)
+        else if (groupLeader == null)
         {
             if (this.gameObject.tag != "Player")
             {

@@ -36,7 +36,7 @@ public class PersonalityBase : MonoBehaviour {
 
 
 	protected void initializeTrustInOthers(int numOfAIs) {
-		for (int i = 0; i < numOfAIs; i++) TrustInOthers[i] =Random.Range(5,8);
+		for (int i = 0; i < numOfAIs; i++) TrustInOthers[i] =Random.Range(4,8);
 	}
 	public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
 
