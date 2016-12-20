@@ -162,14 +162,14 @@ public class gameController : MonoBehaviour {
 	public bool CheckPlayerWin(){
 	
 		if (GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing) {	// si eres monstruo
-			if (numberOfHumans == 0) {
+			if (numberOfHumans <= 0) {
 				Debug.Log ("return true ");
 
 				return true;
 			}
 
 		} else {
-			if (numberOfMonsters == 0) {
+			if (numberOfMonsters <= 0) {
 				Debug.Log ("return true ");
 
 				return true;
@@ -220,7 +220,7 @@ public class gameController : MonoBehaviour {
 	public void decreaseHumans(){
 		numberOfHumans--;
 
-		//Debug.Log ("humanos: " + numberOfHumans + " monstruos: " + numberOfMonsters);
+		Debug.Log ("he disminuido n humanos: " + numberOfHumans + " monstruos: " + numberOfMonsters);
 
 		if (CheckPlayerWin ()) {
 			//Debug.Log ("ha devuelto true en win");

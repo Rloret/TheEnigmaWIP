@@ -29,7 +29,7 @@ public class PlayerPersonality : PersonalityBase {
 	{
 		health -= (int)(damage * defense);
         HealthImage.GetComponent<Image>().fillAmount = health / 100f;
-        Debug.Log(HealthImage.GetComponent<Image>().fillAmount);
+       // Debug.Log(HealthImage.GetComponent<Image>().fillAmount);
         if (health <= 50 && health > 33)
 		{
 			HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
@@ -38,21 +38,26 @@ public class PlayerPersonality : PersonalityBase {
 		{
 			HealthImage.GetComponent<Image>().color = new Color(255, 0, 0);
 		}
-		else
+		else if (health <= 0)
 		{
 			VisibleElements.visibleGameObjects.Remove(this.gameObject);
 
 			gameController gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController> ();
-
-			Debug.Log ("humanos: " + gc.numberOfHumans + " monstruos: " + gc.numberOfMonsters);
-
-		
-				if (personality.isMonster) {
+					
+			if (personality.isMonster && !theThing) {
 					theThing = true;
 					health = 100;
+					Debug.Log ("soy humano y me infectan");
+					gc.numberOfMonsters++;
+					GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().CheckIfMonster();
+					gc.decreaseHumans ();
+
+
+
 				} else {
 					youLost ();
 				}
+			Debug.Log ("humanos: " + gc.numberOfHumans + " monstruos: " + gc.numberOfMonsters);
 
           
 		}

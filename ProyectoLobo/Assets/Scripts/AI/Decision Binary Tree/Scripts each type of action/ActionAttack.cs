@@ -33,7 +33,7 @@ public class ActionAttack : Action {
         }
         else
         {
-            Debug.Log("no tengo que formar ataco");
+//            Debug.Log("no tengo que formar ataco");
             waitForAttack();
         }
 

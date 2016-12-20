@@ -78,7 +78,7 @@ public class AIPersonality: PersonalityBase {
 
 	void convertToMonster(){
 		lastAttackValue = attack;
-		Debug.Log ("convirtiendome");
+//		Debug.Log ("convirtiendome");
 		attack = 20;
 		GetComponent<AgentPositionController>().maxLinearVelocity = 150;
 		GetComponent<SpriteRenderer>().sprite = playerMonsterStateImage;
@@ -172,8 +172,8 @@ public class AIPersonality: PersonalityBase {
         }
         else if(health<=0)
         {
-            
-            if (personality.isMonster)
+
+			if (personality.isMonster && !theThing)
             {
 				theThing = true;
 
@@ -181,14 +181,29 @@ public class AIPersonality: PersonalityBase {
 
 				controller.numberOfMonsters++;
 				controller.decreaseHumans ();
+				Debug.Log ("me mata un puto monstruo y me he convertido.\thumanos: " + controller.numberOfHumans + " monstruos: " + controller.numberOfMonsters);
+
 
             }
-            else
+			else 
             {
-				if (theThing)
+				if (theThing) {
 					controller.numberOfMonsters--;
-				
-				Debug.Log("Recibiendo daño: " +this.gameObject);
+					if (controller.CheckPlayerWin ()) {
+						//Debug.Log ("ha devuelto true en win");
+						controller.youWin (true);
+					} else if (controller.CheckPlayerLost ()) {
+						//Debug.Log ("ha devuelto true en lost");
+						controller.youWin (false);
+
+					}
+				}
+					
+				else 
+					controller.decreaseHumans ();
+
+				Debug.Log ("humanos: " + controller.numberOfHumans + " monstruos: " + controller.numberOfMonsters);
+
 				this.GetComponent<VisibilityConeCycleIA>().enabled = false;
 				VisibleElements.visibleGameObjects.Remove(this.gameObject);
 				string nameIAdeath = this.name+ "ghost";
@@ -213,20 +228,25 @@ public class AIPersonality: PersonalityBase {
                 ghost.name = nameIAdeath;
                 ghost.transform.position = IADeathPosition;
 
-				controller.decreaseHumans ();
 
 				Destroy(personality.gameObject.GetComponent<Pursue> ());
 
-				foreach (var v in GetComponents<MonoBehaviour>()) {
-					Destroy (v);
-				}
-				Destroy(this.gameObject);
+				this.gameObject.SetActive (false);
+				Invoke ("DestroyIA", 5f);
 
             }
 
 
-
             
         }
+
     }
+
+	void DestroyIA(){
+		foreach (var v in GetComponents<MonoBehaviour>()) {
+			Destroy (v);
+		}
+		Destroy(this.gameObject);
+
+	}
 }

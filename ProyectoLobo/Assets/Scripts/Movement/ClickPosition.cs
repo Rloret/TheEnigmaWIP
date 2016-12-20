@@ -99,13 +99,13 @@ public class ClickPosition : MonoBehaviour {
 
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu && menuOpened)
             {
-                Debug.Log("estan cerca, abro menu");
+               // Debug.Log("estan cerca, abro menu");
                 behaviourController.openConversationMenu(behaviorReceiber, aux);
 
             }
             else
             {
-                Debug.Log("esta lejos, me acercare");
+//                Debug.Log("esta lejos, me acercare");
                 clickedOnTile = true;
                 lastLinear = movementScript.linearVelocity ;
               
@@ -152,7 +152,7 @@ public class ClickPosition : MonoBehaviour {
         }
         else if (aux.tag == "Player")
         {
-            Debug.Log("Pa k clikas en el player, jaja salu2");
+            //Debug.Log("Pa k clikas en el player, jaja salu2");
         }
         else if (aux.layer == 8 || aux.layer == 10)
         {
