@@ -35,14 +35,14 @@ public class LocationDiscovery : MonoBehaviour {
         if (IACollider.gameObject.tag == "IA" ) {                            //DEBUG && IACollider.gameObject.name == "IA0") {
             //Debug.Log("Collider de: " + this.name);
             IACollider.gameObject.GetComponent<RoomMemory>().AddLocation(this.name);
+            IACollider.gameObject.GetComponent<RoomMemory>().currentRoom = this.name;
+
         }
     }
 
 
     internal List<string> TraceRoute(string current, string destination, List<string> discoveredRooms)
     {
-        
-
         return BFSPathfinding(current, destination, discoveredRooms);    
     }
 

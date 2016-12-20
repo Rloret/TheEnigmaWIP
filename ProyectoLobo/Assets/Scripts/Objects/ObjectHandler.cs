@@ -87,23 +87,37 @@ public class ObjectHandler : MonoBehaviour {
         {
            if (currentObject) {
                 currentObject.layer = LayerMask.NameToLayer("Objects");
-                VisibleElements.visibleGameObjects.Add(currentObject);
+                //Debug.Log( " Añadiendo a VisibleElements : " + currentObject.name);
+                if(!VisibleElements.visibleGameObjects.Contains(currentObject))
+                {
+                    VisibleElements.visibleGameObjects.Add(currentObject);
+                    Debug.Log("Estoy añadiendo a visible gameObjects: " + currentObject);
+                }
+                    
+                
             }
 
             currentObject = coll.gameObject;
-
-            if (this.tag == "IA"){ 
-                personality.myObject = GO2ObjectType(coll.gameObject.name);
+            if (this.tag == "IA"){
+                //Debug.Log("Estoy colisionando con: " + currentObject);
                 if (coll.gameObject.name == "Medicalaid")
                 {
                     personality.health = 100;
+                    Debug.Log("Me debería estar curándome");
                     hasObject = false;
                 }
                 else
                 {
+                    personality.myObject = GO2ObjectType(coll.gameObject.name);
                     hasObject = true;
                     currentObject.layer = LayerMask.NameToLayer("ObjectsHandler");
-                    VisibleElements.visibleGameObjects.Add(currentObject);
+                    //Debug.Log("Añadiendo a VisibleElements : " + currentObject.name);
+                    if (!VisibleElements.visibleGameObjects.Contains(currentObject))
+                    {
+                        VisibleElements.visibleGameObjects.Add(currentObject);
+                        Debug.Log("Estoy añadiendo a visible gameObjects: " + currentObject);
+                    }
+                        
                 }
                 if (objSeenBefore.ContainsKey(coll.name)) //sólo si es una IA recuerda el objeto
                 {
@@ -112,13 +126,14 @@ public class ObjectHandler : MonoBehaviour {
             }
             else
             {
-                playerPersonality.myObject = GO2ObjectType(coll.gameObject.name);
+                
                 if (coll.gameObject.name == "Medicalaid")
                 {
                     playerPersonality.health = 100;
                     hasObject = false;
                 }
                 else {
+                    playerPersonality.myObject = GO2ObjectType(coll.gameObject.name);
                     hasObject = true;
                     currentObject.layer = LayerMask.NameToLayer("ObjectsHandler");
                     VisibleElements.visibleGameObjects.Remove(currentObject);

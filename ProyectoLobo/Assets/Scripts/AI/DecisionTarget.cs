@@ -136,7 +136,7 @@ public class DecisionTarget : MonoBehaviour {
             {
 				memory.objectsSeenBefore.Add(par.Key.name, par.Key.transform.position);
                 memory.objectWithinRoom.Add(par.Key.name, this.gameObject.GetComponent<RoomMemory>().currentRoom);
-               // Debug.Log("meto en la memoria de habitaciones " + par.Key.name + " y " + this.gameObject.GetComponent<RoomMemory>().currentRoom);
+                Debug.Log("SOY "+ this.gameObject.name +". Meto en la memoria de habitaciones " + par.Key.name + " y " + this.gameObject.GetComponent<RoomMemory>().currentRoom);
             }
         }
 

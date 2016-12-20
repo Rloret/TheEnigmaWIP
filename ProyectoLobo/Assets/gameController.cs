@@ -43,7 +43,7 @@ public class gameController : MonoBehaviour {
 			instantiateIA (type, spawnersLeft [spawnPos].transform.position, 0,currentColor );
 			spawnersLeft.Remove (spawnersLeft [spawnPos]);
             iterator++;
-            Debug.Log(randomColor);
+            //Debug.Log(randomColor);
 
             type = (AIPersonality.Personalities)Random.Range (2, 3);
 			spawnPos = Random.Range (0, spawnersLeft.Count - 1);
@@ -52,7 +52,7 @@ public class gameController : MonoBehaviour {
             instantiateIA (type, spawnersLeft [spawnPos].transform.position, 1,currentColor);
 			spawnersLeft.Remove (spawnersLeft [spawnPos]);
             iterator++;
-            Debug.Log(randomColor);
+            //Debug.Log(randomColor);
 
             type = (AIPersonality.Personalities)Random.Range (4, 5);
 			spawnPos = Random.Range (0, spawnersLeft.Count - 1);
@@ -61,7 +61,7 @@ public class gameController : MonoBehaviour {
             instantiateIA (type, spawnersLeft [spawnPos].transform.position, 2,currentColor );
 			spawnersLeft.Remove (spawnersLeft [spawnPos]);
             iterator++;
-            Debug.Log(randomColor);
+            //Debug.Log(randomColor);
 
             while (i < numberOfIAs - 1) {
 				spawnPos = Random.Range (0, spawnersLeft.Count - 1);
@@ -72,7 +72,7 @@ public class gameController : MonoBehaviour {
 				spawnersLeft.Remove (spawnersLeft [spawnPos]);
 				i++;
                 iterator++;
-                Debug.Log(randomColor);    
+                //Debug.Log(randomColor);    
             }
 
 			GameObject player = GameObject.FindGameObjectWithTag ("Player");

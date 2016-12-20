@@ -174,14 +174,17 @@ public class VisibilityConeCycleIA : MonoBehaviour
             if (objectINeedRemember != "None")
             {
                 // = RememberedObject(objectINeedRemember);
+                RoomMemory rM = this.gameObject.GetComponent<RoomMemory>();
+                rM.SetDestinyRoom(personality.myMemory.objectWithinRoom[objectINeedRemember]);
+                //Debug.Log("Quiero ir a por el " + objectINeedRemember + ", que está en " + personality.myMemory.objectWithinRoom[objectINeedRemember]);
                 priorityGO = RememberedObjectInARoom(objectINeedRemember);
 
-                Debug.Log("necesito el objeto: " + priorityGO);
+                //Debug.Log("necesito el objeto: " + priorityGO);
             }
             else
             {
                 priorityGO = decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
-                Debug.Log("SOY: "+ this.gameObject.name +" PRIORITY GO ES " + priorityGO);
+                //Debug.Log("SOY: "+ this.gameObject.name +" PRIORITY GO ES " + priorityGO);
             }
 
             visibleGameobjects.Clear();
@@ -268,14 +271,19 @@ public class VisibilityConeCycleIA : MonoBehaviour
 
                     if (VisibleElements.visibleGameObjects.Contains(priorityGO))
                     {
-                        objecthand.desiredObject = priorityGO;
+                        //Debug.Log("priorityGo es: " + priorityGO);
+                        if (priorityGO.tag == "Object")
+                            objecthand.desiredObject = priorityGO;
+                        GameObject targetGO = (GameObject)Instantiate(ghostTarget, priorityGO.transform.position, Quaternion.identity);
+                        targetsAux.Add(targetGO);
                         // Debug.Log("busco el objeto");
                         //Debug.Log ("Deseo " + objecthand.desiredObject);
                         //objecthand.setDesiredGameObject(priorityGO);
-                        string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
+                        string[] behaviours = new string[3] { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
                         float[] weightedBehavs = { 0.7f, 1, 1 };
-                        GameObject[] targets = { priorityGO, priorityGO, priorityGO };
+                        GameObject[] targets = { targetGO, targetGO, targetGO };
                         movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
+                        DeleteTargetAux();
 
                     }
                    else
@@ -292,14 +300,24 @@ public class VisibilityConeCycleIA : MonoBehaviour
             }
             if (objectINeedRemember != "None")
             {
-                priorityGO = RememberedObject(objectINeedRemember);
+                //priorityGO = RememberedObject(objectINeedRemember);
+                RoomMemory rM = this.gameObject.GetComponent<RoomMemory>();
+                rM.SetDestinyRoom(personality.myMemory.objectWithinRoom[objectINeedRemember]);
+                //Debug.Log("Quiero ir a por el " + objectINeedRemember + ", que está en " + personality.myMemory.objectWithinRoom[objectINeedRemember]);
+                priorityGO = RememberedObjectInARoom(objectINeedRemember);
+
                 if (priorityGO != null)
                 {
-                    objecthand.desiredObject = priorityGO;
-                    string[] behaviours = new string[3] { "Arrive", "AvoidWall", "Face" };
+                    if (priorityGO.tag == "Object")
+                        objecthand.desiredObject = priorityGO;
+                    //Debug.Log("Deseo " + objecthand.desiredObject);
+                    GameObject targetGO = (GameObject)Instantiate(ghostTarget, priorityGO.transform.position, Quaternion.identity);
+                    targetsAux.Add(targetGO);
+                    string[] behaviours = new string[3] { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
                     float[] weightedBehavs = { 0.7f, 1, 1 };
-                    GameObject[] targets = { priorityGO, priorityGO, priorityGO };
+                    GameObject[] targets = { targetGO, targetGO, targetGO };
                     movementController.addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
+                    DeleteTargetAux();
 
                 }
                 else
@@ -387,6 +405,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
         if (obj == "Medicalaid")
         {
             room = personality.myMemory.SearchRoomInMemory("Medicalaid");
+            //Debug.Log("Mi siguiente destino es: " + room);
         }
         else
             return null;

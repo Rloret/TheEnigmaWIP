@@ -5,6 +5,7 @@ public class Memory : MonoBehaviour {
 
     public Dictionary<string, Vector3?> objectsSeenBefore; //nombre del objeto y la posición en la que se vió
     public Dictionary<string, string> objectWithinRoom;
+    private GameObject objetoDeseado = null;
 	// Use this for initialization
 	void Awake () {
 
@@ -26,9 +27,17 @@ public class Memory : MonoBehaviour {
     public GameObject SearchRoomInMemory(string urgentObject) {
 
         if (objectWithinRoom.ContainsKey(urgentObject))
-        {
-
-            string roomName = objectWithinRoom[urgentObject];
+        { 
+            RoomMemory rM = this.gameObject.GetComponent<RoomMemory>();
+            
+            string roomName = rM.checkRouteProgress();
+            if (roomName == "He llegado" && !objetoDeseado) {
+                objetoDeseado = new GameObject();
+                objetoDeseado.transform.position = (Vector3) objectsSeenBefore[urgentObject];
+                objetoDeseado.tag = "Object";
+                objetoDeseado.name = urgentObject;
+                return objetoDeseado;
+            }
             return GameObject.Find(roomName);
 
         }
