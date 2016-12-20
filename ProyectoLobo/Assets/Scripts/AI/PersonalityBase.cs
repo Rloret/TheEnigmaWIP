@@ -36,18 +36,18 @@ public class PersonalityBase : MonoBehaviour {
 
 
 	protected void initializeTrustInOthers(int numOfAIs) {
-		for (int i = 0; i < numOfAIs; i++) TrustInOthers[i] =7;
+		for (int i = 0; i < numOfAIs; i++) TrustInOthers[i] =Random.Range(5,8);
 	}
 	public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
 
-	public virtual void takeDamage(int damage){
+	public virtual void takeDamage(int damage, PersonalityBase personality){
 	}
 
     public void formacionGrupo(GameObject WhoToFollow, GroupScript leaderGroup)
     {
 
-        string[] baseBehaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
-        float[] weightedBehavs = { 0.6f, 1, 1 };
+        string[] baseBehaviours = { "Arrive", "AvoidWall", "Face" };
+        float[] weightedBehavs = { 1f, 8, 1 };
         GameObject[] targetsarray = { WhoToFollow, WhoToFollow, WhoToFollow };
 
         List<GameObject> mates;
@@ -70,18 +70,58 @@ public class PersonalityBase : MonoBehaviour {
                 {
                     mates.Add(othermate);
                     baseBehavioursformates.Add("Leave");
-                    baseWeightsformates.Add(0.9f);
+                    baseWeightsformates.Add(2f);
                 }
             }
             mates.Add(this.gameObject);
             baseBehavioursformates.Add("Leave");
-            baseWeightsformates.Add(0.9f);
+            baseWeightsformates.Add(2f);
             behaviourManager.addBehavioursOver(mate, convertListToArray<GameObject>(mates), convertListToArray<string>(baseBehavioursformates),
                                                 convertListToArray<float>(baseWeightsformates));
 
 
         }
 
+
+    }
+    public void formacionAtaque(GameObject WhoToFollow, GroupScript leaderGroup)
+    {
+
+        string[] baseBehaviours = { "Arrive", "AvoidWall", "Face" };
+        float[] weightedBehavs = { 1f, 8, 1 };
+        GameObject[] targetsarray = { WhoToFollow, WhoToFollow, WhoToFollow };
+
+        List<GameObject> mates;
+        List<string> baseBehavioursformates;
+        List<float> baseWeightsformates;
+
+        foreach (var mate in leaderGroup.groupMembers)
+        {
+            mates = new List<GameObject>();
+            baseBehavioursformates = new List<string>();
+            baseWeightsformates = new List<float>();
+
+            mates.AddRange(targetsarray);
+            baseBehavioursformates.AddRange(baseBehaviours);
+            baseWeightsformates.AddRange(weightedBehavs);
+
+            foreach (var othermate in leaderGroup.groupMembers)
+            {
+                if (mate != othermate)
+                {
+                    mates.Add(othermate);
+                    baseBehavioursformates.Add("Leave");
+                    baseWeightsformates.Add(2f);
+                }
+            }
+            mates.Add(this.gameObject);
+            baseBehavioursformates.Add("Leave");
+            baseWeightsformates.Add(2f);
+            behaviourManager.addBehavioursOver(mate, convertListToArray<GameObject>(mates), convertListToArray<string>(baseBehavioursformates),
+                                                convertListToArray<float>(baseWeightsformates));
+
+
+        }
     }
     public static T[] convertListToArray<T>(List<T> list)
     {

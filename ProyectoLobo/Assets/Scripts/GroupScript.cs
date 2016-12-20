@@ -6,6 +6,7 @@ public class GroupScript : MonoBehaviour {
 
     public bool inGroup = false;
     public bool IAmTheLeader = false;
+    public GameObject crown;
 
     public GameObject groupLeader;
 
@@ -24,18 +25,16 @@ public class GroupScript : MonoBehaviour {
         originalColor = this.gameObject.GetComponent<SpriteRenderer>().color;
 
     }
-    void OnDrawGizmos()
+
+    public Color getColor()
     {
-        if (groupMembers.Count > 0 && IAmTheLeader)
-        {
-            Gizmos.color = Color.white;
-            Gizmos.color *= Random.Range(0f, 1f);
-            for (int i = 1; i < groupMembers.Count; i++)
-            {
-                Gizmos.DrawLine(groupMembers[i - 1].transform.position+Vector3.up*3, groupMembers[i].transform.position + Vector3.up * 3);
-            }
-        }
+        return originalColor;
     }
+    public void setOriginalColor(Color newCol)
+    {
+        originalColor = newCol;
+    }
+
     public void FollowTheLeaderAttack()
     {
         for (int i = 0; i < numberMembersGroup; i++) {
@@ -45,8 +44,10 @@ public class GroupScript : MonoBehaviour {
     }
 
     public void updateGroups(GameObject elQueseUne, List<GameObject> ysugrupo)
-    {    
-        foreach (var members in ysugrupo)
+    {
+        List<GameObject> auxList = new List<GameObject>();
+        auxList.AddRange(ysugrupo);
+        foreach (var members in auxList)
         {
             addSingleMember(members);
             var currentGroup = members.GetComponent<GroupScript>();
@@ -58,12 +59,22 @@ public class GroupScript : MonoBehaviour {
                 elQueseUne.GetComponent<VisibilityConeCycleIA>().enabled = false;
             }
 
+        if (groupLeader.GetComponent<PersonalityBase>().health < 30)
+        {
+            ExitGroup();
+            this.GetComponent<VisibilityConeCycleIA>().enabled = true;
+            string[] behaviours = { "Wander", "AvoidWall", "LookWhereYouAreGoing" };
+            float[] weightedBehavs = { 0.7f, 1, 1 };
+            GameObject[] targets = { this.gameObject, this.gameObject, this.gameObject };
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject,targets,behaviours,weightedBehavs);
+        }
     }
 
     public void resetMembersOfGroups(SpriteRenderer renderer)
     {
-
-        foreach (var member in groupMembers)
+        List<GameObject> auxList = new List<GameObject>();
+        auxList.AddRange(groupMembers);
+        foreach (var member in auxList)
         {
             var currentGroup = member.GetComponent<GroupScript>();
             currentGroup.groupMembers.Clear();
@@ -117,6 +128,7 @@ public class GroupScript : MonoBehaviour {
         {
             IAmTheLeader = true;
             groupLeader = this.gameObject;
+
         }
         foreach (var members in groupMembers)
         {
@@ -127,10 +139,25 @@ public class GroupScript : MonoBehaviour {
 
     void Update()
     {
-        if(Vector2.Distance(this.gameObject.transform.position, groupLeader.transform.position) > maxDistGroup)
+        if (this != null && groupLeader!=null)
         {
-            ExitGroup();
-
+            if (Vector2.Distance(this.gameObject.transform.position, groupLeader.transform.position) > maxDistGroup)
+            {
+                ExitGroup();
+            }
+            if (IAmTheLeader && groupLeader == this.gameObject)
+            {
+                crown.SetActive(true);
+            }
+            else
+            {
+                crown.SetActive(false);
+            }
+        }
+        else if(groupLeader == null)
+        {
+            this.GetComponent<VisibilityConeCycleIA>().enabled = true;
+            this.makeLeader();
         }
 
     }
@@ -139,6 +166,7 @@ public class GroupScript : MonoBehaviour {
         List<GameObject> members = groupLeader.GetComponent<GroupScript>().groupMembers;
         foreach(var m in members)
         {
+			
             m.GetComponent<GroupScript>().groupMembers.Remove(this.gameObject);
 
         }
@@ -157,6 +185,10 @@ public class GroupScript : MonoBehaviour {
 
         if (this.gameObject.tag != "Player")
         {
+            foreach (var comp in this.GetComponents<AgentBehaviour>())
+            {
+                DestroyImmediate(comp);
+            } 
             GetComponent<VisibilityConeCycleIA>().enabled = true;
         }
 

@@ -17,27 +17,48 @@ public class ActionJoinGroup : Action
         GroupScript leadergroup = t.GetComponent<GroupScript>();
         t = leadergroup.groupLeader;
 
-        myGroup.groupLeader = t;
-        myGroup.inGroup = true;
-        myGroup.IAmTheLeader = false;
-        leadergroup.updateGroups(this.gameObject, myGroup.groupMembers);
-		leadergroup.makeLeader ();
-        myGroup.addSingleMember(t);
-       
-        leadergroup.resetMembersOfGroups(t.GetComponent<SpriteRenderer>());
 
+
+        if (t.tag =="Player" && myGroup.IAmTheLeader == false && myGroup.groupLeader != this.gameObject)
+        {
+            myGroup.ExitGroup();
+            myGroup.groupLeader = t;
+            myGroup.inGroup = true;
+            myGroup.IAmTheLeader = false;
+            leadergroup.updateGroups(this.gameObject, myGroup.groupMembers);
+            leadergroup.makeLeader();
+            myGroup.groupMembers = new List<GameObject>();
+            myGroup.groupMembers.AddRange(leadergroup.groupMembers);
+            myGroup.groupMembers.Remove(this.gameObject);
+            myGroup.addSingleMember(t);
+            this.gameObject.GetComponent<SpriteRenderer>().color = leadergroup.getColor();
+
+        }
+        else
+        {
+             myGroup.groupLeader = t;
+             myGroup.inGroup = true;
+             myGroup.IAmTheLeader = false;
+             leadergroup.updateGroups(this.gameObject, myGroup.groupMembers);
+             leadergroup.makeLeader();
+             myGroup.addSingleMember(t);
+
+             leadergroup.resetMembersOfGroups(t.GetComponent<SpriteRenderer>());
+
+        }
 
         if (this.gameObject.tag != "Player")
         {
 
             string[] behaviours = { "Pursue", "Leave", "AvoidWall", "Face" };
             float[] weightedBehavs = { 0.8f, 0.1f, 1, 1 };
-            GameObject target = this.GetComponent<DecisionTreeCreator>().target;
+            GameObject target = this.GetComponent<DecisionTreeCreator>().target.GetComponent<GroupScript>().groupLeader;
             GameObject[] targets = { target, target, target, target };
             GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject, targets, behaviours, weightedBehavs);
+            base.DestroyTrees();
         }
         t.GetComponent<PersonalityBase>().formacionGrupo(t, leadergroup);
-        if (this.gameObject.tag != "Player") base.DestroyTrees();
+
 
         DecisionTreeNode[] oldNodes = this.gameObject.GetComponents<DecisionTreeNode>();
         foreach (DecisionTreeNode n in oldNodes)

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class ClickPosition : MonoBehaviour {
 
     public Vector2 clickPos;
@@ -92,25 +91,26 @@ public class ClickPosition : MonoBehaviour {
     }
     public void DetermineAction(GameObject behaviorReceiber, GameObject aux)
     {
-        if (aux.tag == "IA" && aux.GetComponent<GroupScript>().IAmTheLeader && aux.GetComponent<GroupScript>().inGroup)
+        if (aux.tag == "IA" )
+
         {
             
 			aux.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu && menuOpened)
             {
-                //Debug.Log("estan cerca, abro menu");
+               // Debug.Log("estan cerca, abro menu");
                 behaviourController.openConversationMenu(behaviorReceiber, aux);
 
             }
             else
             {
-                //Debug.Log("esta lejos, me acercare");
+//                Debug.Log("esta lejos, me acercare");
                 clickedOnTile = true;
                 lastLinear = movementScript.linearVelocity ;
               
 				string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
-				float[] weightedBehavs = { 0.7f, 1, 1 };
+				float[] weightedBehavs = { 1f, 5f, 1 };
 
                 GameObject[] targets = { aux, aux, aux };
 				behaviourController.addBehavioursOver(this.gameObject,targets,behaviours,weightedBehavs); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him
@@ -152,7 +152,7 @@ public class ClickPosition : MonoBehaviour {
         }
         else if (aux.tag == "Player")
         {
-            Debug.Log("Pa k clikas en el player, jaja salu2");
+            //Debug.Log("Pa k clikas en el player, jaja salu2");
         }
         else if (aux.layer == 8 || aux.layer == 10)
         {

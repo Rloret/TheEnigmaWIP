@@ -175,7 +175,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
             {
                 // = RememberedObject(objectINeedRemember);
                 RoomMemory rM = this.gameObject.GetComponent<RoomMemory>();
-                rM.SetDestinyRoom(personality.myMemory.objectWithinRoom[objectINeedRemember]);
+                if (personality.myMemory.objectWithinRoom.ContainsKey(objectINeedRemember))
+                    rM.SetDestinyRoom(personality.myMemory.objectWithinRoom[objectINeedRemember]);                
                 //Debug.Log("Quiero ir a por el " + objectINeedRemember + ", que está en " + personality.myMemory.objectWithinRoom[objectINeedRemember]);
                 priorityGO = RememberedObjectInARoom(objectINeedRemember);
 
@@ -185,6 +186,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
             {
                 priorityGO = decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
                 //Debug.Log("SOY: "+ this.gameObject.name +" PRIORITY GO ES " + priorityGO);
+
             }
 
             visibleGameobjects.Clear();
@@ -302,7 +304,8 @@ public class VisibilityConeCycleIA : MonoBehaviour
             {
                 //priorityGO = RememberedObject(objectINeedRemember);
                 RoomMemory rM = this.gameObject.GetComponent<RoomMemory>();
-                rM.SetDestinyRoom(personality.myMemory.objectWithinRoom[objectINeedRemember]);
+                if(personality.myMemory.objectWithinRoom.ContainsKey(objectINeedRemember))
+                    rM.SetDestinyRoom(personality.myMemory.objectWithinRoom[objectINeedRemember]);
                 //Debug.Log("Quiero ir a por el " + objectINeedRemember + ", que está en " + personality.myMemory.objectWithinRoom[objectINeedRemember]);
                 priorityGO = RememberedObjectInARoom(objectINeedRemember);
 

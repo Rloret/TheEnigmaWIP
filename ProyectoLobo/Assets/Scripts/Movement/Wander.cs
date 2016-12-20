@@ -58,28 +58,32 @@ public class Wander : Face {
 
     public override void OnDrawGizmos()
     {
-        Vector3 direction = target.transform.position - this.transform.position;
-        float Tarorient =0;
-        if (direction.magnitude > 0.0f)
+        if (this != null && target != null)
         {
-            Tarorient = Mathf.Atan2(direction.x, direction.y);
-            Tarorient *= Mathf.Rad2Deg;
+            Vector3 direction = target.transform.position - this.transform.position;
+            float Tarorient = 0;
+            if (direction.magnitude > 0.0f)
+            {
+                Tarorient = Mathf.Atan2(direction.x, direction.y);
+                Tarorient *= Mathf.Rad2Deg;
+            }
+
+            float wanderOrientation = Random.Range(-1.0f, 1.0f) * rate;
+            float targetOrientation = wanderOrientation + target.transform.rotation.eulerAngles.z;
+            Vector2 orientationVec = GetOriAsVec(targetOrientation);
+            Vector2 transformposition = (Vector2)transform.position;
+            Vector2 targetPosition = (offset * orientationVec) + transformposition;
+
+            targetPosition = targetPosition + (GetOriAsVec(targetOrientation) * radius);
+
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawCube(targetPosition, Vector3.one * 5);
+            Gizmos.DrawRay(targetPosition, base.GetOriAsVec(Tarorient));
+
+            base.OnDrawGizmos();
+
         }
-
-        float wanderOrientation = Random.Range(-1.0f, 1.0f) * rate;
-        float targetOrientation = wanderOrientation + target.transform.rotation.eulerAngles.z;
-        Vector2 orientationVec = GetOriAsVec(targetOrientation);
-        Vector2 transformposition = (Vector2)transform.position;
-        Vector2 targetPosition = (offset * orientationVec) + transformposition;
-
-        targetPosition = targetPosition + (GetOriAsVec(targetOrientation) * radius);
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawCube(targetPosition, Vector3.one * 5);
-        Gizmos.DrawRay(targetPosition, base.GetOriAsVec(Tarorient));
-
-        base.OnDrawGizmos();
-
     }
+   
 
 }

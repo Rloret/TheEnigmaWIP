@@ -7,7 +7,7 @@ public class ActionEvade : Action {
     public override void DoAction()
     {
 
-        Debug.Log("voy a huir y bajo confianza. Soy "+this.gameObject.name);
+       // Debug.Log("voy a huir y bajo confianza. Soy "+this.gameObject.name);
 
         Reaction.spawnReaction(ResponseController.responseEnum.EVADE, ResponseController.responseEnum.EVADE, this.gameObject);
         GameObject target = this.GetComponent<DecisionTreeCreator>().target;
@@ -21,8 +21,8 @@ public class ActionEvade : Action {
         base.DestroyTrees();
       
         GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject,targets , behaviours, weightedBehavs);
-
-        Invoke("EnableCone", 10f);
+        this.GetComponent<GroupScript>().ExitGroup();
+            Invoke("EnableCone", 10f);
     }
 
     private void EnableCone()
