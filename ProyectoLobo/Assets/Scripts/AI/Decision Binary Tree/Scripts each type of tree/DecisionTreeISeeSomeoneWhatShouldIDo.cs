@@ -287,10 +287,10 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 						target.GetComponent<AIPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
 
 					}
-					Debug.Log("Le he dicho que se una a mi grupo");
+					//Debug.Log("Le he dicho que se una a mi grupo");
 
 				} else {
-					Debug.Log ("El grupo es muy grande te jodes");
+					//Debug.Log ("El grupo es muy grande te jodes");
 					decision = false;
 
 				}
@@ -298,7 +298,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
             }
             else {
-                Debug.Log("Mi accion es NOTHING y NO le digo nada");
+                //Debug.Log("Mi accion es NOTHING y NO le digo nada");
                 decision = false;
             }
 

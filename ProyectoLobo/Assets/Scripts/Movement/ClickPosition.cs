@@ -98,13 +98,13 @@ public class ClickPosition : MonoBehaviour {
 
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu && menuOpened)
             {
-                Debug.Log("estan cerca, abro menu");
+                //Debug.Log("estan cerca, abro menu");
                 behaviourController.openConversationMenu(behaviorReceiber, aux);
 
             }
             else
             {
-                Debug.Log("esta lejos, me acercare");
+                //Debug.Log("esta lejos, me acercare");
                 clickedOnTile = true;
                 lastLinear = movementScript.linearVelocity ;
               

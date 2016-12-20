@@ -61,7 +61,7 @@ public class PlayerMenuController : MonoBehaviour {
         }
         else //si NO estás convertido
         {
-            Debug.Log("Convirtiendose en monstruo");
+            //Debug.Log("Convirtiendose en monstruo");
 			playerPersonality.lastAttackValue =playerPersonality.attack;
 
             playerPersonality.attack = 20;

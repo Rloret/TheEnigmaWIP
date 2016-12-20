@@ -28,7 +28,7 @@ public class PlayerPersonality : PersonalityBase {
 	{
 		health -= (int)(damage * defense);
         HealthImage.GetComponent<Image>().fillAmount = health / 100f;
-        Debug.Log(HealthImage.GetComponent<Image>().fillAmount);
+        //Debug.Log(HealthImage.GetComponent<Image>().fillAmount);
         if (health <= 50 && health > 33)
 		{
 			HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
@@ -43,7 +43,7 @@ public class PlayerPersonality : PersonalityBase {
 
 			gameController gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController> ();
 
-			Debug.Log ("humanos: " + gc.numberOfHumans + " monstruos: " + gc.numberOfMonsters);
+			//Debug.Log ("humanos: " + gc.numberOfHumans + " monstruos: " + gc.numberOfMonsters);
 
 		
 				if (personality.isMonster) {

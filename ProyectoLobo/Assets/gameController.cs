@@ -55,7 +55,7 @@ public class gameController : MonoBehaviour {
 			instantiateIA (type, spawnersLeft [spawnPos].transform.position, 0,currentColor );
 			spawnersLeft.Remove (spawnersLeft [spawnPos]);
             iterator++;
-            Debug.Log(randomColor);
+            //Debug.Log(randomColor);
 
             type = (AIPersonality.Personalities)Random.Range (2, 3);
 			spawnPos = Random.Range (0, spawnersLeft.Count - 1);
@@ -64,7 +64,7 @@ public class gameController : MonoBehaviour {
             instantiateIA (type, spawnersLeft [spawnPos].transform.position, 1,currentColor);
 			spawnersLeft.Remove (spawnersLeft [spawnPos]);
             iterator++;
-            Debug.Log(randomColor);
+            //Debug.Log(randomColor);
 
             type = (AIPersonality.Personalities)Random.Range (4, 5);
 			spawnPos = Random.Range (0, spawnersLeft.Count - 1);
@@ -163,20 +163,16 @@ public class gameController : MonoBehaviour {
 	
 		if (GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing) {	// si eres monstruo
 			if (numberOfHumans == 0) {
-				Debug.Log ("return true ");
 
 				return true;
 			}
 
 		} else {
 			if (numberOfMonsters == 0) {
-				Debug.Log ("return true ");
-
 				return true;
 			}
 		
 		}
-		Debug.Log ("return false ");
 
 		return false;
 	}
@@ -187,23 +183,21 @@ public class gameController : MonoBehaviour {
 			
 		} else {
 			if (numberOfHumans == 1) {
-				Debug.Log ("return true, solo quedas tu como humano ");
 
 				return true;
 			}
 
 		}
-		Debug.Log ("return false ");
 
 		return false;
 	}
 
 	public void youWin(bool b){
 		if (b) {
-			Debug.Log ("HAS GANADO ");
+			//Debug.Log ("HAS GANADO ");
 			textMonster.text = "YOU WIN";
 		} else {
-			Debug.Log ("HAS PERDIDO ");
+			//Debug.Log ("HAS PERDIDO ");
 			textMonster.text = "YOU LOST";
 		}
 		textMonster.enabled = true;
