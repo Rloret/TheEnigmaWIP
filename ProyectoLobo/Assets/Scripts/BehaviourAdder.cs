@@ -110,54 +110,15 @@ public class BehaviourAdder : MonoBehaviour {
     }
 
     public void openConversationMenu(GameObject character, GameObject targetIA) {
+        GroupScript characterGroup = character.GetComponent<GroupScript>();
+        GroupScript targetGroup = targetIA.GetComponent<GroupScript>();
+        if (characterGroup.groupLeader == targetGroup.groupLeader || (characterGroup.groupMembers.Count +targetGroup.groupMembers.Count>=3) )
+        {
+            menuController.OpenMenu(PlayerMenuController.MenuTypes.MENU_CONVERSATION_WITH_MYGROUP, targetIA);
+        }
+        else
 		menuController.OpenMenu(PlayerMenuController.MenuTypes.MENU_CONVERSATION,targetIA);
 	}
-
-    /*public void addBehavioursOver(GameObject behaviourReceiver, Vector3 target,string[] behaviours, float[] weights)
-    {
-        if (behaviours.Length != weights.Length) Debug.LogError("NO ME HAS MANDADO BIEN LAS PRIORIDADES Y LOS COMPORTAMIENTOS");
-        WeightedBehaviours aux_behav = new WeightedBehaviours();
-        WeightedBehavioursArray = new WeightedBehaviours[behaviours.Length];
-        int iterator = 0;
-        foreach (var behav in behaviours)
-        {
-            switch (behav)
-            {
-                case "Pursue":
-                    WeightedBehavioursArray[iterator]= new WeightedBehaviours(SteeringBehaviour.PURSUE, weights[iterator], 0);
-                    break;
-                case "Face":
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.FACE, weights[iterator], 0);
-                    break;
-                case "LookWhereYouAreGoing":
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.LOOKWHEREYOUAREGOING, weights[iterator], 0);
-                    break;
-                case "AvoidWall":
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.AVOIDWALL, weights[iterator], 0);
-                    break;
-                case "Evade":
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.EVADE, weights[iterator], 0);
-                    break;
-                case "Wander":
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.WANDER, weights[iterator], 0);
-                    break;
-                case "Arrive":
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.ARRIVE, weights[iterator], 0);
-                    break;
-                case "Leave":
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.LEAVE, weights[iterator], 0);
-                    break;
-                default:
-                    Debug.LogError("ESE COMPORTAMIENTO NO ESTA CIONTEMPLADO ;(");
-                    WeightedBehavioursArray[iterator] = new WeightedBehaviours(SteeringBehaviour.NOTHING, weights[iterator], 0);
-                    break;
-            }
-            iterator++;
-
-        }
-        IAAction(behaviourReceiver, target);
-
-    }*/
 
     public void addBehavioursOver(GameObject behaviourReceiver, GameObject[] target, string[] behaviours, float[] weights)
     {
@@ -212,30 +173,6 @@ public class BehaviourAdder : MonoBehaviour {
         IAAction(behaviourReceiver, target);
 
     }
-   /* void IAAction(GameObject behaviourreceiver,Vector3 target)// busca el primer gameobjeto diferente de objext
-    {
-
-        Collider2D[] coli= Physics2D.OverlapCircleAll((Vector2)target, 16,mask);
-        Collider2D selected =null;
-
-        foreach (var colis in coli)
-        {
-            if(colis.tag != "Object" ) {
-                selected = colis;
-                break;
-            }
-        }
-        if (selected != null )
-        {
-            GameObject targetgo = selected.gameObject;
-            ActionWhenClick(behaviourreceiver, targetgo);
-        }
-        else
-        {
-            Debug.LogError("En ese punto no hay absolutamente nada");
-        }
-
-    }*/
     void IAAction(GameObject behaviourreceiver, GameObject[] target)
     {
         ActionWhenClick(behaviourreceiver, target);

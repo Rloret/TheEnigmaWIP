@@ -15,9 +15,10 @@ public class PlayerMenuController : MonoBehaviour {
 	public GameObject menuAttacked; // menu when someone attacks you
 	public GameObject menuOfferedJoinGroup;// menu when someone offers you to join his group
 	public GameObject menuObjectOffered;
+    public GameObject menuconversationWithMyGroup;
     public Button buttonConvert;
 
-    public enum MenuTypes{MENU_CONVERSATION, MENU_ATTACKED, MENU_OFFERED_JOIN, MENU_OFFERED_OBJECT};
+    public enum MenuTypes{MENU_CONVERSATION, MENU_ATTACKED, MENU_OFFERED_JOIN, MENU_OFFERED_OBJECT,MENU_CONVERSATION_WITH_MYGROUP};
 
 	private Renderer render;
 
@@ -95,56 +96,87 @@ public class PlayerMenuController : MonoBehaviour {
 		 targetIA=t;
 	}
 
-	public void OpenMenu(MenuTypes menu, GameObject target){
+    public void OpenMenu(MenuTypes menu, GameObject target)
+    {
 
         //Debug.Log ("target IA es " + target);
-     //   Debug.Log("abro puto menu");
+        //   Debug.Log("abro puto menu");
         this.targetIA = target;
 
 
-		switch (menu) {
-		case MenuTypes.MENU_ATTACKED:
-			//Debug.Log("abro menu attack");
+        switch (menu)
+        {
+            case MenuTypes.MENU_ATTACKED:
+                //Debug.Log("abro menu attack");
 
-			menuAttacked.transform.position = targetIA.transform.position;
-			menuAttacked.transform.rotation = Quaternion.Euler(Vector3.zero);
-			menuAttacked.SetActive(true);
-			break;
+                menuAttacked.transform.position = targetIA.transform.position;
+                menuAttacked.transform.rotation = Quaternion.Euler(Vector3.zero);
+                menuAttacked.SetActive(true);
+                menuConversation.SetActive(false);
+                menuOfferedJoinGroup.SetActive(false);
+                menuObjectOffered.SetActive(false);
+                menuconversationWithMyGroup.SetActive(false);
 
-
-		case MenuTypes.MENU_CONVERSATION:
-			//Debug.Log("abro menu conver");
-
-			menuConversation.transform.position = targetIA.transform.position;
-			menuConversation.transform.rotation = Quaternion.Euler(Vector3.zero);
-			menuConversation.SetActive(true);
-			break;
+                break;
 
 
-		case MenuTypes.MENU_OFFERED_JOIN:
+            case MenuTypes.MENU_CONVERSATION:
+                //Debug.Log("abro menu conver");
 
-			//Debug.Log("abro menu join");
+                menuConversation.transform.position = targetIA.transform.position;
+                menuConversation.transform.rotation = Quaternion.Euler(Vector3.zero);
+                menuConversation.SetActive(true);
 
-			menuOfferedJoinGroup.transform.position = targetIA.transform.position;
-			menuOfferedJoinGroup.transform.rotation = Quaternion.Euler(Vector3.zero);
-			menuOfferedJoinGroup.SetActive(true);
-			break;
+                menuAttacked.SetActive(false);
+                menuOfferedJoinGroup.SetActive(false);
+                menuObjectOffered.SetActive(false);
+                menuconversationWithMyGroup.SetActive(false);
+                break;
 
 
-		case MenuTypes.MENU_OFFERED_OBJECT:
-			//Debug.Log("abro menu object");
+            case MenuTypes.MENU_OFFERED_JOIN:
 
-			menuObjectOffered.transform.position = targetIA.transform.position;
-			menuObjectOffered.transform.rotation = Quaternion.Euler(Vector3.zero);
-			menuObjectOffered.SetActive(true);
-			break;
+                //Debug.Log("abro menu join");
 
-		default:
-			Debug.LogError ("menu type incorrect");
-			break;
-		}
+                menuOfferedJoinGroup.transform.position = targetIA.transform.position;
+                menuOfferedJoinGroup.transform.rotation = Quaternion.Euler(Vector3.zero);
+                menuOfferedJoinGroup.SetActive(true);
+                menuConversation.SetActive(false);
+                menuAttacked.SetActive(false);
+                menuObjectOffered.SetActive(false);
+                menuconversationWithMyGroup.SetActive(false);
+                break;
 
-	}
+
+            case MenuTypes.MENU_OFFERED_OBJECT:
+                //Debug.Log("abro menu object");
+
+                menuObjectOffered.transform.position = targetIA.transform.position;
+                menuObjectOffered.transform.rotation = Quaternion.Euler(Vector3.zero);
+                menuObjectOffered.SetActive(true);
+                menuConversation.SetActive(false);
+                menuAttacked.SetActive(false);
+                menuOfferedJoinGroup.SetActive(false);
+                menuconversationWithMyGroup.SetActive(false);
+                break;
+
+            case MenuTypes.MENU_CONVERSATION_WITH_MYGROUP:
+
+                menuconversationWithMyGroup.transform.position = targetIA.transform.position;
+                menuconversationWithMyGroup.transform.rotation = Quaternion.Euler(Vector3.zero);
+                menuconversationWithMyGroup.SetActive(true);
+                menuConversation.SetActive(false);
+                menuAttacked.SetActive(false);
+                menuOfferedJoinGroup.SetActive(false);
+                menuObjectOffered.SetActive(false);
+
+                break;
+            default:
+                Debug.LogError("menu type incorrect");
+                break;
+        }
+
+    }
 
 
 }

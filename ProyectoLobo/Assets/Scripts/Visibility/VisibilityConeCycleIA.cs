@@ -179,7 +179,7 @@ public class VisibilityConeCycleIA : MonoBehaviour
             else
             {
                 priorityGO = decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
-                Debug.Log("SOY: "+ this.gameObject.name +" PRIORITY GO ES " + priorityGO);
+                //Debug.Log("SOY: "+ this.gameObject.name +" PRIORITY GO ES " + priorityGO);
             }
 
             visibleGameobjects.Clear();

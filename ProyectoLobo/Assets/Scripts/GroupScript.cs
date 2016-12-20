@@ -36,6 +36,14 @@ public class GroupScript : MonoBehaviour {
             }
         }
     }
+    public Color getColor()
+    {
+        return originalColor;
+    }
+    public void setOriginalColor(Color newCol)
+    {
+        originalColor = newCol;
+    }
     public void FollowTheLeaderAttack()
     {
         for (int i = 0; i < numberMembersGroup; i++) {
@@ -45,8 +53,10 @@ public class GroupScript : MonoBehaviour {
     }
 
     public void updateGroups(GameObject elQueseUne, List<GameObject> ysugrupo)
-    {    
-        foreach (var members in ysugrupo)
+    {
+        List<GameObject> auxList = new List<GameObject>();
+        auxList.AddRange(ysugrupo);
+        foreach (var members in auxList)
         {
             addSingleMember(members);
             var currentGroup = members.GetComponent<GroupScript>();
@@ -62,8 +72,9 @@ public class GroupScript : MonoBehaviour {
 
     public void resetMembersOfGroups(SpriteRenderer renderer)
     {
-
-        foreach (var member in groupMembers)
+        List<GameObject> auxList = new List<GameObject>();
+        auxList.AddRange(groupMembers);
+        foreach (var member in auxList)
         {
             var currentGroup = member.GetComponent<GroupScript>();
             currentGroup.groupMembers.Clear();
@@ -157,6 +168,10 @@ public class GroupScript : MonoBehaviour {
 
         if (this.gameObject.tag != "Player")
         {
+            foreach (var comp in this.GetComponents<AgentBehaviour>())
+            {
+                DestroyImmediate(comp);
+            } 
             GetComponent<VisibilityConeCycleIA>().enabled = true;
         }
 

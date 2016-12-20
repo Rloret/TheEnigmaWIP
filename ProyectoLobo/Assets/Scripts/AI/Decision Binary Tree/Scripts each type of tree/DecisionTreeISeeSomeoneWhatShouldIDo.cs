@@ -273,8 +273,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
             {
 				
 				if (this.gameObject.GetComponent<GroupScript> ().groupMembers.Count
-				    + target.GetComponent<GroupScript> ().groupMembers.Count
-				    < 2) {
+				    + target.GetComponent<GroupScript> ().groupMembers.Count< 2) {
 
 					if (target.tag == "Player") {
 						target.GetComponent<PlayerPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
@@ -287,7 +286,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 						target.GetComponent<AIPersonality> ().interactionFromOtherCharacter = ActionsEnum.Actions.JOIN;
 
 					}
-					Debug.Log("Le he dicho que se una a mi grupo");
+					//Debug.Log("Le he dicho que se una a mi grupo");
 
 				} else {
 					Debug.Log ("El grupo es muy grande te jodes");

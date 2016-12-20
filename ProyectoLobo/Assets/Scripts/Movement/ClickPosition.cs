@@ -92,7 +92,7 @@ public class ClickPosition : MonoBehaviour {
     }
     public void DetermineAction(GameObject behaviorReceiber, GameObject aux)
     {
-        if (aux.tag == "IA" && aux.GetComponent<GroupScript>().IAmTheLeader && aux.GetComponent<GroupScript>().inGroup)
+        if (aux.tag == "IA" )
         {
             
 			aux.GetComponent<VisibilityConeCycleIA>().enabled = false;
@@ -110,7 +110,7 @@ public class ClickPosition : MonoBehaviour {
                 lastLinear = movementScript.linearVelocity ;
               
 				string[] behaviours = { "Arrive", "AvoidWall", "LookWhereYouAreGoing" };
-				float[] weightedBehavs = { 0.7f, 1, 1 };
+				float[] weightedBehavs = { 1f, 5f, 1 };
 
                 GameObject[] targets = { aux, aux, aux };
 				behaviourController.addBehavioursOver(this.gameObject,targets,behaviours,weightedBehavs); //if IA character is too far, we need to arrive/pursue him in order to be near, so we can talk to him

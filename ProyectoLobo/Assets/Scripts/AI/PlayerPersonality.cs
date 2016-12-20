@@ -17,6 +17,7 @@ public class PlayerPersonality : PersonalityBase {
         initializeTrustInOthers(numberOfAgents);
         health = 100;
         attack = 10;
+        this.GetComponent<GroupScript>().setOriginalColor(playerColor);
         this.GetComponent<SpriteRenderer>().color = playerColor;
         MyOwnIndex = numberOfAgents - 1;
     }

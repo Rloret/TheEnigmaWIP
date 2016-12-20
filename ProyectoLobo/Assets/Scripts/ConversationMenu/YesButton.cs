@@ -17,7 +17,7 @@ public class YesButton : ButtonAction
         playerPers = player.GetComponent<PlayerPersonality>();
         playerGroup = player.GetComponent<GroupScript>();
 
-        Debug.Log("YES");
+       // Debug.Log("YES");
 
         targetIA = menuController.GetTargetIA();
 
@@ -39,11 +39,11 @@ public class YesButton : ButtonAction
         {
             //	playerGroup.addSingleMember (targetIA);
             //	targetIA.GetComponent<GroupScript> ().updateGroups (player);
-            Debug.Log("player:me uno a tu grupo bro");
+            //Debug.Log("player:me uno a tu grupo bro");
 
             GroupScript myGroup = playerPers.gameObject.GetComponent<GroupScript>();
             GroupScript leadergroup = targetIA.GetComponent<GroupScript>();
-            Debug.Log(targetIA);
+            //Debug.Log(targetIA);
 
 
             /*myGroup.groupLeader = targetIA ;

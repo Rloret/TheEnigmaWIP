@@ -12,43 +12,19 @@ public class AttackButtonClick : ButtonAction {
         Debug.Log("attackAction");
 
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-
-		GroupScript myGroup = player.GetComponent<GroupScript>();
-
-		int totalAttack = player.GetComponent<PlayerPersonality>().attack;
-	
-		foreach (var member in myGroup.groupMembers) {
-
-			totalAttack += member.GetComponent<AIPersonality>().attack;
-			//animacion numeritos
-		}
-
-
         targetIA = menuController.GetTargetIA();
+        GroupScript attackedGroup = targetIA.GetComponent<GroupScript>(); ;
+        GroupScript myGroup = player.GetComponent<GroupScript>();
 
-		PersonalityBase targetPers = targetIA.GetComponent<AIPersonality> ();
-
-		targetPers.interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
-
-		targetPers.takeDamage(totalAttack);
-
-		updateTrust (false, targetPers, player.GetComponent<PersonalityBase> ().GetMyOwnIndex ());
-
-
-		reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
-
-		if (reactionTree != null) {
-			DestroyImmediate (reactionTree);
-		}
-
-		targetIA.gameObject.GetComponent<AIPersonality> ().oldNodes = targetIA.gameObject.GetComponents<DecisionTreeNode> ();
-
-		foreach (DecisionTreeNode n in targetIA.gameObject.GetComponent<AIPersonality>().oldNodes) {
-			DestroyImmediate (n);
-		}
-
-		reactionTree=targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
-		reactionTree.target = GameObject.FindGameObjectWithTag ("Player");
+        if (myGroup.groupLeader != attackedGroup.groupLeader)
+        {
+            myGroup.groupLeader.GetComponent<PersonalityBase>().formacionAtaque(targetIA, myGroup.groupLeader.GetComponent<GroupScript>());
+            Invoke("waitForAttack", 3f);
+        }
+        else
+        {
+            waitForAttack();
+        }
 
         this.gameObject.transform.parent.gameObject.SetActive(false);
 
@@ -64,6 +40,51 @@ public class AttackButtonClick : ButtonAction {
 			pers.TrustInOthers [index] -= 1;
 		}
 	}
+
+    public void waitForAttack()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GroupScript myGroup = player.GetComponent<GroupScript>();
+        int totalAttack = player.GetComponent<PlayerPersonality>().attack;
+        foreach (var member in myGroup.groupMembers)
+        {
+
+            totalAttack += member.GetComponent<AIPersonality>().attack;
+            //animacion numeritos
+        }
+
+
+        targetIA = menuController.GetTargetIA();
+
+        PersonalityBase targetPers = targetIA.GetComponent<AIPersonality>();
+
+        targetPers.interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+
+        targetPers.takeDamage(totalAttack);
+
+        updateTrust(false, targetPers, player.GetComponent<PersonalityBase>().GetMyOwnIndex());
+
+
+        reactionTree = targetIA.GetComponent<DecisionTreeReactionAfterInteraction>();
+
+        if (reactionTree != null)
+        {
+            DestroyImmediate(reactionTree);
+        }
+
+        targetIA.gameObject.GetComponent<AIPersonality>().oldNodes = targetIA.gameObject.GetComponents<DecisionTreeNode>();
+
+        foreach (DecisionTreeNode n in targetIA.gameObject.GetComponent<AIPersonality>().oldNodes)
+        {
+            DestroyImmediate(n);
+        }
+
+        reactionTree = targetIA.AddComponent<DecisionTreeReactionAfterInteraction>();
+        reactionTree.target = GameObject.FindGameObjectWithTag("Player");
+
+        GroupScript leaderGroup = player.GetComponent<GroupScript>().groupLeader.GetComponent<GroupScript>();
+        player.GetComponent<PersonalityBase>().formacionGrupo(leaderGroup.groupLeader, leaderGroup);
+    }
 
 		
 }
