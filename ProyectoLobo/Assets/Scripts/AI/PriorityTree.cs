@@ -26,7 +26,6 @@ public class PriorityTree : MonoBehaviour
                 {
                     GroupScript iagroup = target.GetComponent<GroupScript>();
                     int confidence = Personality.TrustInOthers[target.GetComponent<PersonalityBase>().GetMyOwnIndex()];
-                    //Debug.Log("T : " + target + " groupScript : " + target.GetComponent<GroupScript>());
 
                     if (confidence > 5) // Confía en ella
                         if (iagroup.checkIAInGroup(this.gameObject))
@@ -37,7 +36,7 @@ public class PriorityTree : MonoBehaviour
                         {
                             if (iagroup.groupLeader == target && iagroup.inGroup)
                                 priority = 3;
-                            else if (!iagroup.inGroup)
+						else if (!iagroup.inGroup )
                             {
                                 priority = 0;
                             }
@@ -169,6 +168,7 @@ public class PriorityTree : MonoBehaviour
 
         }
         //        Debug.Log("La prioridad es: " + priority);
+		//Debug.Log("Soy : "+ this.gameObject.name+ " y veo a T : " + target + " y la prio es " +priority);
 
         return priority;
     }

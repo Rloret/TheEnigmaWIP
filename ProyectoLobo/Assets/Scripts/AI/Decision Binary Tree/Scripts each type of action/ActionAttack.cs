@@ -11,10 +11,22 @@ public class ActionAttack : Action {
     public override void DoAction()
     {
 
+        GameObject target;
+        if (this.GetComponent<DecisionTreeCreator>() != null)
+        {
+            target = this.GetComponent<DecisionTreeCreator>().target;
+        }
+        else
+        {
+            target = targetAttack;
+        }
+
+
+
         GroupScript myGroup = this.gameObject.GetComponent<GroupScript>();
-        GameObject target = this.GetComponent<DecisionTreeCreator>().target;
+        // GameObject target = this.GetComponent<DecisionTreeCreator>().target;
         GroupScript attackedGroup = target.gameObject.GetComponent<GroupScript>(); ;
-        if (myGroup.groupLeader != attackedGroup.groupLeader)
+        if (myGroup.groupLeader != attackedGroup.groupLeader && myGroup.inGroup)
         {
             myGroup.groupLeader.GetComponent<PersonalityBase>().formacionAtaque(target, myGroup.groupLeader.GetComponent<GroupScript>());
             Invoke("waitForAttack", 2f);
@@ -24,9 +36,9 @@ public class ActionAttack : Action {
             Debug.Log("no tengo que formar ataco");
             waitForAttack();
         }
-       
-      
-        
+
+
+
     }
     private void waitForAttack()
     {
@@ -59,24 +71,30 @@ public class ActionAttack : Action {
 
         Attack(totalAttack);
         //END ATTACK
-        GameObject target = this.GetComponent<DecisionTreeCreator>().target;
+
+        //GameObject target = this.GetComponent<DecisionTreeCreator>().target;
         GameObject leader = myGroup.groupLeader;
         leader.GetComponent<PersonalityBase>().formacionGrupo(leader, leader.GetComponent<GroupScript>());
-;
-
-        if (this.gameObject.tag != "Player")
-        {
-           
-            base.DestroyTrees();
-            if (target.GetComponent<PersonalityBase>().health > 0)
-                Invoke("EnableCone", 1f);
-        }
+        
+        if (this.gameObject.tag != "Player") {
+			GameObject target;
+			if (this.GetComponent<DecisionTreeCreator> () != null) {
+				target= this.GetComponent<DecisionTreeCreator>().target;
+			}
+			else{
+				target = targetAttack;
+			}
+            base.DestroyTrees ();
+            if (target.GetComponent<PersonalityBase>().health > 0) 
+			    Invoke ("EnableCone", 1f);
+		}
       
     }
 
     private void EnableCone()
     {
-        this.GetComponent<AgentPositionController>().orientation += 180;
+
+//        this.GetComponent<AgentPositionController>().orientation += 180;
         GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerMenuController>().CloseAttackMenu();
 
         GetComponent<VisibilityConeCycleIA>().enabled = true;
@@ -91,29 +109,23 @@ public class ActionAttack : Action {
 
     void Attack(int a)
     {
-        //Debug.Log ("ataco y hago : " + a );
         if (!triggered) targetAttack = this.GetComponent<DecisionTreeCreator>().target;
 
-        PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase>();
-        targetPers.takeDamage(a);
+		PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase> ();
 
-        /*if (this.gameObject.tag == "Player") {
-			
-			targetPers.TrustInOthers[this.gameObject.GetComponent<PlayerPersonality>().GetMyOwnIndex()]-=1;
-			Debug.Log("Soy player, reduzco mi confi y me atacan un total de " + a);
+		GroupScript myGroup = targetPers.gameObject.GetComponent<GroupScript> ();
+		if (myGroup.groupMembers.Count > 0) {
+			if (myGroup.IAmTheLeader) {
+				foreach (var m in myGroup.groupMembers) {
+					m.GetComponent<GroupScript> ().ExitGroup ();
+				}
 
-
-		} else {
-			
-			targetPers.TrustInOthers[this.gameObject.GetComponent<AIPersonality>().GetMyOwnIndex()]-=1;
-			Debug.Log("Soy IA, reduzco mi confi y me atacan un total de " + a);
-
-		}*/
-
+			} else {
+				myGroup.ExitGroup ();
+			}
+		}
+        targetPers.takeDamage(a, this.GetComponent<PersonalityBase>());
         updateTrust(false, targetPers, this.GetComponent<PersonalityBase>().GetMyOwnIndex());
-
-
-
         //HAY QUE RECORRER EL GRUPO DEL TARGET Y REDUCIR LA CONFIANZA DE TODOS
     }
 }

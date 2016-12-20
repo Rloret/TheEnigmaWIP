@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class ClickPosition : MonoBehaviour {
 
     public Vector2 clickPos;
@@ -93,19 +92,20 @@ public class ClickPosition : MonoBehaviour {
     public void DetermineAction(GameObject behaviorReceiber, GameObject aux)
     {
         if (aux.tag == "IA" )
+
         {
             
 			aux.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
             if (Mathf.Abs(Vector3.Distance(behaviorReceiber.transform.position, aux.transform.position)) <= MinDistanceOpenMenu && menuOpened)
             {
-                //Debug.Log("estan cerca, abro menu");
+                Debug.Log("estan cerca, abro menu");
                 behaviourController.openConversationMenu(behaviorReceiber, aux);
 
             }
             else
             {
-                //Debug.Log("esta lejos, me acercare");
+                Debug.Log("esta lejos, me acercare");
                 clickedOnTile = true;
                 lastLinear = movementScript.linearVelocity ;
               

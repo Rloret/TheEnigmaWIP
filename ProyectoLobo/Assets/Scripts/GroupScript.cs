@@ -24,18 +24,7 @@ public class GroupScript : MonoBehaviour {
         originalColor = this.gameObject.GetComponent<SpriteRenderer>().color;
 
     }
-    void OnDrawGizmos()
-    {
-        if (groupMembers.Count > 0 && IAmTheLeader)
-        {
-            Gizmos.color = Color.white;
-            Gizmos.color *= Random.Range(0f, 1f);
-            for (int i = 1; i < groupMembers.Count; i++)
-            {
-                Gizmos.DrawLine(groupMembers[i - 1].transform.position+Vector3.up*3, groupMembers[i].transform.position + Vector3.up * 3);
-            }
-        }
-    }
+
     public Color getColor()
     {
         return originalColor;
@@ -44,6 +33,7 @@ public class GroupScript : MonoBehaviour {
     {
         originalColor = newCol;
     }
+
     public void FollowTheLeaderAttack()
     {
         for (int i = 0; i < numberMembersGroup; i++) {
@@ -150,6 +140,7 @@ public class GroupScript : MonoBehaviour {
         List<GameObject> members = groupLeader.GetComponent<GroupScript>().groupMembers;
         foreach(var m in members)
         {
+			
             m.GetComponent<GroupScript>().groupMembers.Remove(this.gameObject);
 
         }

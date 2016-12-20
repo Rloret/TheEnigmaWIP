@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class gameController : MonoBehaviour {
 
@@ -15,16 +17,26 @@ public class gameController : MonoBehaviour {
     public GameObject LifeImage;
 
 	public bool allCharisma=false;
+	public Text textMonster;
+
 
     private GameObject currentIA;
     private float percentColor;
+
+	public int numberOfMonsters=1;
+	public int numberOfHumans;
+
 	// Use this for initialization
 	void Start () {
+
         float iterator = 1f;
         Color currentColor;
         float randomColor = 0f;
         spawnersLeft = new List<GameObject>();
         spawnersLeft.AddRange(spawnPoints);
+
+		numberOfHumans = numberOfIAs;
+
         if (numberOfIAs > spawnPoints.Length && spawnPoints.Length>6)
         {
             numberOfIAs = spawnPoints.Length - 3;
@@ -72,7 +84,6 @@ public class gameController : MonoBehaviour {
 				spawnersLeft.Remove (spawnersLeft [spawnPos]);
 				i++;
                 iterator++;
-              //  Debug.Log(randomColor);    
             }
 
 			GameObject player = GameObject.FindGameObjectWithTag ("Player");
@@ -93,12 +104,34 @@ public class gameController : MonoBehaviour {
 
 		}
 
+		determineMonster ();
+
         /*personality.health = 100;
         personality.attack = 10;
 
         personality.MyOwnIndex = numberOfIAs - 1;*/
 
     }
+	private void determineMonster(){
+		int r = Random.Range (0, 2);
+
+		if (r == 1) {
+			textMonster.text = "YOU ARE THE MONSTER!";
+			GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing = true;
+
+		} else {
+			textMonster.text = "YOU ARE NOT THE MONSTER!";
+			GameObject.FindGameObjectWithTag ("IA").GetComponent<PersonalityBase> ().theThing = true;
+		}
+
+		this.gameObject.GetComponent<PlayerMenuController>().CheckIfMonster();
+
+		Invoke ("deleteText", 2f);
+	}
+
+	private void deleteText(){
+		textMonster.enabled = false;
+	}
 
     private void instantiateIA(AIPersonality.Personalities type,Vector3 pos,int number,Color color)
     {
@@ -125,6 +158,81 @@ public class gameController : MonoBehaviour {
         collider.size = new Vector2(9.7f,12f);
         VisibleElements.visibleGameObjects.Add(currentIA);
     }
+
+	public bool CheckPlayerWin(){
+	
+		if (GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing) {	// si eres monstruo
+			if (numberOfHumans == 0) {
+				Debug.Log ("return true ");
+
+				return true;
+			}
+
+		} else {
+			if (numberOfMonsters == 0) {
+				Debug.Log ("return true ");
+
+				return true;
+			}
+		
+		}
+		Debug.Log ("return false ");
+
+		return false;
+	}
+
+	public bool CheckPlayerLost(){
+
+		if (GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing) {	// si eres monstruo
+			
+		} else {
+			if (numberOfHumans == 1) {
+				Debug.Log ("return true, solo quedas tu como humano ");
+
+				return true;
+			}
+
+		}
+		Debug.Log ("return false ");
+
+		return false;
+	}
+
+	public void youWin(bool b){
+		if (b) {
+			Debug.Log ("HAS GANADO ");
+			textMonster.text = "YOU WIN";
+		} else {
+			Debug.Log ("HAS PERDIDO ");
+			textMonster.text = "YOU LOST";
+		}
+		textMonster.enabled = true;
+
+		Invoke ("replay", 2f);
+
+	}
+
+	private void replay(){
+		SceneManager.LoadScene (0);
+
+	}
+
+	public void decreaseHumans(){
+		numberOfHumans--;
+
+		//Debug.Log ("humanos: " + numberOfHumans + " monstruos: " + numberOfMonsters);
+
+		if (CheckPlayerWin ()) {
+			//Debug.Log ("ha devuelto true en win");
+			youWin (true);
+		} else if (CheckPlayerLost ()) {
+			//Debug.Log ("ha devuelto true en lost");
+			youWin (false);
+
+		}
+	}
+
+
 
     
 }

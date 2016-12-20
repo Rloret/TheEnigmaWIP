@@ -174,12 +174,11 @@ public class VisibilityConeCycleIA : MonoBehaviour
             if (objectINeedRemember != "None")
             {
                 priorityGO = RememberedObject(objectINeedRemember);
-                Debug.Log("necesito el objeto: " + priorityGO);
+               // Debug.Log("necesito el objeto: " + priorityGO);
             }
             else
             {
                 priorityGO = decisionTargetScript.ChooseTarget(visibleGameobjects, this.gameObject);
-                //Debug.Log("SOY: "+ this.gameObject.name +" PRIORITY GO ES " + priorityGO);
             }
 
             visibleGameobjects.Clear();

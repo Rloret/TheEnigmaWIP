@@ -16,7 +16,7 @@ public class AttackButtonClick : ButtonAction {
         GroupScript attackedGroup = targetIA.GetComponent<GroupScript>(); ;
         GroupScript myGroup = player.GetComponent<GroupScript>();
 
-        if (myGroup.groupLeader != attackedGroup.groupLeader)
+        if (myGroup.groupLeader != attackedGroup.groupLeader && myGroup.inGroup)
         {
             myGroup.groupLeader.GetComponent<PersonalityBase>().formacionAtaque(targetIA, myGroup.groupLeader.GetComponent<GroupScript>());
             Invoke("waitForAttack", 3f);
@@ -53,14 +53,15 @@ public class AttackButtonClick : ButtonAction {
             //animacion numeritos
         }
 
-
         targetIA = menuController.GetTargetIA();
 
         PersonalityBase targetPers = targetIA.GetComponent<AIPersonality>();
-
+        
         targetPers.interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
+        targetIA.GetComponent<GroupScript>().ExitGroup();
+        targetIA.GetComponent<VisibilityConeCycleIA>().enabled = true;
 
-        targetPers.takeDamage(totalAttack);
+        targetPers.takeDamage(totalAttack, player.GetComponent<PersonalityBase> ());
 
         updateTrust(false, targetPers, player.GetComponent<PersonalityBase>().GetMyOwnIndex());
 

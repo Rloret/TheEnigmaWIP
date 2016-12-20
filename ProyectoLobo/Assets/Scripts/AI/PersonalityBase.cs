@@ -40,7 +40,7 @@ public class PersonalityBase : MonoBehaviour {
 	}
 	public ActionsEnum.Actions GetInteraction() { return interactionFromOtherCharacter; }
 
-	public virtual void takeDamage(int damage){
+	public virtual void takeDamage(int damage, PersonalityBase personality){
 	}
 
     public void formacionGrupo(GameObject WhoToFollow, GroupScript leaderGroup)
