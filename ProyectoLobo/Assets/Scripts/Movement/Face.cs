@@ -19,42 +19,53 @@ public class Face : Align
     public override SteeringOutput GetSteering()
     {
         SteeringOutput steering;
-
-        targetAux = target;
-
-        target = new GameObject();
-        target.transform.rotation = targetAux.transform.rotation;
-        target.transform.position = targetAux.transform.position;
-
-        Vector3 direction = target.transform.position - this.transform.position;
-
-        if (direction.magnitude > 0.0f)
+        if (target != null)
         {
-            float targetOrientation = Mathf.Atan2(-direction.x,direction.y);
-            targetOrientation *= Mathf.Rad2Deg;
-            target.transform.rotation =Quaternion.Euler(0,0, targetOrientation);
-        }
 
-        steering= base.GetSteering();
-        //targetAux.transform.rotation = target.transform.rotation;
-        DestroyImmediate(target);
-        target = targetAux;
-        return steering;
+
+            targetAux = target;
+
+            target = new GameObject();
+            target.transform.rotation = targetAux.transform.rotation;
+            target.transform.position = targetAux.transform.position;
+
+            Vector3 direction = target.transform.position - this.transform.position;
+
+            if (direction.magnitude > 0.0f)
+            {
+                float targetOrientation = Mathf.Atan2(-direction.x, direction.y);
+                targetOrientation *= Mathf.Rad2Deg;
+                target.transform.rotation = Quaternion.Euler(0, 0, targetOrientation);
+            }
+
+            steering = base.GetSteering();
+            //targetAux.transform.rotation = target.transform.rotation;
+            DestroyImmediate(target);
+            target = targetAux;
+            return steering;
+        }
+        else
+        {
+            return new SteeringOutput() ;
+        }
       
     }
 
-   public override void OnDrawGizmos()
+    public override void OnDrawGizmos()
     {
-        Vector3 direction = target.transform.position - this.transform.position;
-        float targetOrientation=0;
-        if (direction.magnitude > 0.0f)
+        if (this != null && target != null)
         {
-            targetOrientation = Mathf.Atan2(direction.x, direction.y);
-            targetOrientation *= Mathf.Rad2Deg;
+            Vector3 direction = target.transform.position - this.transform.position;
+            float targetOrientation = 0;
+            if (direction.magnitude > 0.0f)
+            {
+                targetOrientation = Mathf.Atan2(direction.x, direction.y);
+                targetOrientation *= Mathf.Rad2Deg;
+            }
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(target.transform.position, base.GetOriAsVec(targetOrientation) * 30);
+            base.OnDrawGizmos();
         }
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(target.transform.position,base.GetOriAsVec(targetOrientation) *30);
-        base.OnDrawGizmos();
     }
 
 

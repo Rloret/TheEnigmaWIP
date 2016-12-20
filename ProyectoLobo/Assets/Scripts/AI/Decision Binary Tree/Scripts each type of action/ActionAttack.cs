@@ -33,7 +33,7 @@ public class ActionAttack : Action {
         }
         else
         {
-            Debug.Log("no tengo que formar ataco");
+//            Debug.Log("no tengo que formar ataco");
             waitForAttack();
         }
 
@@ -73,7 +73,8 @@ public class ActionAttack : Action {
         GameObject leader = myGroup.groupLeader;
         leader.GetComponent<PersonalityBase>().formacionGrupo(leader, leader.GetComponent<GroupScript>());
         
-        if (this.gameObject.tag != "Player") {
+        
+        if (this!=null && this.gameObject.tag != "Player") {
 			GameObject target;
 			if (this.GetComponent<DecisionTreeCreator> () != null) {
 				target= this.GetComponent<DecisionTreeCreator>().target;
@@ -82,7 +83,7 @@ public class ActionAttack : Action {
 				target = targetAttack;
 			}
             base.DestroyTrees ();
-            if (target.GetComponent<PersonalityBase>().health > 0) 
+            if (target==null ||target.GetComponent<PersonalityBase>().health > 0) 
 			    Invoke ("EnableCone", 1f);
 		}
       
@@ -99,50 +100,56 @@ public class ActionAttack : Action {
 
         foreach (DecisionTreeNode n in this.gameObject.GetComponent<AIPersonality>().oldNodes)
         {
-            DestroyImmediate(n);
+            Destroy(n);
         }
 
     }
 
     void Attack(int a)
     {
+
         var arbol = this.GetComponent<DecisionTreeCreator>();
-        try
+        if (arbol != null)
         {
-            if (!triggered)
+            try
             {
-                targetAttack = arbol.target;
-            }
-        }
-        catch (MissingReferenceException e) {
-            Debug.LogError("Ha ocurrido esto en " +this.name + " "+e.Message);
-        }
-
-		PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase> ();
-
-		GroupScript targetGroup = targetPers.gameObject.GetComponent<GroupScript> ();
-        if (targetGroup.groupLeader == this.gameObject.GetComponent<GroupScript>().groupLeader)
-        {
-            if (targetGroup.groupMembers.Count > 0)
-            {
-                if (targetGroup.IAmTheLeader)
+                if (!triggered)
                 {
-                    var members = targetGroup.groupMembers;
-                    targetGroup.ExitGroup();
-                    foreach (var m in members)
+                    targetAttack = arbol.target;
+                }
+            }
+            catch
+            {
+                Debug.LogError("Ha ocurrido error en " + this.name);
+            }
+
+            PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase>();
+
+            GroupScript targetGroup = targetPers.gameObject.GetComponent<GroupScript>();
+            if (targetGroup.groupLeader == this.gameObject.GetComponent<GroupScript>().groupLeader)
+            {
+                if (targetGroup.groupMembers.Count > 0)
+                {
+                    if (targetGroup.IAmTheLeader)
                     {
-                        GroupScript memberGroup =m.GetComponent<GroupScript>();
-                        memberGroup.groupLeader = members[0];
+                        var members = targetGroup.groupMembers;
+                        targetGroup.ExitGroup();
+                        foreach (var m in members)
+                        {
+                            GroupScript memberGroup = m.GetComponent<GroupScript>();
+                            memberGroup.groupLeader = members[0];
+                        }
+                    }
+                    else
+                    {
+                        targetGroup.ExitGroup();
                     }
                 }
-                else
-                {
-                    targetGroup.ExitGroup();
-                }
             }
+            updateTrust(false, targetPers, this.GetComponent<PersonalityBase>().GetMyOwnIndex());
+            targetPers.takeDamage(a, this.GetComponent<PersonalityBase>());
+
+            //HAY QUE RECORRER EL GRUPO DEL TARGET Y REDUCIR LA CONFIANZA DE TODOS
         }
-        targetPers.takeDamage(a, this.GetComponent<PersonalityBase>());
-        updateTrust(false, targetPers, this.GetComponent<PersonalityBase>().GetMyOwnIndex());
-        //HAY QUE RECORRER EL GRUPO DEL TARGET Y REDUCIR LA CONFIANZA DE TODOS
     }
 }

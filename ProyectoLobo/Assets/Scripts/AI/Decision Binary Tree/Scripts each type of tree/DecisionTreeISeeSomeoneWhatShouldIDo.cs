@@ -253,7 +253,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 					target.GetComponent<AIPersonality>().interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
 				}
 
-                Debug.Log("Le he dicho que le ataco");
+//                Debug.Log("Le he dicho que le ataco");
 
             }
             else if (Object.ReferenceEquals(actionNew.GetType(), offer.GetType())) // compare classes 
@@ -289,7 +289,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 					//Debug.Log("Le he dicho que se una a mi grupo");
 
 				} else {
-					Debug.Log ("El grupo es muy grande te jodes");
+					//Debug.Log ("El grupo es muy grande te jodes");
 					decision = false;
 
 				}
@@ -297,7 +297,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 
             }
             else {
-                Debug.Log("Mi accion es NOTHING y NO le digo nada");
+              //  Debug.Log("Mi accion es NOTHING y NO le digo nada");
                 decision = false;
             }
 
@@ -311,7 +311,7 @@ public class DecisionTreeISeeSomeoneWhatShouldIDo : DecisionTreeCreator
 						Destroy (reaction);
 					}
 					reaction = target.AddComponent<DecisionTreeReactionAfterInteraction> ();
-					reaction.target = this.gameObject;
+                    if (this != null) { reaction.target = this.gameObject; }
 					target.GetComponent<VisibilityConeCycleIA>().enabled = false;
 
 

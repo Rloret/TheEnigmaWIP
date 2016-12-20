@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: da194594dd6831144805fbb26718c9f0
-timeCreated: 1482166483
+timeCreated: 1482211759
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -11,7 +11,7 @@ MonoImporter:
   - playerMonsterStateImage: {instanceID: 0}
   - myMemory: {instanceID: 0}
   - ghostSprite: {fileID: 21300000, guid: b31b31e4627561c4797fbab4be571024, type: 3}
-  executionOrder: 980
+  executionOrder: 150
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

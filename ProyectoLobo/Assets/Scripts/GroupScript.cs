@@ -59,6 +59,15 @@ public class GroupScript : MonoBehaviour {
                 elQueseUne.GetComponent<VisibilityConeCycleIA>().enabled = false;
             }
 
+        if (groupLeader.GetComponent<PersonalityBase>().health < 30)
+        {
+            ExitGroup();
+            this.GetComponent<VisibilityConeCycleIA>().enabled = true;
+            string[] behaviours = { "Wander", "AvoidWall", "LookWhereYouAreGoing" };
+            float[] weightedBehavs = { 0.7f, 1, 1 };
+            GameObject[] targets = { this.gameObject, this.gameObject, this.gameObject };
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject,targets,behaviours,weightedBehavs);
+        }
     }
 
     public void resetMembersOfGroups(SpriteRenderer renderer)
@@ -130,17 +139,25 @@ public class GroupScript : MonoBehaviour {
 
     void Update()
     {
-        if(Vector2.Distance(this.gameObject.transform.position, groupLeader.transform.position) > maxDistGroup)
+        if (this != null && groupLeader!=null)
         {
-            ExitGroup();
+            if (Vector2.Distance(this.gameObject.transform.position, groupLeader.transform.position) > maxDistGroup)
+            {
+                ExitGroup();
+            }
+            if (IAmTheLeader && groupLeader == this.gameObject)
+            {
+                crown.SetActive(true);
+            }
+            else
+            {
+                crown.SetActive(false);
+            }
         }
-        if(IAmTheLeader && groupLeader == this.gameObject)
+        else if(groupLeader == null)
         {
-            crown.SetActive(true);
-        }
-        else
-        {
-            crown.SetActive(false);
+            this.GetComponent<VisibilityConeCycleIA>().enabled = true;
+            this.makeLeader();
         }
 
     }

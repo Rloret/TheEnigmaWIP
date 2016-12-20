@@ -162,11 +162,18 @@ public class AvoidWall : Seek {
 
     public override void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(target.transform.position, Vector3.one * 10);
-        //Gizmos.DrawWireSphere(transform.position, (sp.bounds.min.x * transform.localScale.x));
+        if (this != null && target != null)
+        {
+            if (this.target.transform.position == null)
+            {
+                Debug.LogError("Error en " + this.name);
+            }
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(target.transform.position, Vector3.one * 10);
+            //Gizmos.DrawWireSphere(transform.position, (sp.bounds.min.x * transform.localScale.x));
 
-        base.OnDrawGizmos();
+            base.OnDrawGizmos();
+        }
     }
 
     private Vector2 PerpendicularClockWise(Vector2 v2) {
