@@ -14,9 +14,12 @@ public class AIPersonality: PersonalityBase {
 
     public Memory myMemory;
     public int numberOfIAs;
+    public Sprite ghostSprite;
 
 	GroupScript aiGroup;
 	VisibilityConeCycleIA cone;
+	gameController controller;
+
 
     /// <summary>
     /// Personalities contains the 6 possible personalities beeing:
@@ -38,10 +41,11 @@ public class AIPersonality: PersonalityBase {
 
     void Start()
     {
-        numberOfIAs = GameObject.FindGameObjectWithTag("GameController").GetComponent<gameController>().numberOfIAs;
+		controller = GameObject.FindGameObjectWithTag ("GameController").GetComponent<gameController>();
+        numberOfIAs = controller.GetComponent<gameController>().numberOfIAs;
         TrustInOthers = new int[numberOfIAs]; 
         myMemory = GetComponent<Memory>();
-        base.behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
+		base.behaviourManager = controller.GetComponent<BehaviourAdder>();
        // interactionFromOtherCharacter = ActionsEnum.Actions.ATTACK;
         initializeTrustInOthers(numberOfIAs);
 		aiGroup = GetComponent<GroupScript> ();
@@ -55,11 +59,11 @@ public class AIPersonality: PersonalityBase {
 			if (aiGroup.inGroup && aiGroup.groupMembers.Count==1) {
 				if (cone.visibleGameobjects.Count <= 1) {
 					convertToMonster ();
-					attackAction ();
+					//attackAction ();
 				}
 
 			}
-			if (health <= 50) {
+			else if (health <= 50) {
 				convertToMonster ();
 			}
 		} 
@@ -80,12 +84,26 @@ public class AIPersonality: PersonalityBase {
 		GetComponent<SpriteRenderer>().sprite = playerMonsterStateImage;
 		isMonster = true;
 
+		GroupScript myGroup=this.GetComponent<GroupScript>();
+		if (myGroup.groupMembers.Count > 1) {
+			Debug.LogError ("hay mas de uno");
+
+		} else if (myGroup.groupMembers.Count > 0) {
+			if (myGroup.IAmTheLeader) {
+
+				myGroup.groupMembers [0].GetComponent<GroupScript> ().ExitGroup ();
+
+			} else {
+				myGroup.ExitGroup ();
+			}
+		}
+
 
 
 	}
 	void attackAction(){
 		ActionAttack a= gameObject.AddComponent<ActionAttack> ();
-		a.targetAttack = aiGroup.groupMembers [0];
+		//a.targetAttack = aiGroup.groupMembers [0];
 		a.triggered = true;
 		a.DoAction ();}
 
@@ -139,9 +157,11 @@ public class AIPersonality: PersonalityBase {
         initializeTrustInOthers(numberOfIAs);
     }
 
-    public override void takeDamage(int damage)
+    public override void takeDamage(int damage, PersonalityBase personality)
     {
         health -= (int)(damage * defense);
+        HealthImage.GetComponent<Image>().fillAmount = health / 100f;
+        print(HealthImage.GetComponent<Image>().fillAmount);
         if (health <= 50 && health > 33)
         {
             HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
@@ -149,25 +169,65 @@ public class AIPersonality: PersonalityBase {
         else if (health <= 33 && health > 0)
         {
             HealthImage.GetComponent<Image>().color = new Color(255, 0, 0);
+           
         }
         else if(health<=0)
         {
-            Debug.Log("Recibiendo daño: " +this.gameObject);
-            this.GetComponent<VisibilityConeCycleIA>().enabled = false;
-            VisibleElements.visibleGameObjects.Remove(this.gameObject);
-            Debug.Log(this.gameObject.name + "HA MUERTO");
-            this.enabled = false;
-            Destroy(this.gameObject);
-          /* var comportam= this.GetComponents<MonoBehaviour>();
-            foreach (var compo in comportam)
+            
+            if (personality.isMonster)
             {
-                Destroy(compo);
+				theThing = true;
+
+				HealthImage.GetComponent<Image>().color = new Color(0, 255, 0);
+
+				controller.numberOfMonsters++;
+				controller.decreaseHumans ();
+
             }
-            var treenodes = this.GetComponents<DecisionTreeNode>();
-            foreach (var compo in treenodes)
+            else
             {
-                Destroy(compo);
-            }*/
+				if (theThing)
+					controller.numberOfMonsters--;
+				
+				Debug.Log("Recibiendo daño: " +this.gameObject);
+				this.GetComponent<VisibilityConeCycleIA>().enabled = false;
+				VisibleElements.visibleGameObjects.Remove(this.gameObject);
+				string nameIAdeath = this.name+ "ghost";
+				Vector3 IADeathPosition = this.transform.position;
+
+				this.enabled = false;
+
+				this.GetComponent<GroupScript> ().ExitGroup ();
+
+				PlayerMenuController menu = controller.GetComponent<PlayerMenuController> ();
+				menu.CloseAttackMenu ();
+				menu.menuConversation.SetActive(false);
+				menu.CloseJoinMenu ();
+				menu.CloseObjectMenu ();
+
+
+                GameObject ghost = new GameObject();
+                ghost.AddComponent<SpriteRenderer>();
+                ghost.GetComponent<SpriteRenderer>().sprite = ghostSprite;
+                ghost.GetComponent<SpriteRenderer>().sortingLayerName = "Personajes";
+                ghost.transform.localScale = new Vector2(5f, 5f);
+                ghost.name = nameIAdeath;
+                ghost.transform.position = IADeathPosition;
+
+				controller.decreaseHumans ();
+
+				Destroy(personality.gameObject.GetComponent<Pursue> ());
+
+				foreach (var v in GetComponents<MonoBehaviour>()) {
+					Destroy (v);
+				}
+				Destroy(this.gameObject);
+
+            }
+
+
+
+            
         }
     }
 }

@@ -28,11 +28,10 @@ public class PlayerMenuController : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         playerPersonality = player.GetComponent<PersonalityBase>();
         playerSprite = player.GetComponent<SpriteRenderer>();
-        CheckIfMonster();
     }
 
 
-    private void CheckIfMonster()
+	public void CheckIfMonster()
     {
         if(playerPersonality.theThing)
         {

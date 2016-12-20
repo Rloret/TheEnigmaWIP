@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class ClickPosition : MonoBehaviour {
 
     public Vector2 clickPos;
