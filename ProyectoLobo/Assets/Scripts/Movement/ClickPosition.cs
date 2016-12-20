@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class ClickPosition : MonoBehaviour {
 
     public Vector2 clickPos;
-    public BehaviourAdder clickController;
     public LayerMask avoidCollisionWith;
 
     public float MinDistanceOpenMenu =100f;
@@ -28,6 +27,7 @@ public class ClickPosition : MonoBehaviour {
 		behaviourController = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
         movementScript = GetComponent<AgentPositionController>();
         objectHandlerPlayer = this.GetComponent<ObjectHandler>();
+
     }
     void Update()
     {

@@ -12,6 +12,7 @@ public class StateManager : MonoBehaviour {
     private IStateBase activeState;
 	private static StateManager instanceRef;
 
+
 	void Awake(){
         //Este trozo es para que el gameObject que contiene este script (que deberia ser el gamemanager) no se destruya en la transición de escenas.
         if (instanceRef == null) {
@@ -49,13 +50,11 @@ public class StateManager : MonoBehaviour {
         activeState.SwitchScene(PLAYSCENE);
     }
 
-    public void OnQuitButton()
-    {
-        //APAGAR EL JUEGO
+    public void OnQuitButton() {
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
-    public void OnMenuButton()
-    {
+    public void OnMenuButton() {
         activeState.SwitchScene(MENUSCENE);
     }
 
