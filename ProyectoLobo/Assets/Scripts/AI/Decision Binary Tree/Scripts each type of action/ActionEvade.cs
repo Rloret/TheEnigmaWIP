@@ -21,8 +21,8 @@ public class ActionEvade : Action {
         base.DestroyTrees();
       
         GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>().addBehavioursOver(this.gameObject,targets , behaviours, weightedBehavs);
-
-        Invoke("EnableCone", 10f);
+        this.GetComponent<GroupScript>().ExitGroup();
+            Invoke("EnableCone", 10f);
     }
 
     private void EnableCone()

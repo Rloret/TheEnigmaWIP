@@ -46,11 +46,13 @@ public class ObjectHandler : MonoBehaviour {
     public static int pickRadius;
     public int radius;
 
+
 	public GameObject currentObject = null;
 
     //public ObjectType lastObjecttype;
 
 	public GameObject desiredObject;
+    public GameObject positionGO;
 	private AIPersonality personality;
     private PlayerPersonality playerPersonality;
     private AgentPositionController agentPositionControllerScript;
@@ -160,7 +162,7 @@ public class ObjectHandler : MonoBehaviour {
     }
 
 	public void pickupObject(GameObject takedObject) {
-        takedObject.transform.position = this.transform.position;
+        takedObject.transform.position =  positionGO.transform.position;
 
     }
 

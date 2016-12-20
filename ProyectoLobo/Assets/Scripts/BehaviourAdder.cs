@@ -112,7 +112,11 @@ public class BehaviourAdder : MonoBehaviour {
     public void openConversationMenu(GameObject character, GameObject targetIA) {
         GroupScript characterGroup = character.GetComponent<GroupScript>();
         GroupScript targetGroup = targetIA.GetComponent<GroupScript>();
-        if (characterGroup.groupLeader == targetGroup.groupLeader || (characterGroup.groupMembers.Count +targetGroup.groupMembers.Count>=3) )
+        if (targetIA.GetComponent<AIPersonality>().theThing)
+        {
+            menuController.OpenMenu(PlayerMenuController.MenuTypes.MENU_ATTACKED, targetIA);
+        }
+        else if (characterGroup.groupLeader == targetGroup.groupLeader || (characterGroup.groupMembers.Count +targetGroup.groupMembers.Count>=3) )
         {
             menuController.OpenMenu(PlayerMenuController.MenuTypes.MENU_CONVERSATION_WITH_MYGROUP, targetIA);
         }

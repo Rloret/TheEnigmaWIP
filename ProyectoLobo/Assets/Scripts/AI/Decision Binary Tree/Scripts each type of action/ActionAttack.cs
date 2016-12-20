@@ -52,13 +52,10 @@ public class ActionAttack : Action {
         if (this.gameObject.tag == "Player")
         {
             totalAttack = this.GetComponent<PlayerPersonality>().attack;
-
-
         }
         else
         {
             totalAttack = this.GetComponent<AIPersonality>().attack;
-
         }
 
 
@@ -109,21 +106,41 @@ public class ActionAttack : Action {
 
     void Attack(int a)
     {
-        if (!triggered) targetAttack = this.GetComponent<DecisionTreeCreator>().target;
+        var arbol = this.GetComponent<DecisionTreeCreator>();
+        try
+        {
+            if (!triggered)
+            {
+                targetAttack = arbol.target;
+            }
+        }
+        catch (MissingReferenceException e) {
+            Debug.LogError("Ha ocurrido esto en " +this.name + " "+e.Message);
+        }
 
 		PersonalityBase targetPers = targetAttack.GetComponent<PersonalityBase> ();
 
-		GroupScript myGroup = targetPers.gameObject.GetComponent<GroupScript> ();
-		if (myGroup.groupMembers.Count > 0) {
-			if (myGroup.IAmTheLeader) {
-				foreach (var m in myGroup.groupMembers) {
-					m.GetComponent<GroupScript> ().ExitGroup ();
-				}
-
-			} else {
-				myGroup.ExitGroup ();
-			}
-		}
+		GroupScript targetGroup = targetPers.gameObject.GetComponent<GroupScript> ();
+        if (targetGroup.groupLeader == this.gameObject.GetComponent<GroupScript>().groupLeader)
+        {
+            if (targetGroup.groupMembers.Count > 0)
+            {
+                if (targetGroup.IAmTheLeader)
+                {
+                    var members = targetGroup.groupMembers;
+                    targetGroup.ExitGroup();
+                    foreach (var m in members)
+                    {
+                        GroupScript memberGroup =m.GetComponent<GroupScript>();
+                        memberGroup.groupLeader = members[0];
+                    }
+                }
+                else
+                {
+                    targetGroup.ExitGroup();
+                }
+            }
+        }
         targetPers.takeDamage(a, this.GetComponent<PersonalityBase>());
         updateTrust(false, targetPers, this.GetComponent<PersonalityBase>().GetMyOwnIndex());
         //HAY QUE RECORRER EL GRUPO DEL TARGET Y REDUCIR LA CONFIANZA DE TODOS

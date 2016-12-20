@@ -6,6 +6,7 @@ public class GroupScript : MonoBehaviour {
 
     public bool inGroup = false;
     public bool IAmTheLeader = false;
+    public GameObject crown;
 
     public GameObject groupLeader;
 
@@ -118,6 +119,7 @@ public class GroupScript : MonoBehaviour {
         {
             IAmTheLeader = true;
             groupLeader = this.gameObject;
+
         }
         foreach (var members in groupMembers)
         {
@@ -131,7 +133,14 @@ public class GroupScript : MonoBehaviour {
         if(Vector2.Distance(this.gameObject.transform.position, groupLeader.transform.position) > maxDistGroup)
         {
             ExitGroup();
-
+        }
+        if(IAmTheLeader && groupLeader == this.gameObject)
+        {
+            crown.SetActive(true);
+        }
+        else
+        {
+            crown.SetActive(false);
         }
 
     }

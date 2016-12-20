@@ -19,7 +19,7 @@ public class ActionOffer : Action {
 
 		if (this.gameObject.tag != "Player") {
 			base.DestroyTrees ();
-
+            if(this.gameObject.GetComponent<GroupScript>().groupLeader == this.gameObject && this.gameObject.GetComponent<GroupScript>().inGroup)
 			Invoke ("EnableCone", 5f);
 		}
     }

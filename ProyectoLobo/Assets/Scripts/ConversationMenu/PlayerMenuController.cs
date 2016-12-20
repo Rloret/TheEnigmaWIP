@@ -38,15 +38,13 @@ public class PlayerMenuController : MonoBehaviour {
         {
             buttonConvert.enabled = true;
             buttonConvert.image.enabled = true;
-            buttonConvert.GetComponentInChildren<Text>().enabled = true;
+
         }
         else
         {
             buttonConvert.enabled = false;
             buttonConvert.image.enabled = false;
-            buttonConvert.GetComponentInChildren<Text>().enabled = false;
         }
-
     }
      
     public void Convert2Monster()

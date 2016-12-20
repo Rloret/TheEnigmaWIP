@@ -18,7 +18,8 @@ public class ActionNothing : Action {
 
 			base.DestroyTrees ();
 
-			Invoke ("EnableCone", 10f);
+            if (this.gameObject.GetComponent<GroupScript>().groupLeader == this.gameObject && this.gameObject.GetComponent<GroupScript>().inGroup)
+                Invoke ("EnableCone", 10f);
 		}
     }
 

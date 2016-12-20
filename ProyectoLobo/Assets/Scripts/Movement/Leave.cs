@@ -11,8 +11,6 @@ public class Leave : AgentBehaviour {
     public override SteeringOutput GetSteering()
     {
         SteeringOutput steering = new SteeringOutput();
-
-
         Vector2 direction = -(Vector2)target.transform.position + (Vector2)transform.position; // transform.position es vector3 y queremos vector2, puede dar problemas.
         float distance = direction.magnitude;
         float reduce;

@@ -88,7 +88,7 @@ public class gameController : MonoBehaviour {
 
 			GameObject player = GameObject.FindGameObjectWithTag ("Player");
 			PlayerPersonality personality = player.GetComponent<PlayerPersonality> ();
-			personality.configurePlayer (new Color(151,76,154,255)/255);
+			personality.configurePlayer (new Color(250,250,250,255)/255);
 		} else {
 			int i = 0;
 
@@ -183,7 +183,8 @@ public class gameController : MonoBehaviour {
 
 	public bool CheckPlayerLost(){
 
-		if (GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing) {	// si eres monstruo
+		if (GameObject.FindGameObjectWithTag ("Player").GetComponent<PersonalityBase> ().theThing) {
+            // si eres monstruo
 			
 		} else {
 			if (numberOfHumans == 1) {

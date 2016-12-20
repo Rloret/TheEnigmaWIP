@@ -12,6 +12,8 @@ public class PlayerPersonality : PersonalityBase {
     void Start()
     {
         base.behaviourManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BehaviourAdder>();
+        HealthImage.GetComponent<Image>().color = new Color(82f / 255, 178f / 255, 82f / 255);
+       
     }
     public void configurePlayer(Color playerColor)
     {
@@ -19,6 +21,7 @@ public class PlayerPersonality : PersonalityBase {
         TrustInOthers = new int[numberOfAgents];
         initializeTrustInOthers(numberOfAgents);
         health = 100;
+        HealthImage.GetComponent<Image>().fillAmount =1;
         attack = 10;
         this.GetComponent<GroupScript>().setOriginalColor(playerColor);
         this.GetComponent<SpriteRenderer>().color = playerColor;
@@ -30,13 +33,16 @@ public class PlayerPersonality : PersonalityBase {
 		health -= (int)(damage * defense);
         HealthImage.GetComponent<Image>().fillAmount = health / 100f;
         Debug.Log(HealthImage.GetComponent<Image>().fillAmount);
-        if (health <= 50 && health > 33)
+        if (health > 50) {
+            HealthImage.GetComponent<Image>().color = new Color(82f / 255, 178f / 255, 82f / 255);
+        }
+        else if (health <= 50 && health > 33)
 		{
-			HealthImage.GetComponent<Image>().color = new Color(255, 255, 0);
+			HealthImage.GetComponent<Image>().color = new Color(226f / 255, 213f / 255, 89f / 255);
 		}
 		else if (health <= 33 && health > 0)
 		{
-			HealthImage.GetComponent<Image>().color = new Color(255, 0, 0);
+			HealthImage.GetComponent<Image>().color = new Color(193f / 255, 52 / 255f, 52f / 255) ;
 		}
 		else
 		{
