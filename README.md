@@ -3,7 +3,7 @@ This is a project made by four people as a prototype for an artificial Intellige
 In this pproject i took care of the steering behaviours, Fog of war and flocking.
 Also, Made the communication system which is still under trial.
 
-	The game is placed in a closed room complex inside of which there are a group of humans, and an another world creature too… this creature is able to adopt human appearance.
+The game is placed in a closed room complex inside of which there are a group of humans, and an another world creature too… this creature is able to adopt human appearance.
 
 This way, two teams are created, Humans and Creatures, each one with different goals. As creature, the goal is to isolate each human in order to infect him and increase the number of creatures. It is important to isolate humans, because the creature is superior in single combat, but if there are two or more humans together the creature will be at a disadvantage. The creatures’ final goal is the total annihilation of the human team.
 
@@ -19,4 +19,6 @@ Axe: Increase damage
 Flashlight: Increase the vision range
 Bulletproof vest: Increase defense
 
-	Each agent can only carry one object and the power-up will be active will the object is carried. In addition, the are a first-aid kit in a fixed place of the scene where the agents can recover health by getting close. However, the position of each object will be randomly selected in each game. 
+Each agent can only carry one object and the power-up will be active will the object is carried. In addition, the are a first-aid kit in a fixed place of the scene where the agents can recover health by getting close. However, the position of each object will be randomly selected in each game. 
+
+[![Enigma](http://i.imgur.com/d908CJC.png)] [![Enigma](http://i.imgur.com/GPm9Ekv.png)] [![Enigma](http://i.imgur.com/FKlyOZI.png)]
